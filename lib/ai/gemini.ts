@@ -103,7 +103,11 @@ export async function generateJson<T>(options: GenerateOptions): Promise<T> {
           responseMimeType: "application/json",
           responseSchema: options.responseSchema,
           temperature: options.temperature ?? 0.8,
-          maxOutputTokens: 32768,
+          // Pas de maxOutputTokens : chaque modèle a le sien, et une valeur
+          // codée en dur au-dessus de sa capacité fait refuser la requête —
+          // Gemini 2.0 Flash plafonne à 8 192 jetons là où 2.5 Flash en
+          // accepte huit fois plus. Sans la consigne, le modèle utilise son
+          // propre maximum.
         },
       }),
     },

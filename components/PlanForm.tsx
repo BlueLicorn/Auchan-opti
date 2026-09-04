@@ -36,17 +36,42 @@ const INDULGENCE_MARKS = [
   { at: 100, label: "Gros porc" },
 ];
 
+/**
+ * Deux façons de dire la même chose.
+ *
+ * Le moteur ne connaît qu'un budget total, mais on ne raisonne pas toujours
+ * ainsi : « 8 € le repas » est souvent plus naturel que « 240 € le mois ».
+ * Le mode ne change que la saisie ; la valeur transmise reste le total.
+ */
+export type BudgetMode = "total" | "parRepas";
+
 export function PlanForm({
-  request, onChange, onSubmit, busy, progress,
+  request, onChange, onSubmit, busy, progress, budgetMode, onBudgetModeChange,
 }: {
   request: PlanRequest;
   onChange: (next: PlanRequest) => void;
   onSubmit: () => void;
   busy: boolean;
   progress?: string;
+  budgetMode: BudgetMode;
+  onBudgetModeChange: (mode: BudgetMode) => void;
 }) {
   const set = <K extends keyof PlanRequest>(key: K, value: PlanRequest[K]) =>
     onChange({ ...request, [key]: value });
+
+  const round2 = (n: number) => Math.round(n * 100) / 100;
+
+  /** Coût par repas déduit du total. Le total reste la source de vérité. */
+  const parRepas = request.meals > 0 ? round2(request.budget / request.meals) : 0;
+
+  /** Changer le nombre de repas conserve le coût unitaire, pas le total. */
+  const setMeals = (meals: number) => {
+    if (budgetMode === "parRepas" && meals > 0) {
+      onChange({ ...request, meals, budget: round2(parRepas * meals) });
+    } else {
+      set("meals", meals);
+    }
+  };
 
   const toggle = <T extends string>(list: T[], value: T): T[] =>
     list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
@@ -84,23 +109,47 @@ export function PlanForm({
       }}
     >
       <Card title="Le cadre" subtitle="Ce que tu veux dépenser, et pour combien de repas.">
+        <div className="mb-4">
+          <SegmentGroup<BudgetMode>
+            value={budgetMode}
+            onChange={onBudgetModeChange}
+            options={[
+              { value: "total", label: "Budget total", hint: "pour l'ensemble" },
+              { value: "parRepas", label: "Coût par repas", hint: "×  nb de repas" },
+            ]}
+          />
+        </div>
+
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-          <Field label="Budget">
-            <NumberInput
-              value={request.budget}
-              onChange={(v) => set("budget", v)}
-              min={5}
-              max={1000}
-              step={5}
-              suffix="€"
-            />
-          </Field>
+          {budgetMode === "total" ? (
+            <Field label="Budget total">
+              <NumberInput
+                value={request.budget}
+                onChange={(v) => set("budget", v)}
+                min={5}
+                max={5000}
+                step={5}
+                suffix="€"
+              />
+            </Field>
+          ) : (
+            <Field label="Coût par repas">
+              <NumberInput
+                value={parRepas}
+                onChange={(v) => onChange({ ...request, budget: round2(v * request.meals) })}
+                min={0.5}
+                max={200}
+                step={0.5}
+                suffix="€"
+              />
+            </Field>
+          )}
           <Field label="Repas">
             <NumberInput
               value={request.meals}
-              onChange={(v) => set("meals", v)}
+              onChange={setMeals}
               min={1}
-              max={14}
+              max={60}
             />
           </Field>
           <Field label="Couverts par repas">
@@ -118,8 +167,18 @@ export function PlanForm({
             diagnostic === "impossible" ? "text-warn" : "text-muted"
           }`}
         >
-          <strong>{formatPrice(perServing)} par portion</strong>
-          {" "}pour {servings} portion{servings > 1 ? "s" : ""}.{" "}
+          {budgetMode === "parRepas" ? (
+            <>
+              <strong>{formatPrice(request.budget)} au total</strong> pour{" "}
+              {request.meals} repas, soit {formatPrice(perServing)} par portion
+              ({servings} portion{servings > 1 ? "s" : ""}).{" "}
+            </>
+          ) : (
+            <>
+              <strong>{formatPrice(perServing)} par portion</strong> pour{" "}
+              {servings} portion{servings > 1 ? "s" : ""}.{" "}
+            </>
+          )}
           {diagnostic === "impossible" && (
             <>
               Ce budget ne passera pas : avec {servings} portion

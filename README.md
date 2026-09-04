@@ -1,14 +1,19 @@
 # Auchan-Opti
 
-Tu donnes un budget, un nombre de repas et tes contraintes. L'application
-compose les plats, écrit les recettes détaillées, et sort une liste de courses
-chiffrée, triée dans l'ordre de parcours du magasin.
+Tu donnes un budget — au total ou par repas — un nombre de repas et tes
+contraintes. L'application compose les plats, écrit les recettes détaillées, et
+sort une liste de courses chiffrée, triée dans l'ordre de parcours du magasin.
 
 Application web Next.js, sans compte et sans serveur de données : tout vit
 dans ton navigateur.
 
 ## Ce qu'elle fait
 
+- **Le budget se donne au total ou par repas.** « 4 € le repas » se saisit
+  directement : changer le nombre de repas garde alors le coût unitaire et
+  recalcule le total. Jusqu'à 60 repas par plan — au-delà de six, la
+  génération part en lots successifs, avec la liste des plats déjà retenus
+  passée à chaque lot pour éviter de servir deux fois le même.
 - **Un plan qui tient dans le budget.** Le coût n'est jamais estimé par l'IA :
   il est calculé à partir des conditionnements réels. 350 g de pâtes coûtent
   le prix d'un paquet de 500 g, et les 150 g restants sont affichés comme
@@ -228,6 +233,14 @@ La source lisible est dans le script ; le JSON est un artefact.
 - **Sous 10 portions, le conditionnement fixe un plancher.** Cinq repas pour
   une personne ne descendront pas à 1 € la portion : on achète un paquet de
   pâtes, pas 110 g. L'application annonce ce plancher au lieu de le subir.
+  L'effet inverse joue en faveur des gros plans : à 1 € la portion demandée,
+  quarante repas descendent à 1,04 € quand cinq plafonnent à 1,23 €, parce
+  qu'un paquet de riz se partage entre quarante repas comme entre cinq.
+- **Au-delà du budget nécessaire, le planificateur hors-ligne varie le menu
+  plutôt que d'économiser.** Quarante repas à 3 € la portion coûtent plus
+  cher par portion que cinq, non par gaspillage mais parce que le menu
+  s'étend à 71 produits distincts au lieu de 18. C'est un choix : quand le
+  budget ne contraint pas, la variété passe devant la dernière pièce.
 - **Les poids à la pièce sont des moyennes** (un œuf 55 g, un oignon 60 g).
   Le bilan nutritionnel en hérite l'approximation.
 

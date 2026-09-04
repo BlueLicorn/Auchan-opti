@@ -69,18 +69,9 @@ export async function generatePlan(options: PlanOptions): Promise<MealPlan> {
     });
   }
 
-  onProgress?.("Composition des repas par Gemini…");
-
-  let raw = await withRetry(() =>
-    generateJson<RawPlan>({
-      apiKey: gemini.apiKey,
-      model: gemini.model,
-      systemInstruction: SYSTEM_INSTRUCTION,
-      prompt: buildPlanPrompt(request, pool),
-      responseSchema: PLAN_SCHEMA,
-      signal,
-    }),
-  );
+  let raw = await composeAvecGemini({
+    request, pool, gemini, signal, onProgress,
+  });
 
   let validation = validatePlan(raw, pool, request);
   warnings.push(...validation.warnings);
@@ -142,6 +133,114 @@ export async function generatePlan(options: PlanOptions): Promise<MealPlan> {
     model: gemini.model,
   });
 }
+
+/**
+ * Nombre de repas demandés en une seule requête au modèle.
+ *
+ * Au-delà, la réponse se fait tronquer : une recette détaillée pèse plusieurs
+ * centaines de jetons, et le plafond de sortie d'un modèle Flash est vite
+ * atteint. Découper permet de demander trente repas sans rien perdre — au prix
+ * d'un appel supplémentaire par lot, prélevé sur le quota de l'utilisateur.
+ */
+const REPAS_PAR_LOT = 6;
+
+/**
+ * Demande les repas au modèle, en un seul appel ou en plusieurs lots.
+ *
+ * Chaque lot reçoit la liste des plats déjà composés, pour que le menu ne
+ * tourne pas en rond : sans cela, chaque lot repartirait des mêmes produits
+ * les moins chers et proposerait trois fois les mêmes pâtes.
+ */
+async function composeAvecGemini({
+  request, pool, gemini, signal, onProgress,
+}: {
+  request: PlanRequest;
+  pool: Product[];
+  gemini: { apiKey: string; model: string };
+  signal?: AbortSignal;
+  onProgress?: (step: string) => void;
+}): Promise<RawPlan> {
+  const lots = decouperEnLots(request.meals, REPAS_PAR_LOT);
+
+  if (lots.length === 1) {
+    onProgress?.("Composition des repas par Gemini…");
+    return withRetry(() =>
+      generateJson<RawPlan>({
+        apiKey: gemini.apiKey,
+        model: gemini.model,
+        systemInstruction: SYSTEM_INSTRUCTION,
+        prompt: buildPlanPrompt(request, pool),
+        responseSchema: PLAN_SCHEMA,
+        signal,
+      }),
+    );
+  }
+
+  const recipes: RawPlan["recipes"] = [];
+  const notes: string[] = [];
+
+  for (const [index, taille] of lots.entries()) {
+    onProgress?.(
+      `Composition des repas ${recipes.length + 1} à ${recipes.length + taille}`
+      + ` sur ${request.meals}…`,
+    );
+
+    // Le budget est réparti au prorata du lot : chacun doit viser sa part,
+    // sinon le premier lot consomme tout et les suivants n'ont plus rien.
+    const partDuLot: PlanRequest = {
+      ...request,
+      meals: taille,
+      budget: round2(request.budget * (taille / request.meals)),
+    };
+
+    const dejaProposes = recipes.map((recipe) => recipe.title);
+    const consigne = dejaProposes.length > 0
+      ? `${buildPlanPrompt(partDuLot, pool)}\n\n## Déjà au menu\n`
+        + `${dejaProposes.map((titre) => `- ${titre}`).join("\n")}\n`
+        + `Propose autre chose : ni les mêmes plats, ni les mêmes protéines`
+        + ` dominantes. Tu peux en revanche réutiliser les produits déjà`
+        + ` achetés — c'est même souhaitable pour finir les paquets ouverts.`
+      : buildPlanPrompt(partDuLot, pool);
+
+    try {
+      const lot = await withRetry(() =>
+        generateJson<RawPlan>({
+          apiKey: gemini.apiKey,
+          model: gemini.model,
+          systemInstruction: SYSTEM_INSTRUCTION,
+          prompt: consigne,
+          responseSchema: PLAN_SCHEMA,
+          signal,
+        }),
+      );
+      recipes.push(...(lot.recipes ?? []));
+      notes.push(...(lot.notes ?? []));
+    } catch (error) {
+      // Un lot perdu ne doit pas emporter les précédents : on garde ce qui a
+      // été composé et l'appelant signalera le manque.
+      if (index === 0) throw error;
+      notes.push(
+        `Le lot ${index + 1} n'a pas abouti ; le plan est plus court que demandé.`,
+      );
+      break;
+    }
+  }
+
+  return { recipes, notes };
+}
+
+/** Répartit N repas en lots aussi égaux que possible, sans lot d'un seul repas. */
+export function decouperEnLots(total: number, taille: number): number[] {
+  if (total <= taille) return [total];
+
+  const nombre = Math.ceil(total / taille);
+  const base = Math.floor(total / nombre);
+  const reste = total % nombre;
+
+  return Array.from({ length: nombre }, (_, i) => base + (i < reste ? 1 : 0));
+}
+
+const round2 = (n: number) => Math.round(n * 100) / 100;
 
 /**
  * Explique un dépassement au lieu de le constater.

@@ -8,7 +8,7 @@ import {
   DEFAULT_REQUEST, KEYS, loadCatalog, loadOverrides, loadPlan, loadRequest,
   read, remove, write,
 } from "@/lib/storage";
-import { PlanForm } from "@/components/PlanForm";
+import { PlanForm, type BudgetMode } from "@/components/PlanForm";
 import { PlanResult } from "@/components/PlanResult";
 import { SettingsPanel } from "@/components/SettingsPanel";
 import { Button, Notice } from "@/components/ui";
@@ -25,6 +25,7 @@ export default function Home() {
   const [overrides, setOverrides] = useState<StoreOverride[]>([]);
   const [importedCatalog, setImportedCatalog] = useState<Catalog | null>(null);
   const [assumeStaples, setAssumeStaples] = useState(true);
+  const [budgetMode, setBudgetMode] = useState<BudgetMode>("total");
 
   const [plan, setPlan] = useState<MealPlan | null>(null);
   const [checked, setChecked] = useState<string[]>([]);
@@ -42,6 +43,7 @@ export default function Home() {
     setAssumeStaples(read(KEYS.staples, true));
     setChecked(read<string[]>(KEYS.checked, []));
     setImportedCatalog(loadCatalog());
+    setBudgetMode(read<BudgetMode>(KEYS.budgetMode, "total"));
 
     const saved = loadPlan();
     if (saved) {
@@ -57,6 +59,7 @@ export default function Home() {
   useEffect(() => { if (ready) write(KEYS.overrides, overrides); }, [ready, overrides]);
   useEffect(() => { if (ready) write(KEYS.staples, assumeStaples); }, [ready, assumeStaples]);
   useEffect(() => { if (ready) write(KEYS.checked, checked); }, [ready, checked]);
+  useEffect(() => { if (ready) write(KEYS.budgetMode, budgetMode); }, [ready, budgetMode]);
   useEffect(() => {
     if (!ready) return;
     if (importedCatalog) write(KEYS.catalog, importedCatalog);
@@ -197,6 +200,8 @@ export default function Home() {
             onSubmit={generate}
             busy={busy}
             progress={progress}
+            budgetMode={budgetMode}
+            onBudgetModeChange={setBudgetMode}
           />
         </div>
       )}

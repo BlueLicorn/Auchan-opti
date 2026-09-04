@@ -21,6 +21,7 @@ export const KEYS = {
   overrides: `${PREFIX}store-overrides`,
   checked: `${PREFIX}checked`,
   catalog: `${PREFIX}catalog`,
+  budgetMode: `${PREFIX}budget-mode`,
   staples: `${PREFIX}assume-staples`,
 } as const;
 

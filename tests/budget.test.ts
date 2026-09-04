@@ -2,7 +2,7 @@ import { strict as assert } from "node:assert";
 import { describe, it } from "node:test";
 
 import { filterCatalog, indexById, seedCatalog } from "@/lib/catalog";
-import { generatePlan } from "@/lib/planner";
+import { decouperEnLots, generatePlan } from "@/lib/planner";
 import { buildShoppingList } from "@/lib/planner/cost";
 import { budgetPressure, planOffline } from "@/lib/planner/offline";
 import type { PlanRequest } from "@/lib/types";
@@ -183,5 +183,96 @@ describe("honnêteté quand le budget est intenable", () => {
   it("se tait quand le budget est tenu", async () => {
     const result = await plan(request(80, 5, 2));
     assert.ok(!result.warnings.some((w) => w.includes("minimum atteignable")));
+  });
+});
+
+describe("découpage des grandes demandes en lots", () => {
+  it("n'en fait qu'un seul tant que la demande tient", () => {
+    assert.deepEqual(decouperEnLots(1, 6), [1]);
+    assert.deepEqual(decouperEnLots(6, 6), [6]);
+  });
+
+  it("répartit équitablement au-delà", () => {
+    assert.deepEqual(decouperEnLots(7, 6), [4, 3]);
+    assert.deepEqual(decouperEnLots(12, 6), [6, 6]);
+    assert.deepEqual(decouperEnLots(30, 6), [6, 6, 6, 6, 6]);
+  });
+
+  it("ne laisse jamais un lot d'un seul repas isolé", () => {
+    // Un découpage naïf de 13 en lots de 6 donnerait [6, 6, 1] : le dernier
+    // appel coûterait autant pour une seule recette, et sans contexte.
+    for (const total of [7, 8, 13, 19, 25, 31, 43, 60]) {
+      const lots = decouperEnLots(total, 6);
+      assert.equal(lots.reduce((a, b) => a + b, 0), total, `somme fausse pour ${total}`);
+      assert.ok(Math.min(...lots) >= 2, `lot isolé pour ${total} : ${lots.join("+")}`);
+      assert.ok(Math.max(...lots) <= 6, `lot trop gros pour ${total} : ${lots.join("+")}`);
+    }
+  });
+
+  it("garde des lots d'écart minimal", () => {
+    for (const total of [7, 11, 17, 23, 29, 41]) {
+      const lots = decouperEnLots(total, 6);
+      assert.ok(
+        Math.max(...lots) - Math.min(...lots) <= 1,
+        `lots déséquilibrés pour ${total} : ${lots.join("+")}`,
+      );
+    }
+  });
+});
+
+describe("beaucoup de repas", () => {
+  it("compose un plan bien au-delà de l'ancien plafond de quatorze", async () => {
+    const req = request(300, 40, 2);
+    const result = await plan(req);
+    assert.equal(result.recipes.length, 40, "les quarante repas doivent être là");
+    assert.ok(result.shoppingList.lines.length > 0);
+  });
+
+  it("amortit les conditionnements quand le budget serre", async () => {
+    // Un paquet de riz se partage entre quarante repas comme entre cinq, mais
+    // il ne se paie qu'une fois : à budget par portion identique et serré, le
+    // grand plan doit descendre plus bas que le petit.
+    const petit = await plan(request(10, 5, 2));
+    const grand = await plan(request(80, 40, 2));
+
+    const parPortion = (r: Awaited<ReturnType<typeof plan>>, n: number) =>
+      r.shoppingList.total / n;
+
+    assert.ok(
+      parPortion(grand, 80) < parPortion(petit, 10),
+      `${parPortion(grand, 80).toFixed(2)} € devrait être sous ${parPortion(petit, 10).toFixed(2)} €`,
+    );
+  });
+
+  it("n'ouvre pas un produit de plus à chaque repas ajouté", async () => {
+    // La vraie mesure de l'amortissement : la liste de courses ne grossit pas
+    // au rythme du menu. Huit fois plus de repas ne doit pas donner huit fois
+    // plus de produits distincts à acheter.
+    const distincts = async (req: PlanRequest) => {
+      const result = await plan(req);
+      return new Set(result.recipes.flatMap((r) => r.ingredients.map((i) => i.productId))).size;
+    };
+
+    const petit = await distincts(request(30, 5, 2));
+    const grand = await distincts(request(240, 40, 2));
+
+    assert.ok(
+      grand / 40 < petit / 5,
+      `${(grand / 40).toFixed(2)} produit(s) par repas sur quarante, `
+        + `contre ${(petit / 5).toFixed(2)} sur cinq`,
+    );
+  });
+
+  it("tient encore le budget à soixante repas", async () => {
+    // Le plafond de l'application est à soixante : le budget doit y rester une
+    // contrainte, pas une indication.
+    const req = request(360, 60, 2);
+    const result = await plan(req);
+
+    assert.equal(result.recipes.length, 60);
+    assert.ok(
+      result.shoppingList.total <= req.budget,
+      `${result.shoppingList.total.toFixed(2)} € pour un budget de ${req.budget} €`,
+    );
   });
 });
