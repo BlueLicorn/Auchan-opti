@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Catalog, Product } from "@/lib/types";
 import type { StoreOverride } from "@/lib/catalog";
 import {
   formatPrice, normalize, packLabel, provenanceLabel, seedCatalog,
 } from "@/lib/catalog";
 import { CSV_TEMPLATE, exportCsv, importCsv, type CsvImportResult } from "@/lib/catalog/sources";
-import { FALLBACK_MODELS, GeminiError, listModels, type GeminiModel } from "@/lib/ai/gemini";
+import {
+  FALLBACK_MODELS, GeminiError, listModels, preferredModel, type GeminiModel,
+} from "@/lib/ai/gemini";
 import { download } from "@/lib/export";
 import { Button, Card, Field, Notice, TextInput } from "@/components/ui";
 import { CollectPanel } from "@/components/CollectPanel";
@@ -107,7 +109,7 @@ function GeminiSettings({
   const [error, setError] = useState("");
   const [reveal, setReveal] = useState(false);
 
-  const check = async () => {
+  const check = useCallback(async () => {
     if (!apiKey.trim()) return;
     setStatus("checking");
     setError("");
@@ -116,14 +118,37 @@ function GeminiSettings({
       setModels(available);
       setStatus("ok");
       if (!available.some((m) => m.id === model)) {
-        const preferred = available.find((m) => m.id.includes("flash")) ?? available[0];
+        const preferred = preferredModel(available);
         if (preferred) onModelChange(preferred.id);
       }
     } catch (caught) {
       setStatus("error");
       setError(caught instanceof GeminiError ? caught.message : "Vérification impossible.");
     }
-  };
+    // `model` est volontairement absent : la liste ne doit pas être rechargée
+    // parce que l'utilisateur vient de changer de modèle dans le menu.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiKey, onModelChange]);
+
+  /**
+   * Charger la liste dès qu'une clé est présente, sans attendre un clic.
+   *
+   * La liste de repli est écrite en dur : elle vieillit, et un nom qui n'existe
+   * plus fait échouer la génération par un 404 en renvoyant l'utilisateur vers
+   * un menu qui ne propose que d'autres noms tout aussi vieux. Demander à
+   * Google ce que la clé ouvre vraiment coûte un appel et supprime le piège.
+   */
+  useEffect(() => {
+    if (!apiKey.trim()) {
+      setModels(FALLBACK_MODELS);
+      setStatus("idle");
+      return;
+    }
+    if (status !== "idle") return;
+    void check();
+    // Une seule tentative par clé : en cas d'échec, le bouton reste là.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiKey]);
 
   return (
     <Card

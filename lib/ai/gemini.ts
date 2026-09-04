@@ -60,18 +60,34 @@ export async function listModels(apiKey: string): Promise<GeminiModel[]> {
     }[];
   };
 
-  const models = (data.models ?? [])
+  const utilisables = (data.models ?? [])
     .filter((m) => m.supportedGenerationMethods?.includes("generateContent"))
     .map((m) => ({
       id: m.name.replace(/^models\//, ""),
       label: m.displayName ?? m.name.replace(/^models\//, ""),
       inputTokenLimit: m.inputTokenLimit,
-    }))
-    // Les variantes datées et expérimentales polluent la liste sans rien
-    // apporter à l'utilisateur ; on garde les alias stables.
+    }));
+
+  // Les variantes datées et expérimentales polluent la liste sans rien apporter
+  // à l'utilisateur ; on garde les alias stables.
+  const lisibles = utilisables
     .filter((m) => !/-\d{3,4}$|vision|embedding|aqa|tts|image|live/.test(m.id));
 
-  return models.length > 0 ? models : FALLBACK_MODELS;
+  // Si ce tri ne laisse rien, on rend la liste brute plutôt que les noms codés
+  // en dur : de vrais modèles inélégamment nommés valent toujours mieux qu'une
+  // liste écrite il y a des mois, dont rien ne garantit qu'elle existe encore.
+  if (lisibles.length > 0) return lisibles;
+  return utilisables.length > 0 ? utilisables : FALLBACK_MODELS;
+}
+
+/**
+ * Choisit un modèle par défaut dans une liste réelle : le plus économique
+ * d'abord, parce que c'est celui dont le quota gratuit tient le mieux.
+ */
+export function preferredModel(models: GeminiModel[]): GeminiModel | undefined {
+  return models.find((m) => /flash/.test(m.id) && !/lite/.test(m.id))
+    ?? models.find((m) => /flash/.test(m.id))
+    ?? models[0];
 }
 
 export interface GenerateOptions {
@@ -179,7 +195,7 @@ async function toError(response: Response): Promise<GeminiError> {
       );
     case 404:
       return new GeminiError(
-        "Ce modèle n'existe pas ou n'est pas accessible avec ta clé. Choisis-en un autre dans la liste.",
+        "Ce modèle n'existe pas ou n'est pas accessible avec ta clé.",
         404,
       );
     case 429:

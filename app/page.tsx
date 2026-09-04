@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Catalog, MealPlan, PlanRequest } from "@/lib/types";
 import { applyOverrides, seedCatalog, type StoreOverride } from "@/lib/catalog";
 import { generatePlan } from "@/lib/planner";
+import { GeminiError, listModels, preferredModel } from "@/lib/ai/gemini";
 import {
   DEFAULT_REQUEST, KEYS, loadCatalog, loadOverrides, loadPlan, loadRequest,
   read, remove, write,
@@ -77,17 +78,46 @@ export default function Home() {
     setError("");
     setProgress("Préparation…");
 
+    const cle = apiKey.trim();
+    // Une graine neuve à chaque génération : redemander un plan doit rebattre
+    // les produits, pas resservir la même liste.
+    const seed = Date.now();
+    const lancer = (modele: string) => generatePlan({
+      request,
+      catalog,
+      gemini: cle ? { apiKey: cle, model: modele } : undefined,
+      assumeStaples,
+      seed,
+      onProgress: setProgress,
+    });
+
     try {
-      const result = await generatePlan({
-        request,
-        catalog,
-        gemini: apiKey.trim() ? { apiKey: apiKey.trim(), model } : undefined,
-        assumeStaples,
-        // Une graine neuve à chaque génération : redemander un plan doit
-        // rebattre les produits, pas resservir la même liste.
-        seed: Date.now(),
-        onProgress: setProgress,
-      });
+      let result;
+      try {
+        result = await lancer(model);
+      } catch (caught) {
+        // Un modèle disparu ou fermé à cette clé renvoie 404. Renvoyer
+        // l'utilisateur « choisir dans la liste » ne menait nulle part : cette
+        // liste est codée en dur tant que la clé n'a pas été vérifiée, et rien
+        // ne garantit qu'un autre de ses noms existe encore. On demande donc à
+        // Google ce que la clé ouvre réellement, et on repart avec.
+        if (!(caught instanceof GeminiError) || caught.status !== 404 || !cle) throw caught;
+
+        setProgress("Modèle indisponible : recherche d'un modèle accessible…");
+        const disponibles = await listModels(cle);
+        const remplacant = preferredModel(disponibles.filter((m) => m.id !== model));
+        if (!remplacant) throw caught;
+
+        result = await lancer(remplacant.id);
+        setModel(remplacant.id);
+        result = {
+          ...result,
+          warnings: [
+            `« ${model} » n'est pas accessible avec ta clé : passé à « ${remplacant.label} ».`,
+            ...result.warnings,
+          ],
+        };
+      }
 
       setPlan(result);
       setChecked([]);

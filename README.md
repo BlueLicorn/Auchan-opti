@@ -61,9 +61,14 @@ gabarits. C'est correct et bien chiffré, mais peu varié.
 
 Pour des recettes réellement variées, ouvre **Réglages** et colle une clé
 obtenue sur [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
-(gratuite). Le bouton *Vérifier la clé* interroge l'API et remplit la liste
-des modèles réellement accessibles avec ta clé — plutôt qu'un nom codé en dur
-qui finit toujours par renvoyer un 404.
+(gratuite). La liste des modèles se remplit toute seule dès qu'une clé est
+présente : elle vient de l'API, pas d'un nom écrit en dur qui finit toujours
+par renvoyer un 404 quelques mois plus tard. Le bouton *Vérifier la clé* la
+recharge à la demande.
+
+Si le modèle enregistré n'est plus accessible, la génération ne s'arrête pas :
+l'application demande à Google ce que la clé ouvre réellement, bascule sur un
+modèle disponible et le signale dans les avertissements du plan.
 
 **La clé ne quitte pas ton navigateur.** Les requêtes partent directement vers
 Google, sans passer par le serveur de cette application. La seule route
