@@ -308,7 +308,7 @@
     const b = document.createElement("button");
     b.textContent = libelle;
     b.style.cssText = [
-      "flex:1", "padding:7px 8px", "border-radius:9px", "cursor:pointer",
+      "flex:1 1 auto", "padding:7px 8px", "border-radius:9px", "cursor:pointer",
       "font:600 12px system-ui,sans-serif",
       principal ? "background:#c8102e;color:#fff;border:none"
                 : "background:#fff;color:#444;border:1px solid #d8d4cf",
@@ -331,9 +331,33 @@
     panneau.appendChild(info);
 
     const actions = document.createElement("div");
-    actions.style.cssText = "display:flex;gap:6px";
+    actions.style.cssText = "display:flex;gap:6px;flex-wrap:wrap";
 
-    const copier = bouton("Copier le relevé", true);
+    // Dérouler la page en cours pour déclencher le chargement paresseux de
+    // tous ses produits. C'est le défilement de l'utilisateur, automatisé, sur
+    // une page qu'il a lui-même ouverte : aucune navigation, aucun lien suivi.
+    // Un rayon complet passe ainsi de deux cents clics à un seul.
+    const derouler = bouton("Dérouler la page", true);
+    derouler.addEventListener("click", async () => {
+      if (defilementEnCours) return;
+      defilementEnCours = true;
+      derouler.disabled = true;
+      const avant = Object.keys(lireReleve()).length;
+
+      try {
+        await deroulerPage((position, hauteur) => {
+          info.textContent = `Défilement ${Math.round((position / hauteur) * 100)} %…`;
+        });
+        passer();
+        const apres = Object.keys(lireReleve()).length;
+        info.textContent = `Page déroulée : ${apres - avant} produit(s) de plus, ${apres} au total.`;
+      } finally {
+        defilementEnCours = false;
+        derouler.disabled = false;
+      }
+    });
+
+    const copier = bouton("Copier le relevé", false);
     copier.addEventListener("click", async () => {
       const contenu = JSON.stringify(
         { version: 1, produits: Object.values(lireReleve()) },
@@ -359,15 +383,60 @@
       info.textContent = "Relevé vidé.";
     });
 
-    actions.append(copier, vider);
+    actions.append(derouler, copier, vider);
     panneau.appendChild(actions);
+
+    const astuce = document.createElement("div");
+    astuce.style.cssText = "margin-top:9px;padding-top:8px;border-top:1px solid #eee;color:#888;font-size:11px;line-height:1.4";
+    astuce.textContent = "Le plus rentable : ouvre « Mes commandes », une liste "
+      + "enregistrée, ou un rayon entier — une seule page y contient des dizaines "
+      + "de produits.";
+    panneau.appendChild(astuce);
   }
+
+  /**
+   * Fait défiler la page jusqu'en bas, par paliers, en laissant le temps au
+   * contenu paresseux de se charger. S'arrête dès que la hauteur cesse de
+   * croître, ou au bout d'un plafond de paliers — une page infinie ne doit pas
+   * faire tourner le script sans fin.
+   */
+  async function deroulerPage(onProgres) {
+    const PALIER = Math.max(400, window.innerHeight * 0.85);
+    const PALIERS_MAX = 120;
+    let stagnation = 0;
+
+    for (let i = 0; i < PALIERS_MAX; i++) {
+      const hauteurAvant = document.body.scrollHeight;
+      const position = window.scrollY + window.innerHeight;
+
+      onProgres(Math.min(position, hauteurAvant), hauteurAvant);
+      window.scrollBy(0, PALIER);
+      await pause(450);
+
+      const enBas = window.scrollY + window.innerHeight >= document.body.scrollHeight - 5;
+      const aGrandi = document.body.scrollHeight > hauteurAvant;
+
+      if (enBas && !aGrandi) {
+        // Deux paliers sans rien de neuf : la page est bel et bien terminée.
+        if (++stagnation >= 2) break;
+        await pause(700);
+      } else {
+        stagnation = 0;
+      }
+    }
+
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+
+  const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // ---------------------------------------------------------------------------
   // Boucle : le site est une application, le contenu change sans rechargement
   // ---------------------------------------------------------------------------
 
   let dernierResume = "";
+  /** Empêche deux défilements concurrents, qui se gêneraient mutuellement. */
+  let defilementEnCours = false;
 
   function passer() {
     const { produits, methode } = extraireProduits();
@@ -400,6 +469,7 @@
   // avec une temporisation pour ne pas travailler à chaque micro-mutation.
   let minuteur;
   new MutationObserver(() => {
+    if (defilementEnCours) return; // l'analyse se fera une fois en bas de page
     clearTimeout(minuteur);
     minuteur = setTimeout(passer, 1200);
   }).observe(document.body, { childList: true, subtree: true });

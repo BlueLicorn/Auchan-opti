@@ -4,7 +4,9 @@ import { describe, it } from "node:test";
 import {
   applyOverrides, coverage, isEstimate, provenanceLabel, seedCatalog,
 } from "@/lib/catalog";
-import { importReleve } from "@/lib/catalog/collect";
+import {
+  importReleve, mergeEntries, parseReceiptText,
+} from "@/lib/catalog/collect";
 import type { Catalog } from "@/lib/types";
 
 const today = new Date().toISOString().slice(0, 10);
@@ -145,5 +147,74 @@ describe("priorité entre sources", () => {
       { productId: "es-penne", price: 2.05, at: "2020-01-01" },
     ]);
     assert.equal(avec.products.find((p) => p.id === "es-penne")!.price, 2.05);
+  });
+});
+
+describe("lecture d'une commande ou d'un ticket collé", () => {
+  it("lit un ticket de caisse classique", () => {
+    const { entries } = parseReceiptText(`
+AUCHAN VILLARS
+Ticket du 04/09/2026
+
+PENNE 500G                 1,15 €
+FILETS DE POULET 1KG       8,99 €
+TOMATES PELEES 400G        0,85 €
+
+TOTAL                     10,99 €
+CB                        10,99 €
+    `);
+
+    assert.equal(entries.length, 3, "les trois produits, et rien d'autre");
+    assert.deepEqual(entries.map((e) => e.prix), [1.15, 8.99, 0.85]);
+    assert.ok(entries[0].nom?.includes("PENNE"));
+  });
+
+  it("ramène un lot au prix unitaire", () => {
+    const { entries } = parseReceiptText("3 x Yaourt nature 4,50 €");
+    assert.equal(entries[0].prix, 1.5, "4,50 € pour 3 font 1,50 € pièce");
+  });
+
+  it("accepte la notation x2 et les points de conduite", () => {
+    const { entries } = parseReceiptText("x2 Mozzarella ............ 2,18");
+    assert.equal(entries.length, 1);
+    assert.equal(entries[0].prix, 1.09);
+    assert.equal(entries[0].nom, "Mozzarella");
+  });
+
+  it("écarte les totaux, la TVA et les moyens de paiement", () => {
+    const { entries, ignored } = parseReceiptText(`
+Sous-total    12,00 €
+TVA 5,5%       0,66 €
+Remise        -1,00 €
+Carte fidélité 2,00 €
+Net à payer   11,66 €
+Frais de livraison 3,90 €
+    `);
+    assert.equal(entries.length, 0, "aucune de ces lignes n'est un produit");
+    assert.ok(ignored.length >= 5);
+  });
+
+  it("ne prend pas un grammage pour un prix", () => {
+    const { entries } = parseReceiptText("Farine T55 1,00 kg");
+    assert.equal(entries.length, 0, "« 1,00 kg » n'est pas un montant");
+  });
+
+  it("écarte une ligne sans libellé exploitable", () => {
+    const { entries } = parseReceiptText("3901234567890   2,50 €\n****   1,00 €");
+    assert.equal(entries.length, 0);
+  });
+
+  it("écarte un montant invraisemblable", () => {
+    const { ignored } = parseReceiptText("Produit fantaisiste 999,00 €");
+    assert.ok(ignored.some((i) => i.reason.includes("bornes")));
+  });
+
+  it("alimente le catalogue comme n'importe quelle autre source", () => {
+    const { entries } = parseReceiptText("PENNE 500G   1,42 €");
+    const result = mergeEntries(entries);
+    assert.equal(result.matched, 1);
+    const penne = result.catalog.products.find((p) => p.id === "es-penne")!;
+    assert.equal(penne.price, 1.42);
+    assert.equal(penne.priceFrom.source, "collecte");
   });
 });

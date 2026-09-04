@@ -2,8 +2,11 @@
 
 import { useRef, useState } from "react";
 import type { Catalog } from "@/lib/types";
-import { coverage, seedCatalog } from "@/lib/catalog";
-import { importReleve, type CollectResult } from "@/lib/catalog/collect";
+import { coverage, formatPrice, seedCatalog } from "@/lib/catalog";
+import {
+  importReleve, mergeEntries, parseReceiptText,
+  type CollectResult, type ReleveEntry,
+} from "@/lib/catalog/collect";
 import { Button, Card, Notice, Stat } from "@/components/ui";
 import { CommunityPrices } from "@/components/CommunityPrices";
 
@@ -84,6 +87,13 @@ export function CollectPanel({
         subtitle="Auchan ne publie ni API de prix ni API de stock. La seule source qui contient les deux, c'est le site Drive avec ton magasin sélectionné."
       >
         <div className="space-y-5">
+          <Notice title="Les pages qui rapportent le plus">
+            Inutile d&apos;ouvrir les fiches une par une. <strong>Mes commandes</strong>,
+            une <strong>liste enregistrée</strong> ou un <strong>rayon entier</strong>{" "}
+            contiennent chacun des dizaines de produits sur une seule page.
+            Ouvre-en une, clique sur « Dérouler la page », et c&apos;est fait.
+          </Notice>
+
           <Notice title="Comment ça marche, exactement">
             Le collecteur est un petit script qui s&apos;exécute{" "}
             <strong>dans ton navigateur, sur les pages Auchan que tu ouvres
@@ -137,6 +147,16 @@ export function CollectPanel({
             <li className="flex gap-3">
               <Step n={4} />
               <span>
+                Sur une page de rayon, clique sur{" "}
+                <strong>« Dérouler la page »</strong> : le script fait défiler
+                la page jusqu&apos;au bout pour que tous ses produits se
+                chargent. Un rayon entier se relève ainsi en un clic, sans
+                ouvrir la moindre fiche produit.
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <Step n={5} />
+              <span>
                 Clique sur « Copier le relevé », puis colle-le ci-dessous.
               </span>
             </li>
@@ -174,6 +194,8 @@ export function CollectPanel({
           {result && <ImportReport result={result} />}
         </div>
       </Card>
+
+      <ReceiptImport catalog={catalog} onCatalogChange={onCatalogChange} />
 
       <CommunityPrices catalog={catalog} onCatalogChange={onCatalogChange} />
     </div>
@@ -219,6 +241,106 @@ function ImportReport({ result }: { result: CollectResult }) {
         </ul>
       )}
     </Notice>
+  );
+}
+
+/**
+ * Import d'une commande ou d'un ticket collé.
+ *
+ * Le meilleur rapport effort/exactitude qui existe : ce sont les prix
+ * réellement payés, pour les produits réellement achetés, et ce sont les
+ * données du compte de l'utilisateur — rien n'est collecté nulle part.
+ */
+function ReceiptImport({
+  catalog, onCatalogChange,
+}: {
+  catalog: Catalog;
+  onCatalogChange: (value: Catalog) => void;
+}) {
+  const [text, setText] = useState("");
+  const [preview, setPreview] = useState<ReleveEntry[] | null>(null);
+  const [ignoredCount, setIgnoredCount] = useState(0);
+  const [result, setResult] = useState<CollectResult | null>(null);
+
+  const analyse = () => {
+    const { entries, ignored } = parseReceiptText(text);
+    setPreview(entries);
+    setIgnoredCount(ignored.length);
+    setResult(null);
+  };
+
+  const confirm = () => {
+    if (!preview || preview.length === 0) return;
+    const merged = mergeEntries(preview, catalog);
+    setResult(merged);
+    if (merged.matched > 0 || merged.added > 0) {
+      onCatalogChange(merged.catalog);
+      setText("");
+      setPreview(null);
+    }
+  };
+
+  return (
+    <Card
+      title="Coller une commande ou un ticket"
+      subtitle="Le chemin le plus court vers des prix exacts : ce que tu as réellement payé, pour ce que tu achètes réellement."
+    >
+      <div className="space-y-4">
+        <Notice>
+          Ouvre <strong>Mes commandes</strong> sur ton compte Auchan, sélectionne
+          le détail d&apos;une commande, copie-le, et colle-le ici. Un ticket
+          dématérialisé fonctionne aussi. Ce sont tes données : rien n&apos;est
+          collecté ailleurs que dans ton propre compte.
+        </Notice>
+
+        <textarea
+          className="h-32 w-full rounded-xl border border-line bg-canvas px-3 py-2.5 font-mono text-xs outline-none focus:border-accent"
+          placeholder={"PENNE 500G                 1,15 €\nFILETS DE POULET 1KG       8,99 €\n3 x YAOURT NATURE          4,50 €"}
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+          aria-label="Commande ou ticket à analyser"
+        />
+
+        <Button onClick={analyse} disabled={text.trim().length < 6}>
+          Analyser
+        </Button>
+
+        {preview && preview.length === 0 && (
+          <Notice tone="warn">
+            Aucune ligne de produit reconnue. Il faut un libellé suivi d&apos;un
+            prix en fin de ligne, par exemple « PENNE 500G 1,15 € ».
+          </Notice>
+        )}
+
+        {preview && preview.length > 0 && (
+          <div className="rounded-xl border border-line bg-canvas p-3">
+            <p className="mb-2 text-sm font-medium">
+              {preview.length} ligne(s) reconnue(s)
+              {ignoredCount > 0 && `, ${ignoredCount} écartée(s)`} — vérifie avant
+              d&apos;appliquer.
+            </p>
+            <ul className="max-h-52 overflow-y-auto text-sm">
+              {preview.map((entry, i) => (
+                <li
+                  key={i}
+                  className="flex justify-between gap-3 border-b border-line py-1.5 last:border-0"
+                >
+                  <span className="min-w-0 truncate">{entry.nom}</span>
+                  <span className="shrink-0 tabular-nums font-medium">
+                    {formatPrice(entry.prix ?? 0)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-3">
+              <Button onClick={confirm}>Appliquer au catalogue</Button>
+            </div>
+          </div>
+        )}
+
+        {result && <ImportReport result={result} />}
+      </div>
+    </Card>
   );
 }
 

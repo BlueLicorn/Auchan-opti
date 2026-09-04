@@ -187,11 +187,22 @@ sont conservées et s'appliquent à toutes les listes suivantes.
 
 ## Comment relever, en pratique
 
+**Le plus rapide : coller une commande.** Ouvre *Mes commandes* sur ton compte,
+copie le détail d'une commande, colle-le dans **Réglages → Prix & stock**.
+Ce sont tes propres données, les prix réellement payés, et rien n'est collecté
+nulle part. C'est le meilleur rapport effort/exactitude qui existe.
+
 **Pour le drive (prix + stock, le plus complet).** Installe Violentmonkey ou
 Tampermonkey, colle `public/auchan-collect.user.js`, va sur auchan.fr,
-sélectionne ton magasin, puis navigue dans les rayons qui t'intéressent. Un
-encart compte les produits relevés. Clique sur « Copier le relevé » et
-colle-le dans **Réglages → Prix & stock**.
+sélectionne ton magasin, puis ouvre une page à fort rendement — *Mes
+commandes*, une liste enregistrée, ou un rayon entier. Clique sur **« Dérouler
+la page »** : le script fait défiler cette page jusqu'au bout pour que tous ses
+produits se chargent, puis les relève d'un coup. Sur une page de rayon, cela
+donne plusieurs dizaines de produits en un clic. Ensuite « Copier le relevé »,
+et colle-le dans l'application.
+
+Ce bouton ne navigue pas : il fait défiler la page que tu as ouverte, comme ton
+doigt le ferait. Aucun lien n'est suivi, aucune page n'est ouverte à ta place.
 
 Le collecteur lit d'abord le JSON-LD (`schema.org/Product`) que le site publie
 pour les moteurs de recherche : c'est la source la plus stable, normalisée, et

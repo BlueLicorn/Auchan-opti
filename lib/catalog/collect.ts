@@ -59,6 +59,17 @@ export function importReleve(raw: string, base: Catalog = seedCatalog): CollectR
     return empty(base, "Relevé vide : aucun produit n'y figure.");
   }
 
+  return mergeEntries(entries, base);
+}
+
+/**
+ * Fusionne des relevés dans le catalogue, quelle que soit leur origine :
+ * collecteur navigateur, ticket de caisse ou commande collée.
+ */
+export function mergeEntries(
+  entries: ReleveEntry[],
+  base: Catalog = seedCatalog,
+): CollectResult {
   const products = base.products.map((p) => ({ ...p }));
   const byId = new Map(products.map((p) => [p.id, p]));
   const byEan = new Map(
@@ -208,3 +219,93 @@ function slug(value: string): string {
 }
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
+
+// ---------------------------------------------------------------------------
+// Lecture d'une commande ou d'un ticket collé
+// ---------------------------------------------------------------------------
+
+/**
+ * Extrait des lignes « produit + prix » d'un texte collé.
+ *
+ * C'est la source la plus rentable de toutes : l'historique de commandes d'un
+ * compte Auchan, ou un ticket dématérialisé, contient les prix réellement
+ * payés pour les produits réellement achetés. Ce sont les données de
+ * l'utilisateur, sur son propre compte — rien à collecter nulle part.
+ *
+ * L'analyse est délibérément prudente : un faux prix contaminerait le budget
+ * en silence, alors qu'une ligne manquée se rattrape en un instant.
+ */
+
+/** Mentions qui identifient une ligne de pied de ticket, jamais un produit. */
+const LIGNES_NON_PRODUIT =
+  /\b(total|sous-?total|montant|tva|remise|reduction|fidelit|carte|especes|espèces|cb\b|rendu|monnaie|nombre d'articles|articles?\s*:|panier|livraison|frais de port|consigne|eco-?part|dont|net a payer|net à payer|ticket|facture|commande n|date|heure|magasin|drive|merci)\b/i;
+
+/**
+ * Un prix en fin de ligne : « 1,15 € », « 1.15 EUR », « 1,15 ».
+ * L'ancrage en fin de ligne évite de confondre un prix avec un grammage.
+ */
+const PRIX_FIN_DE_LIGNE = /(\d{1,3})[.,](\d{2})\s*(?:€|eur|euros?)?\s*$/i;
+
+/** Quantité en tête de ligne : « 2 x », « x2 », « 3 » suivi du libellé. */
+const QUANTITE_EN_TETE = /^\s*(?:(\d{1,2})\s*[x×]\s*|[x×]\s*(\d{1,2})\s+)/i;
+
+export interface ReceiptParseResult {
+  entries: ReleveEntry[];
+  /** Lignes écartées, avec la raison, pour que l'utilisateur puisse corriger. */
+  ignored: { line: string; reason: string }[];
+}
+
+export function parseReceiptText(text: string): ReceiptParseResult {
+  const entries: ReleveEntry[] = [];
+  const ignored: ReceiptParseResult["ignored"] = [];
+  const today = new Date().toISOString().slice(0, 10);
+
+  for (const rawLine of text.split(/\r?\n/)) {
+    const line = rawLine.replace(/\.{2,}/g, " ").replace(/\s+/g, " ").trim();
+    if (line.length < 4) continue;
+
+    if (LIGNES_NON_PRODUIT.test(line)) {
+      ignored.push({ line, reason: "Ligne de pied de ticket, pas un produit." });
+      continue;
+    }
+
+    const prix = line.match(PRIX_FIN_DE_LIGNE);
+    if (!prix) continue;
+
+    const montant = Number(`${prix[1]}.${prix[2]}`);
+    if (!(montant >= MIN_PRICE && montant <= MAX_PRICE)) {
+      ignored.push({ line, reason: `Montant hors des bornes plausibles : ${montant}.` });
+      continue;
+    }
+
+    let libelle = line.slice(0, prix.index).trim();
+
+    // Une quantité en tête signifie que le montant est un total de ligne :
+    // c'est le prix unitaire qui nous intéresse.
+    const quantite = libelle.match(QUANTITE_EN_TETE);
+    const multiple = Number(quantite?.[1] ?? quantite?.[2] ?? 1);
+    if (quantite) libelle = libelle.slice(quantite[0].length).trim();
+
+    // Codes article, références et poids résiduels ne sont pas des libellés.
+    libelle = libelle
+      .replace(/^\d{6,}\s*/, "")
+      .replace(/[\s.·–—-]+$/, "")
+      .trim();
+
+    if (libelle.length < 3 || !/[a-zà-ÿ]{3}/i.test(libelle)) {
+      ignored.push({ line, reason: "Aucun libellé de produit lisible." });
+      continue;
+    }
+
+    const unitaire = multiple > 1 ? montant / multiple : montant;
+    entries.push({
+      nom: libelle,
+      prix: Math.round(unitaire * 100) / 100,
+      // Un ticket prouve que le produit était disponible ce jour-là.
+      stock: "en_rayon",
+      releveLe: today,
+    });
+  }
+
+  return { entries, ignored };
+}

@@ -71,8 +71,17 @@ cliques pas sur « Copier le relevé ».
 
 1. Installe [Violentmonkey](https://violentmonkey.github.io/) ou Tampermonkey.
 2. Colle le contenu de `public/auchan-collect.user.js` dans un nouveau script.
-3. Va sur auchan.fr, **sélectionne ton magasin**, navigue dans tes rayons.
-4. « Copier le relevé », puis colle-le dans **Réglages → Prix & stock**.
+3. Va sur auchan.fr, **sélectionne ton magasin**, ouvre une page qui contient
+   beaucoup de produits : *Mes commandes*, une liste enregistrée, ou un rayon
+   entier.
+4. Clique sur **« Dérouler la page »** : le script fait défiler la page
+   jusqu'au bout pour que tous ses produits se chargent. Un rayon complet se
+   relève en un clic, sans ouvrir la moindre fiche produit.
+5. « Copier le relevé », puis colle-le dans **Réglages → Prix & stock**.
+
+Le collecteur ne navigue jamais tout seul : il ne suit aucun lien et n'ouvre
+aucune page. « Dérouler la page » fait défiler *la page que tu as ouverte*,
+exactement comme si tu faisais glisser ton doigt.
 
 Il lit en priorité le JSON-LD `schema.org/Product` publié par le site pour les
 moteurs de recherche — format normalisé et stable, qui porte le prix et la
@@ -92,6 +101,18 @@ partielle, et il n'y a **aucune donnée de stock**.
 
 Un prix venu d'Open Prices ne remplace jamais un relevé que tu as fait
 toi-même — il ne comble que les estimations.
+
+### Coller une commande ou un ticket
+
+**Réglages → Prix & stock → Coller une commande ou un ticket.** Le meilleur
+rapport effort/exactitude : copie le détail d'une commande depuis *Mes
+commandes*, colle-le, et l'application en extrait les lignes « produit + prix ».
+Ce sont les prix que tu as réellement payés, pour ce que tu achètes vraiment,
+depuis ton propre compte.
+
+L'analyse écarte d'elle-même les totaux, la TVA, les remises et les moyens de
+paiement, ramène un lot au prix unitaire (« 3 x Yaourt 4,50 € » → 1,50 €), et
+te montre ce qu'elle a compris avant d'appliquer quoi que ce soit.
 
 ### Le mode rayon
 
@@ -152,10 +173,11 @@ se trompe sur un prix ne peut donc pas fausser ton budget.
 npm test
 ```
 
-88 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
+96 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
 la validation des réponses du modèle, le score nutritionnel, l'import CSV,
 l'import d'un relevé magasin, la lecture des réponses Open Prices,
-l'arbitrage entre sources de prix, et le respect du budget de bout en bout.
+l'arbitrage entre sources de prix, la lecture d'un ticket de caisse, et le
+respect du budget de bout en bout.
 
 ## Régénérer le catalogue
 
