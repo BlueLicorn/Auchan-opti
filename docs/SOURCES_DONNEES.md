@@ -192,8 +192,11 @@ copie le détail d'une commande, colle-le dans **Réglages → Prix & stock**.
 Ce sont tes propres données, les prix réellement payés, et rien n'est collecté
 nulle part. C'est le meilleur rapport effort/exactitude qui existe.
 
-**Pour le drive (prix + stock, le plus complet).** Installe Violentmonkey ou
-Tampermonkey, colle `public/auchan-collect.user.js`, va sur auchan.fr,
+**Pour le drive (prix + stock, le plus complet).** Deux façons d'installer le
+collecteur : glisser le bouton « Relever les prix Auchan » depuis les réglages
+dans ta barre de favoris — rien à installer, c'est un simple marque-page —, ou
+coller `public/auchan-collect.user.js` dans Violentmonkey si tu veux qu'il se
+lance tout seul. Ensuite, va sur auchan.fr,
 sélectionne ton magasin, puis ouvre une page à fort rendement — *Mes
 commandes*, une liste enregistrée, ou un rayon entier. Clique sur **« Dérouler
 la page »** : le script fait défiler cette page jusqu'au bout pour que tous ses

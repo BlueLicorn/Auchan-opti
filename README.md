@@ -63,15 +63,21 @@ accéder est **ton propre navigateur**.
 
 ### Le collecteur
 
-`public/auchan-collect.user.js` est un script utilisateur qui s'exécute sur
-les pages Auchan **que tu ouvres toi-même**. Il ne fait aucune requête au
+`public/auchan-collect.user.js` est un script qui s'exécute sur les pages
+Auchan **que tu ouvres toi-même** — soit par un favori (aucune installation),
+soit via une extension de scripts utilisateur. Il ne fait aucune requête au
 site, ne suit aucun lien, ne stocke aucun identifiant : il lit le contenu déjà
 affiché à ton écran et l'accumule localement. Rien n'en sort tant que tu ne
 cliques pas sur « Copier le relevé ».
 
-1. Installe [Violentmonkey](https://violentmonkey.github.io/) ou Tampermonkey.
-2. Colle le contenu de `public/auchan-collect.user.js` dans un nouveau script.
-3. Va sur auchan.fr, **sélectionne ton magasin**, ouvre une page qui contient
+1. Ouvre **Réglages → Prix & stock** et **fais glisser le bouton
+   « Relever les prix Auchan » dans ta barre de favoris**. Rien à installer.
+   *(Sur téléphone : copie le code et colle-le comme adresse d'un favori.
+   Ou, si tu préfères l'automatisme, installe
+   [Violentmonkey](https://violentmonkey.github.io/) et colle
+   `public/auchan-collect.user.js` — le script se lancera alors tout seul.)*
+2. Va sur auchan.fr et clique sur ce favori : un encart apparaît en bas à droite.
+3. **Sélectionne ton magasin**, puis ouvre une page qui contient
    beaucoup de produits : *Mes commandes*, une liste enregistrée, ou un rayon
    entier.
 4. Clique sur **« Dérouler la page »** : le script fait défiler la page
@@ -144,6 +150,7 @@ données — est dans [`docs/SOURCES_DONNEES.md`](docs/SOURCES_DONNEES.md).
 ```
 data/catalog.json          Catalogue embarqué, généré par scripts/build-catalog.mjs
 public/auchan-collect.user.js  Collecteur de prix et de stock, exécuté dans TON navigateur
+scripts/build-bookmarklet.mjs  En dérive la version « favori », sans extension
 lib/types.ts               Modèle de données, dont la provenance de chaque donnée
 app/api/openprices/        Relais vers Open Prices (aucune donnée personnelle)
 lib/catalog/

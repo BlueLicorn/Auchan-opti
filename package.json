@@ -9,7 +9,9 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --import ./tests/register.mjs --test \"tests/*.test.ts\"",
-    "catalog": "node scripts/build-catalog.mjs"
+    "catalog": "node scripts/build-catalog.mjs",
+    "bookmarklet": "node scripts/build-bookmarklet.mjs",
+    "prebuild": "node scripts/build-bookmarklet.mjs"
   },
   "dependencies": {
     "next": "^15.5.25",

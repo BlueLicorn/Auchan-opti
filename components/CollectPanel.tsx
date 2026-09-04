@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Catalog } from "@/lib/types";
 import { coverage, formatPrice, seedCatalog } from "@/lib/catalog";
 import {
@@ -103,39 +103,9 @@ export function CollectPanel({
             ne cliques pas sur « Copier ».
           </Notice>
 
+          <Installation />
+
           <ol className="space-y-3 text-sm">
-            <li className="flex gap-3">
-              <Step n={1} />
-              <span>
-                Installe{" "}
-                <a
-                  className="text-accent underline"
-                  href="https://violentmonkey.github.io/"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  Violentmonkey
-                </a>{" "}
-                ou Tampermonkey dans ton navigateur (extension gratuite qui
-                exécute des scripts utilisateur).
-              </span>
-            </li>
-            <li className="flex gap-3">
-              <Step n={2} />
-              <span>
-                Ouvre le collecteur et colle-le dans un nouveau script.
-                <span className="mt-2 block">
-                  <a
-                    className="inline-block rounded-xl border border-line bg-canvas px-3 py-2 text-sm font-semibold text-accent"
-                    href="/auchan-collect.user.js"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Ouvrir le collecteur
-                  </a>
-                </span>
-              </span>
-            </li>
             <li className="flex gap-3">
               <Step n={3} />
               <span>
@@ -198,6 +168,135 @@ export function CollectPanel({
       <ReceiptImport catalog={catalog} onCatalogChange={onCatalogChange} />
 
       <CommunityPrices catalog={catalog} onCatalogChange={onCatalogChange} />
+    </div>
+  );
+}
+
+/**
+ * Installation du collecteur, par favori ou par extension.
+ *
+ * Le favori est proposé en premier parce qu'il ne demande rien à installer :
+ * l'extension était l'obstacle qui décourageait le plus, et elle n'existe
+ * quasiment pas sur téléphone.
+ */
+function Installation() {
+  const [code, setCode] = useState("");
+  const [copie, setCopie] = useState("");
+  const lien = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    let annule = false;
+    fetch("/auchan-collect.bookmarklet.txt")
+      .then((r) => (r.ok ? r.text() : Promise.reject(new Error("indisponible"))))
+      .then((texte) => {
+        if (!annule) setCode(texte.trim());
+      })
+      .catch(() => {
+        /* le chemin par extension reste proposé ci-dessous */
+      });
+    return () => {
+      annule = true;
+    };
+  }, []);
+
+  // React refuse une URL « javascript: » dans un href : on la pose nous-mêmes
+  // sur l'élément, ce qui est justement le mécanisme d'un favori.
+  useEffect(() => {
+    if (lien.current && code) lien.current.setAttribute("href", code);
+  }, [code]);
+
+  return (
+    <div className="rounded-xl border border-line bg-canvas p-4">
+      <p className="text-sm font-semibold">Installer le collecteur</p>
+
+      <div className="mt-3 space-y-4">
+        <div>
+          <p className="text-sm font-medium">Sur ordinateur — le plus simple</p>
+          <p className="mt-1 text-sm text-muted">
+            Affiche ta barre de favoris ({" "}
+            <kbd className="rounded border border-line px-1">Ctrl</kbd>+
+            <kbd className="rounded border border-line px-1">Maj</kbd>+
+            <kbd className="rounded border border-line px-1">B</kbd>, ou{" "}
+            <kbd className="rounded border border-line px-1">Cmd</kbd>+
+            <kbd className="rounded border border-line px-1">Maj</kbd>+
+            <kbd className="rounded border border-line px-1">B</kbd> sur Mac),
+            puis <strong>fais glisser ce bouton dedans</strong>. Rien à
+            installer.
+          </p>
+          <p className="mt-2">
+            {code ? (
+              <a
+                ref={lien}
+                draggable
+                onClick={(event) => event.preventDefault()}
+                className="inline-block cursor-grab rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white"
+              >
+                📋 Relever les prix Auchan
+              </a>
+            ) : (
+              <span className="text-sm text-muted">Chargement du collecteur…</span>
+            )}
+          </p>
+          <p className="mt-2 text-xs text-muted">
+            Ensuite : va sur auchan.fr, et clique sur ce favori.
+          </p>
+        </div>
+
+        <div>
+          <p className="text-sm font-medium">Sur téléphone</p>
+          <p className="mt-1 text-sm text-muted">
+            Copie le code, crée un favori sur n&apos;importe quelle page, puis
+            modifie-le : remplace son adresse par le code collé et nomme-le
+            « Relever Auchan ». Sur la page Auchan, ouvre la barre d&apos;adresse
+            et tape le nom du favori pour le déclencher.
+          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <Button
+              variant="secondary"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(code);
+                  setCopie("Code copié.");
+                } catch {
+                  setCopie("Copie refusée : sélectionne le code à la main.");
+                }
+                window.setTimeout(() => setCopie(""), 3000);
+              }}
+            >
+              Copier le code du collecteur
+            </Button>
+            {copie && <span className="text-xs text-good">{copie}</span>}
+          </div>
+        </div>
+
+        <details className="text-sm">
+          <summary className="cursor-pointer text-muted">
+            Ou par extension, si tu préfères
+          </summary>
+          <p className="mt-2 text-muted">
+            Installe{" "}
+            <a
+              className="text-accent underline"
+              href="https://violentmonkey.github.io/"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Violentmonkey
+            </a>{" "}
+            ou Tampermonkey, puis colle{" "}
+            <a
+              className="text-accent underline"
+              href="/auchan-collect.user.js"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              le collecteur
+            </a>{" "}
+            dans un nouveau script. Il se lancera alors tout seul sur auchan.fr,
+            sans avoir à cliquer sur un favori.
+          </p>
+        </details>
+      </div>
     </div>
   );
 }
