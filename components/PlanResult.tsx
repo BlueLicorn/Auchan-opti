@@ -2,7 +2,9 @@
 
 import { useMemo, useState } from "react";
 import type { MealPlan, ShoppingLine } from "@/lib/types";
-import { formatPrice, packLabel, quantityLabel } from "@/lib/catalog";
+import {
+  formatPrice, isEstimate, packLabel, provenanceLabel, quantityLabel,
+} from "@/lib/catalog";
 import {
   costPerRecipe, costPerServing, leftoverValue, pantryStockValue,
 } from "@/lib/planner/cost";
@@ -89,6 +91,8 @@ export function PlanResult({
           Par portion : {plan.nutrition.proteinPerServing} g de protéines,{" "}
           {plan.nutrition.fiberPerServing} g de fibres, {plan.nutrition.saltPerServing} g de sel.
         </p>
+
+        <PriceReliability plan={plan} />
 
         {plan.suggestions.length > 0 && (
           <div className="mt-4">
@@ -279,8 +283,12 @@ function ShoppingRow({
             {line.product.name}
           </span>
           <span className="block text-xs text-muted">
+            <StockBadge line={line} />
             {packLabel(line.product)}
-            {line.product.stock === "stock_faible" && " · stock faible"}
+            {" · "}
+            <span className={isEstimate(line.product) ? "italic" : "text-good"}>
+              {provenanceLabel(line.product.priceFrom)}
+            </span>
             {line.leftoverQuantity > 0 &&
               ` · reste ${quantityLabel(line.leftoverQuantity, line.product.unit)}`}
             {line.usedBy.length > 0 && ` · ${line.usedBy.join(", ")}`}
@@ -292,6 +300,69 @@ function ShoppingRow({
         </span>
       </button>
     </li>
+  );
+}
+
+/**
+ * Pastille de disponibilité.
+ *
+ * « Inconnu » n'affiche rien : encombrer chaque ligne d'un badge gris pour
+ * dire qu'on ne sait pas n'informe personne. Seul le constat mérite un signe.
+ */
+function StockBadge({ line }: { line: ShoppingLine }) {
+  const { stock, stockFrom } = line.product;
+  if (stock === "inconnu") return null;
+
+  const style = {
+    en_rayon: { text: "en rayon", className: "bg-good/15 text-good" },
+    stock_faible: { text: "stock faible", className: "bg-warn/20 text-warn" },
+    rupture: { text: "rupture", className: "bg-accent-soft text-accent" },
+  }[stock];
+
+  return (
+    <span
+      className={`mr-1.5 inline-block rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${style.className}`}
+      title={stockFrom ? `Constaté : ${provenanceLabel(stockFrom)}` : undefined}
+    >
+      {style.text}
+    </span>
+  );
+}
+
+/**
+ * Dit franchement sur quoi repose le total.
+ *
+ * Un budget calculé sur des prix estimés reste un ordre de grandeur. Le
+ * masquer derrière un chiffre au centime près serait la pire des sorties :
+ * l'utilisateur découvrirait l'écart en caisse.
+ */
+function PriceReliability({ plan }: { plan: MealPlan }) {
+  const lignes = plan.shoppingList.lines.filter((l) => l.packs > 0);
+  if (lignes.length === 0) return null;
+
+  const reels = lignes.filter((l) => !isEstimate(l.product));
+  const montantReel = reels.reduce((sum, l) => sum + l.cost, 0);
+  const part = Math.round((montantReel / Math.max(0.01, plan.shoppingList.total)) * 100);
+
+  if (part >= 90) {
+    return (
+      <div className="mt-4">
+        <Notice title="Total fiable">
+          {part} % du panier est chiffré sur des prix relevés dans ton magasin.
+        </Notice>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4">
+      <Notice tone="warn" title={part === 0 ? "Total indicatif" : `Total fiable à ${part} %`}>
+        {part === 0
+          ? "Aucun prix de ce panier n'a été relevé dans ton magasin : le total est un ordre de grandeur, pas un montant de caisse."
+          : `${reels.length} produit(s) sur ${lignes.length} portent un prix relevé. Le reste est estimé.`}{" "}
+        Le relevé se fait dans <strong>Réglages → Prix &amp; stock</strong>.
+      </Notice>
+    </div>
   );
 }
 

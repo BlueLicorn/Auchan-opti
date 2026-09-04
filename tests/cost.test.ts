@@ -10,12 +10,16 @@ import type { Product, Recipe } from "@/lib/types";
 const products = new Map<string, Product>([
   ["pates", {
     id: "pates", name: "Penne", rayon: "Épicerie salée", category: "pates",
-    brandTier: "mdd", unit: "g", packSize: 500, price: 1.15, diet: [],
+    brandTier: "mdd", unit: "g", packSize: 500, price: 1.15,
+    priceFrom: { source: "estimation", at: "2026-01-01" },
+    diet: [],
     shelfLifeDays: 400, stock: "en_rayon",
   }],
   ["poulet", {
     id: "poulet", name: "Filets de poulet", rayon: "Volaille", category: "poulet",
-    brandTier: "mdd", unit: "g", packSize: 1000, price: 8.99, diet: [],
+    brandTier: "mdd", unit: "g", packSize: 1000, price: 8.99,
+    priceFrom: { source: "estimation", at: "2026-01-01" },
+    diet: [],
     shelfLifeDays: 3, stock: "en_rayon",
   }],
 ]);
@@ -162,11 +166,15 @@ describe("fond de placard facturé au prorata", () => {
     ["huile", {
       id: "huile", name: "Huile de tournesol", rayon: "Épicerie salée",
       category: "matiere-grasse", brandTier: "mdd", unit: "ml", packSize: 1000,
-      price: 2.49, diet: [], shelfLifeDays: 500, stock: "en_rayon",
+      price: 2.49,
+    priceFrom: { source: "estimation", at: "2026-01-01" },
+    diet: [], shelfLifeDays: 500, stock: "en_rayon",
     }],
     ["pates", {
       id: "pates", name: "Penne", rayon: "Épicerie salée", category: "pates",
-      brandTier: "mdd", unit: "g", packSize: 500, price: 1.15, diet: [],
+      brandTier: "mdd", unit: "g", packSize: 500, price: 1.15,
+    priceFrom: { source: "estimation", at: "2026-01-01" },
+    diet: [],
       shelfLifeDays: 400, stock: "en_rayon",
     }],
   ]);

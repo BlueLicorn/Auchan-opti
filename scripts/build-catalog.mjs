@@ -274,6 +274,8 @@ const RAYONS = {
   ],
 };
 
+const TODAY = new Date().toISOString().slice(0, 10);
+
 const products = [];
 const seenIds = new Set();
 
@@ -301,7 +303,10 @@ for (const [rayon, rows] of Object.entries(RAYONS)) {
       diet: ALL_DIETS.filter((d) => !denied.has(d)),
       nutrition: { kcal, protein, carbs, fat, fiber, salt },
       shelfLifeDays,
-      stock: "en_rayon",
+      // Le catalogue embarqué ne sait rien du stock d'un magasin donné, et
+      // le prix n'en est qu'une estimation : les deux sont marqués comme tels.
+      priceFrom: { source: "estimation", at: TODAY },
+      stock: "inconnu",
       ...(readyToEat ? { readyToEat: true } : {}),
     });
   }

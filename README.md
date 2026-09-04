@@ -49,27 +49,65 @@ Google ; elles ne transitent par aucun serveur de cette application, qui n'a
 d'ailleurs aucune route d'API. C'est la seule architecture où cette promesse
 est vérifiable.
 
-## Les prix
+## Les prix réels et le stock de ton magasin
 
-Le catalogue embarqué (220 produits, tous rayons) contient des **relevés
-indicatifs**, pas les prix en direct de ton magasin — Auchan ne publie pas
-d'API de prix.
+Auchan ne publie ni API de prix ni API de stock. La seule source qui contient
+les deux est le site Drive, ton magasin sélectionné — et le moyen légitime d'y
+accéder est **ton propre navigateur**.
 
-Pour un chiffrage exact, importe les tiens : **Réglages → Télécharger le
-modèle**, tu le remplis, **Importer mes prix**. Tu peux aussi corriger un prix
-ou signaler une rupture à l'unité depuis la recherche produit, ce qui est
-conservé pour toutes tes listes suivantes.
+### Le collecteur
 
-Le raisonnement complet — y compris pourquoi je n'ai pas écrit de scraper
-furtif, et comment les comparateurs obtiennent réellement leurs données — est
-dans [`docs/SOURCES_DONNEES.md`](docs/SOURCES_DONNEES.md).
+`public/auchan-collect.user.js` est un script utilisateur qui s'exécute sur
+les pages Auchan **que tu ouvres toi-même**. Il ne fait aucune requête au
+site, ne suit aucun lien, ne stocke aucun identifiant : il lit le contenu déjà
+affiché à ton écran et l'accumule localement. Rien n'en sort tant que tu ne
+cliques pas sur « Copier le relevé ».
+
+1. Installe [Violentmonkey](https://violentmonkey.github.io/) ou Tampermonkey.
+2. Colle le contenu de `public/auchan-collect.user.js` dans un nouveau script.
+3. Va sur auchan.fr, **sélectionne ton magasin**, navigue dans tes rayons.
+4. « Copier le relevé », puis colle-le dans **Réglages → Prix & stock**.
+
+Il lit en priorité le JSON-LD `schema.org/Product` publié par le site pour les
+moteurs de recherche — format normalisé et stable, qui porte le prix et la
+disponibilité. Deux stratégies de repli suivent, et l'encart affiche toujours
+celle qui a servi.
+
+### Le mode rayon
+
+Pour le magasin physique, **Réglages → Mode rayon** relève un prix devant
+l'étiquette : recherche par nom ou scan du code-barres (quand le navigateur
+sait le faire), saisie, validation. Deux boutons signalent une rupture ou un
+stock faible en un geste.
+
+### Chaque prix dit d'où il vient
+
+Tout prix et tout stock porte sa source et sa date. La liste de courses
+affiche `prix estimé` ou `relevé sur auchan.fr il y a 2 j` sur chaque ligne, et
+le plan annonce en tête quel pourcentage du panier repose sur des prix réels.
+Le total ne se présente jamais comme exact quand il ne l'est pas.
+
+**Le stock vaut « inconnu » par défaut, pas « en rayon »** : le catalogue
+embarqué ne sait rien de ton magasin, et prétendre le contraire serait
+inventer une information. Un produit relevé en rupture est exclu de la
+planification.
+
+En cas de conflit entre deux sources, la plus récente gagne.
+
+Le raisonnement complet — pourquoi pas de robot furtif, en quoi le collecteur
+navigateur en diffère, et comment les comparateurs obtiennent réellement leurs
+données — est dans [`docs/SOURCES_DONNEES.md`](docs/SOURCES_DONNEES.md).
 
 ## Architecture
 
 ```
 data/catalog.json          Catalogue embarqué, généré par scripts/build-catalog.mjs
-lib/types.ts               Modèle de données
-lib/catalog/               Chargement, filtrage, substitutions, import/export CSV
+public/auchan-collect.user.js  Collecteur de prix et de stock, exécuté dans TON navigateur
+lib/types.ts               Modèle de données, dont la provenance de chaque donnée
+lib/catalog/
+  index.ts                 Chargement, filtrage, substitutions, fiabilité
+  sources.ts               Import/export CSV
+  collect.ts               Import du relevé navigateur
 lib/planner/
   cost.ts                  Chiffrage au conditionnement — le cœur du budget
   scoring.ts               Bilan nutritionnel et score d'équilibre
@@ -92,8 +130,9 @@ se trompe sur un prix ne peut donc pas fausser ton budget.
 npm test
 ```
 
-47 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
-la validation des réponses du modèle, le score nutritionnel et l'import CSV.
+60 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
+la validation des réponses du modèle, le score nutritionnel, l'import CSV,
+l'import d'un relevé magasin et l'arbitrage entre sources de prix.
 
 ## Régénérer le catalogue
 
@@ -105,10 +144,14 @@ La source lisible est dans le script ; le JSON est un artefact.
 
 ## Limites connues
 
-- **Les prix embarqués sont indicatifs.** Vérifie-les en rayon, ou importe les
-  tiens.
-- **Le stock n'est pas connu en temps réel.** Aucune source publique ne
-  l'expose. Tu peux marquer manuellement les ruptures que tu constates.
+- **Les prix embarqués sont des estimations**, et l'application le dit sur
+  chaque ligne. Ils ne deviennent exacts qu'une fois relevés.
+- **Le stock n'est connu que de ce que tu as relevé.** Il n'existe aucun flux
+  temps réel : le collecteur capture la disponibilité affichée au moment où tu
+  consultes la page, le mode rayon ce que tu constates devant le linéaire.
+- **Le collecteur dépend de la structure des pages Auchan.** Il essaie trois
+  stratégies et annonce laquelle a fonctionné ; si le site change en
+  profondeur, les sélecteurs devront être ajustés.
 - **Le planificateur hors-ligne n'épuise pas le budget** : il minimise le coût.
   Quand il reste plus de 12 % du budget, l'application le dit et propose des
   compléments.

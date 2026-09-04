@@ -4,15 +4,28 @@ Tu as demandé « du scraping Auchan avec un moyen qui ne se ferait pas détecte
 ou trouver un autre moyen — comment font les comparateurs ? ». Ce document
 répond aux deux moitiés de la question.
 
-## Ce que je n'ai pas fait, et pourquoi
+## La distinction qui compte : robot furtif ≠ ton propre navigateur
 
-Je n'ai pas implémenté de collecte conçue pour échapper à la détection :
-rotation de proxies résidentiels, falsification d'empreinte navigateur,
-résolution de CAPTCHA, cadence calquée sur un humain.
+Il n'y a pas de collecte conçue pour échapper à la détection : pas de rotation
+de proxies résidentiels, pas de falsification d'empreinte navigateur, pas de
+résolution de CAPTCHA, pas de cadence calquée sur un humain.
 
-Ce n'est pas une objection de principe au scraping. C'est que la partie
-« indétectable » est précisément celle qui fait basculer une collecte de
-données publiques vers quelque chose que tu ne veux pas porter :
+Il y a en revanche un **collecteur qui s'exécute dans ton navigateur**
+(`public/auchan-collect.user.js`), et c'est une chose entièrement différente.
+Il ne fait aucune requête au site : il lit le contenu des pages que **tu**
+ouvres, dans **ta** session, à **ta** vitesse. Aucun trafic supplémentaire
+n'est généré, aucun identifiant n'est stocké, aucune protection n'est
+contournée — techniquement, la seule chose qui se passe est que le texte
+affiché à l'écran est aussi lu par un script au lieu de l'être uniquement par
+tes yeux.
+
+C'est le mode de fonctionnement des extensions de suivi de prix. C'est ce qui
+donne le prix exact de ton magasin **et** sa disponibilité, les deux seules
+données qu'aucune source publique ne contient.
+
+Ce qui reste écarté, c'est le robot autonome qui parcourt le site sans toi. La
+partie « indétectable » est précisément celle qui fait basculer une collecte
+vers quelque chose que tu ne veux pas porter :
 
 - **Les CGU d'Auchan interdisent l'extraction automatisée.** S'en affranchir
   t'expose à la fermeture de ton compte client — celui-là même qui te sert à
@@ -27,9 +40,9 @@ données publiques vers quelque chose que tu ne veux pas porter :
   maintenance permanente, et il casse toujours au pire moment — le jour où tu
   fais tes courses.
 
-Le résultat concret : tu aurais une application fragile, illégitime, et qui
-tombe en panne sans prévenir. C'est un mauvais échange contre les quelques
-euros de précision que ça apporte.
+Le résultat concret : une application fragile, illégitime, qui tombe en panne
+sans prévenir. Le collecteur navigateur obtient la même donnée sans aucun de
+ces inconvénients, parce qu'il ne prétend jamais être autre chose que toi.
 
 ## Comment font vraiment les comparateurs
 
@@ -94,14 +107,44 @@ disponible pour un usage personnel.
 
 ## Ce que fait cette application
 
-L'architecture sépare la source de données du moteur, via l'interface
-`CatalogSource` (`lib/catalog/sources.ts`). Trois sources sont branchées :
+L'architecture sépare la source de données du moteur. Quatre sources sont
+branchées :
 
 | Source | Produits | Prix | Stock | Nutrition | Statut |
 |---|---|---|---|---|---|
-| Catalogue embarqué | oui | indicatifs | non | oui | actif par défaut |
+| Catalogue embarqué | oui | estimés | **inconnu** | oui | repli par défaut |
+| **Collecteur navigateur** | oui | **exacts** | **exact** | héritée | actif |
+| Mode rayon (étiquette) | — | **exacts** | **exact** | — | actif |
 | Import CSV | oui | **exacts** | oui | héritée | actif |
-| Corrections en magasin | — | **exacts** | oui | — | actif |
+
+### Chaque donnée porte sa provenance
+
+C'est le point qui rend le reste utilisable. Tout prix et tout statut de stock
+transporte sa source et sa date (`Provenance` dans `lib/types.ts`) :
+
+- `estimation` — le relevé indicatif embarqué. Bon ordre de grandeur, pas un
+  montant de caisse.
+- `collecte` — lu sur auchan.fr, dans ton navigateur, pour ton magasin.
+- `saisie` — relevé par toi en rayon, devant l'étiquette.
+- `import` — venu de ton fichier CSV.
+
+L'interface affiche cette provenance sur **chaque ligne** de la liste de
+courses, et le plan annonce en tête le pourcentage du panier chiffré sur des
+prix réels. Un total calculé à 100 % sur des estimations le dit ; il ne se
+présente pas comme un montant exact.
+
+En cas de conflit, **la donnée la plus récente gagne** : une correction saisie
+il y a trois semaines n'écrase pas un prix relevé ce matin.
+
+### Le stock par défaut est « inconnu », pas « en rayon »
+
+Le catalogue embarqué ne sait rien de la disponibilité d'un magasin donné.
+Afficher « en rayon » par défaut serait inventer une information. Tant que
+rien n'a été constaté, le stock est `inconnu` et aucune pastille n'est
+affichée — seul un constat réel mérite un signe à l'écran.
+
+Un produit marqué en rupture est exclu de la planification : aucune recette ne
+sera bâtie dessus.
 
 **Le catalogue embarqué** (`data/catalog.json`, 220 produits) est un relevé
 indicatif couvrant tous les rayons. Il permet à l'application de fonctionner
@@ -117,7 +160,26 @@ fiche nutritionnelle est conservée.
 une rupture depuis l'écran de réglages, sans repasser par un fichier. Elles
 sont conservées et s'appliquent à toutes les listes suivantes.
 
-## Si tu veux quand même automatiser la collecte
+## Comment relever, en pratique
+
+**Pour le drive (prix + stock, le plus complet).** Installe Violentmonkey ou
+Tampermonkey, colle `public/auchan-collect.user.js`, va sur auchan.fr,
+sélectionne ton magasin, puis navigue dans les rayons qui t'intéressent. Un
+encart compte les produits relevés. Clique sur « Copier le relevé » et
+colle-le dans **Réglages → Prix & stock**.
+
+Le collecteur lit d'abord le JSON-LD (`schema.org/Product`) que le site publie
+pour les moteurs de recherche : c'est la source la plus stable, normalisée, et
+elle contient `offers.price` et `offers.availability`. À défaut il lit l'état
+applicatif de la page, puis en dernier recours le texte affiché — chaque
+stratégie est annoncée dans l'encart, pour que tu saches ce qui a servi.
+
+**Pour le magasin physique.** Le mode rayon (Réglages → Mode rayon) sert à
+corriger un prix devant l'étiquette : recherche par nom ou scan du code-barres
+quand le navigateur le sait faire, saisie du prix, validation. Deux boutons
+permettent de signaler une rupture ou un stock faible en un geste.
+
+## Si tu veux quand même un robot autonome
 
 Une position défendable existe, et elle n'a rien à voir avec la furtivité :
 
@@ -132,11 +194,10 @@ Une position défendable existe, et elle n'a rien à voir avec la furtivité :
 5. **Arrête-toi au premier signe de refus** : 403, 429, page de challenge.
    C'est une réponse, pas un obstacle à franchir.
 
-Un tel collecteur se brancherait comme une `CatalogSource` supplémentaire sans
-toucher au moteur. Je ne le fournis pas : il resterait contraire aux CGU, et
-je ne veux pas te vendre comme sûr quelque chose qui ne l'est pas.
+Un tel robot se brancherait sans toucher au moteur. Je ne le fournis pas : il
+resterait contraire aux CGU, et je ne veux pas te vendre comme sûr quelque
+chose qui ne l'est pas.
 
-Le chemin que je te recommande reste l'import CSV. Vingt minutes une fois pour
-tes cinquante produits habituels, et le chiffrage devient exact — plus exact
-que n'importe quel scraper, parce qu'il porte sur ton magasin et pas sur une
-moyenne nationale.
+Il n'apporterait d'ailleurs rien de plus. Le collecteur navigateur donne
+exactement la même donnée — prix de ton magasin et disponibilité — sans risque
+pour ton compte et sans maintenance à chaque refonte du site.

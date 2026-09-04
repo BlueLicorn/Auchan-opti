@@ -1,4 +1,4 @@
-import type { Catalog, Product, Rayon } from "@/lib/types";
+import type { Catalog, Product, Provenance, Rayon } from "@/lib/types";
 import { RAYONS } from "@/lib/types";
 import { normalize, seedCatalog } from "@/lib/catalog";
 
@@ -66,6 +66,8 @@ export interface CsvImportResult {
  * ne le comptera pas dans le score d'équilibre.
  */
 export function importCsv(text: string, base: Catalog = seedCatalog): CsvImportResult {
+  const today = new Date().toISOString().slice(0, 10);
+  const provenance: Provenance = { source: "import", at: today };
   const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0);
   const rejected: CsvImportResult["rejected"] = [];
 
@@ -123,8 +125,12 @@ export function importCsv(text: string, base: Catalog = seedCatalog): CsvImportR
     if (existingId) {
       const product = byId.get(existingId)!;
       product.price = price;
+      product.priceFrom = provenance;
       const stock = idx.stock >= 0 ? parseStock(cells[idx.stock]) : undefined;
-      if (stock) product.stock = stock;
+      if (stock) {
+        product.stock = stock;
+        product.stockFrom = provenance;
+      }
       const packSize = idx.packSize >= 0 ? Number(cells[idx.packSize]?.replace(",", ".")) : NaN;
       if (Number.isFinite(packSize) && packSize > 0) product.packSize = packSize;
       updated++;
@@ -142,11 +148,15 @@ export function importCsv(text: string, base: Catalog = seedCatalog): CsvImportR
       unit,
       packSize: Number.isFinite(packSize) && packSize > 0 ? packSize : 1,
       price,
+      priceFrom: provenance,
       // Sans information, on n'exclut le produit d'aucun régime : c'est à
       // l'utilisateur de compléter, et l'interface le signale.
       diet: [],
       shelfLifeDays: 30,
-      stock: (idx.stock >= 0 ? parseStock(cells[idx.stock]) : undefined) ?? "en_rayon",
+      stock: (idx.stock >= 0 ? parseStock(cells[idx.stock]) : undefined) ?? "inconnu",
+      ...(idx.stock >= 0 && parseStock(cells[idx.stock])
+        ? { stockFrom: provenance }
+        : {}),
       ...(idx.ean >= 0 && cells[idx.ean]?.trim() ? { ean: cells[idx.ean].trim() } : {}),
     };
     byId.set(product.id, product);
@@ -210,7 +220,7 @@ function parsePrice(raw: string | undefined): number | undefined {
 
 function parseStock(raw: string | undefined): Product["stock"] | undefined {
   const value = normalize(raw ?? "");
-  if (!value) return undefined;
+  if (!value || value === "inconnu") return undefined;
   if (/rupture|indispo|0/.test(value)) return "rupture";
   if (/faible|limite|bas/.test(value)) return "stock_faible";
   return "en_rayon";

@@ -1,6 +1,6 @@
 import rawCatalog from "@/data/catalog.json";
 import type {
-  Catalog, DietTag, Product, Rayon, Unit,
+  Catalog, DietTag, Product, Provenance, Rayon, Unit,
 } from "@/lib/types";
 import { RAYONS } from "@/lib/types";
 
@@ -208,6 +208,8 @@ export interface StoreOverride {
   productId: string;
   price?: number;
   stock?: Product["stock"];
+  /** Date de la correction, ISO court. Conservée pour dater la provenance. */
+  at?: string;
 }
 
 export function applyOverrides(catalog: Catalog, overrides: StoreOverride[]): Catalog {
@@ -219,11 +221,96 @@ export function applyOverrides(catalog: Catalog, overrides: StoreOverride[]): Ca
     products: catalog.products.map((product) => {
       const override = byId.get(product.id);
       if (!override) return product;
+
+      // Une correction saisie à la main est un relevé : elle porte sa date,
+      // sinon l'interface ne saurait pas la distinguer d'une estimation.
+      const provenance: Provenance = {
+        source: "saisie",
+        at: override.at ?? new Date().toISOString().slice(0, 10),
+      };
+
+      // La donnée la plus récente gagne. Sans cette règle, une correction
+      // saisie il y a trois semaines écraserait le prix relevé ce matin.
+      const priceWins = override.price !== undefined
+        && !isOlder(provenance, product.priceFrom);
+      const stockWins = override.stock !== undefined
+        && !isOlder(provenance, product.stockFrom);
+
       return {
         ...product,
-        ...(override.price !== undefined ? { price: override.price } : {}),
-        ...(override.stock !== undefined ? { stock: override.stock } : {}),
+        ...(priceWins ? { price: override.price, priceFrom: provenance } : {}),
+        ...(stockWins ? { stock: override.stock, stockFrom: provenance } : {}),
       };
     }),
   };
+}
+
+/** Vrai si `candidate` est antérieur à `existing`. Une absence ne prime jamais. */
+function isOlder(candidate: Provenance, existing: Provenance | undefined): boolean {
+  if (!existing || existing.source === "estimation") return false;
+  return Date.parse(candidate.at) < Date.parse(existing.at);
+}
+
+// ---------------------------------------------------------------------------
+// Fiabilité des données affichées
+// ---------------------------------------------------------------------------
+
+/** Un prix relevé n'est fiable qu'un temps : les prix bougent. */
+export const PRICE_FRESH_DAYS = 30;
+
+export function isEstimate(product: Product): boolean {
+  return product.priceFrom.source === "estimation";
+}
+
+/** Jours écoulés depuis un relevé, ou undefined si la date est illisible. */
+export function daysSince(provenance: Provenance | undefined): number | undefined {
+  if (!provenance) return undefined;
+  const then = Date.parse(provenance.at);
+  if (Number.isNaN(then)) return undefined;
+  return Math.max(0, Math.round((Date.now() - then) / 86_400_000));
+}
+
+/** Libellé court de la provenance, pour l'afficher à côté d'un prix. */
+export function provenanceLabel(provenance: Provenance | undefined): string {
+  if (!provenance) return "inconnu";
+  const age = daysSince(provenance);
+  const quand = age === undefined ? ""
+    : age === 0 ? " aujourd'hui"
+    : age === 1 ? " hier"
+    : ` il y a ${age} j`;
+
+  switch (provenance.source) {
+    case "estimation": return "prix estimé";
+    case "collecte": return `relevé sur auchan.fr${quand}`;
+    case "import": return `importé${quand}`;
+    case "saisie": return `saisi${quand}`;
+  }
+}
+
+export interface CatalogCoverage {
+  /** Produits dont le prix vient d'un relevé réel, et non d'une estimation. */
+  realPrices: number;
+  /** Produits dont la disponibilité a été constatée. */
+  knownStock: number;
+  total: number;
+  /** Relevés de prix datant de plus de PRICE_FRESH_DAYS jours. */
+  stale: number;
+}
+
+/** Ce que l'application sait réellement, pour pouvoir le dire à l'utilisateur. */
+export function coverage(products: Product[]): CatalogCoverage {
+  let realPrices = 0;
+  let knownStock = 0;
+  let stale = 0;
+
+  for (const product of products) {
+    if (!isEstimate(product)) {
+      realPrices++;
+      const age = daysSince(product.priceFrom);
+      if (age !== undefined && age > PRICE_FRESH_DAYS) stale++;
+    }
+    if (product.stock !== "inconnu") knownStock++;
+  }
+
+  return { realPrices, knownStock, stale, total: products.length };
 }

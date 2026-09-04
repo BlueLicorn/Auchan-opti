@@ -3,11 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import type { Catalog, Product } from "@/lib/types";
 import type { StoreOverride } from "@/lib/catalog";
-import { formatPrice, normalize, packLabel, seedCatalog } from "@/lib/catalog";
+import {
+  formatPrice, normalize, packLabel, provenanceLabel, seedCatalog,
+} from "@/lib/catalog";
 import { CSV_TEMPLATE, exportCsv, importCsv, type CsvImportResult } from "@/lib/catalog/sources";
 import { FALLBACK_MODELS, GeminiError, listModels, type GeminiModel } from "@/lib/ai/gemini";
 import { download } from "@/lib/export";
 import { Button, Card, Field, Notice, TextInput } from "@/components/ui";
+import { CollectPanel } from "@/components/CollectPanel";
+import { ShelfMode } from "@/components/ShelfMode";
 
 export function SettingsPanel({
   apiKey, onApiKeyChange, model, onModelChange,
@@ -25,22 +29,67 @@ export function SettingsPanel({
   assumeStaples: boolean;
   onAssumeStaplesChange: (value: boolean) => void;
 }) {
+  // Les réglages couvrent trois sujets distincts ; les empiler ferait une page
+  // interminable où le relevé de prix — le plus utile — serait tout en bas.
+  const [tab, setTab] = useState<"prix" | "rayon" | "ia">("prix");
+
+  const tabs = [
+    { id: "prix", label: "Prix & stock" },
+    { id: "rayon", label: "Mode rayon" },
+    { id: "ia", label: "IA & catalogue" },
+  ] as const;
+
   return (
     <div className="space-y-5">
-      <GeminiSettings
-        apiKey={apiKey}
-        onApiKeyChange={onApiKeyChange}
-        model={model}
-        onModelChange={onModelChange}
-      />
-      <CatalogSettings
-        catalog={catalog}
-        onCatalogChange={onCatalogChange}
-        overrides={overrides}
-        onOverridesChange={onOverridesChange}
-        assumeStaples={assumeStaples}
-        onAssumeStaplesChange={onAssumeStaplesChange}
-      />
+      <div className="flex gap-2 rounded-2xl border border-line bg-surface p-1.5">
+        {tabs.map((entry) => (
+          <button
+            key={entry.id}
+            type="button"
+            onClick={() => setTab(entry.id)}
+            aria-pressed={tab === entry.id}
+            className={`flex-1 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${
+              tab === entry.id ? "bg-accent text-white" : "text-muted hover:text-ink"
+            }`}
+          >
+            {entry.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === "prix" && (
+        <CollectPanel
+          catalog={catalog}
+          onCatalogChange={(next) => onCatalogChange(next)}
+        />
+      )}
+
+      {tab === "rayon" && (
+        <ShelfMode
+          products={catalog.products}
+          overrides={overrides}
+          onOverridesChange={onOverridesChange}
+        />
+      )}
+
+      {tab === "ia" && (
+        <>
+          <GeminiSettings
+            apiKey={apiKey}
+            onApiKeyChange={onApiKeyChange}
+            model={model}
+            onModelChange={onModelChange}
+          />
+          <CatalogSettings
+            catalog={catalog}
+            onCatalogChange={onCatalogChange}
+            overrides={overrides}
+            onOverridesChange={onOverridesChange}
+            assumeStaples={assumeStaples}
+            onAssumeStaplesChange={onAssumeStaplesChange}
+          />
+        </>
+      )}
     </div>
   );
 }
@@ -283,8 +332,8 @@ function CatalogSettings({
                     <span className="min-w-0 flex-1">
                       <span className="block text-sm font-medium">{product.name}</span>
                       <span className="block text-xs text-muted">
-                        {product.rayon} · {packLabel(product)} · catalogue{" "}
-                        {formatPrice(product.price)}
+                        {product.rayon} · {packLabel(product)} ·{" "}
+                        {formatPrice(product.price)} · {provenanceLabel(product.priceFrom)}
                       </span>
                     </span>
 
@@ -316,6 +365,7 @@ function CatalogSettings({
                         })
                       }
                     >
+                      <option value="inconnu">Stock inconnu</option>
                       <option value="en_rayon">En rayon</option>
                       <option value="stock_faible">Stock faible</option>
                       <option value="rupture">Rupture</option>

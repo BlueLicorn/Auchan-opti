@@ -1,6 +1,6 @@
 "use client";
 
-import type { MealPlan, PlanRequest } from "@/lib/types";
+import type { Catalog, MealPlan, PlanRequest } from "@/lib/types";
 import type { StoreOverride } from "@/lib/catalog";
 
 /**
@@ -20,6 +20,7 @@ export const KEYS = {
   plan: `${PREFIX}plan`,
   overrides: `${PREFIX}store-overrides`,
   checked: `${PREFIX}checked`,
+  catalog: `${PREFIX}catalog`,
   staples: `${PREFIX}assume-staples`,
 } as const;
 
@@ -76,4 +77,19 @@ export function loadOverrides(): StoreOverride[] {
 
 export function loadPlan(): MealPlan | null {
   return read<MealPlan | null>(KEYS.plan, null);
+}
+
+/**
+ * Catalogue personnalisé (import CSV ou relevé en magasin).
+ *
+ * Il représente un vrai travail de l'utilisateur — parfois une heure de
+ * relevé — et doit survivre à un rechargement de page. On vérifie sa forme
+ * avant de le rendre : un stockage corrompu ne doit pas casser l'application.
+ */
+export function loadCatalog(): Catalog | null {
+  const stored = read<Catalog | null>(KEYS.catalog, null);
+  if (!stored || !Array.isArray(stored.products) || stored.products.length === 0) {
+    return null;
+  }
+  return stored;
 }

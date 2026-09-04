@@ -68,8 +68,40 @@ export interface Nutrition {
   salt: number;
 }
 
-/** Disponibilité en rayon, éditable par l'utilisateur pour SON magasin. */
-export type StockStatus = "en_rayon" | "stock_faible" | "rupture";
+/**
+ * Disponibilité en rayon.
+ *
+ * « inconnu » est l'état par défaut et ce n'est pas un détail : le catalogue
+ * embarqué ne sait rien du stock d'un magasin donné. Afficher « en rayon »
+ * sans l'avoir constaté serait une information inventée.
+ */
+export type StockStatus = "inconnu" | "en_rayon" | "stock_faible" | "rupture";
+
+/**
+ * D'où vient une donnée de prix ou de stock.
+ *
+ * Distinguer un relevé d'une estimation est la différence entre une liste
+ * qu'on peut opposer à la caisse et une liste approximative. L'interface
+ * affiche cette provenance partout où le chiffre est montré.
+ */
+export type DataSource =
+  /** Relevé indicatif livré avec l'application. Plausible, pas exact. */
+  | "estimation"
+  /** Importé depuis un fichier CSV fourni par l'utilisateur. */
+  | "import"
+  /** Relevé sur le site Auchan par le collecteur, dans le navigateur. */
+  | "collecte"
+  /** Saisi à la main, en rayon ou depuis les réglages. */
+  | "saisie";
+
+/** Une donnée datée et sourcée, pour que l'interface sache quoi en dire. */
+export interface Provenance {
+  source: DataSource;
+  /** Date du relevé, ISO 8601 court (AAAA-MM-JJ). */
+  at: string;
+  /** Magasin concerné, quand la source le précise. */
+  store?: string;
+}
 
 /**
  * Un produit tel qu'il est vendu : un conditionnement, un prix, un rayon.
@@ -90,14 +122,18 @@ export interface Product {
   packSize: number;
   /** Prix du conditionnement, en euros TTC. */
   price: number;
+  /** Origine et date du prix ci-dessus. */
+  priceFrom: Provenance;
   /** Étiquettes de régime satisfaites par le produit. */
   diet: DietTag[];
   /** Valeurs pour 100 g / 100 ml. Absent pour les produits non alimentaires. */
   nutrition?: Nutrition;
   /** Durée de conservation après achat, en jours. Sert à éviter le gâchis. */
   shelfLifeDays: number;
-  /** Statut par défaut ; surchargeable par magasin via les préférences. */
+  /** Disponibilité constatée, « inconnu » tant que rien ne l'a été. */
   stock: StockStatus;
+  /** Origine et date du statut ci-dessus. Absent tant que le stock est inconnu. */
+  stockFrom?: Provenance;
   /** Rend le produit consommable tel quel (sert au mode dépannage). */
   readyToEat?: boolean;
   /** Code-barres, quand il est connu, pour l'enrichissement Open Food Facts. */

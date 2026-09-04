@@ -27,7 +27,11 @@
         "salt": 0
       },
       "shelfLifeDays": 12,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-banane",
@@ -56,7 +60,11 @@
         "salt": 0
       },
       "shelfLifeDays": 7,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-orange",
@@ -85,7 +93,11 @@
         "salt": 0
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-clementine",
@@ -114,7 +126,11 @@
         "salt": 0
       },
       "shelfLifeDays": 10,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-poire",
@@ -143,7 +159,11 @@
         "salt": 0
       },
       "shelfLifeDays": 10,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-kiwi",
@@ -172,7 +192,11 @@
         "salt": 0
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-citron",
@@ -201,7 +225,11 @@
         "salt": 0
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-citron-vert",
@@ -230,7 +258,11 @@
         "salt": 0
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-fraise",
@@ -259,7 +291,11 @@
         "salt": 0
       },
       "shelfLifeDays": 4,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-raisin",
@@ -288,7 +324,11 @@
         "salt": 0
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-ananas",
@@ -317,7 +357,11 @@
         "salt": 0
       },
       "shelfLifeDays": 7,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-avocat",
@@ -346,7 +390,11 @@
         "salt": 0
       },
       "shelfLifeDays": 6,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-pdt",
@@ -375,7 +423,11 @@
         "salt": 0
       },
       "shelfLifeDays": 30,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-patate-douce",
@@ -404,7 +456,11 @@
         "salt": 0.06
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-carotte",
@@ -433,7 +489,11 @@
         "salt": 0.07
       },
       "shelfLifeDays": 18,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-oignon",
@@ -462,7 +522,11 @@
         "salt": 0
       },
       "shelfLifeDays": 90,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-echalote",
@@ -491,7 +555,11 @@
         "salt": 0
       },
       "shelfLifeDays": 90,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-ail",
@@ -520,7 +588,11 @@
         "salt": 0
       },
       "shelfLifeDays": 120,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-gingembre",
@@ -549,7 +621,11 @@
         "salt": 0
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-courgette",
@@ -578,7 +654,11 @@
         "salt": 0
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-aubergine",
@@ -607,7 +687,11 @@
         "salt": 0
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-poivron",
@@ -636,7 +720,11 @@
         "salt": 0
       },
       "shelfLifeDays": 10,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-tomate",
@@ -665,7 +753,11 @@
         "salt": 0
       },
       "shelfLifeDays": 7,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-tomate-cerise",
@@ -694,7 +786,11 @@
         "salt": 0
       },
       "shelfLifeDays": 7,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -724,7 +820,11 @@
         "salt": 0
       },
       "shelfLifeDays": 7,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -754,7 +854,11 @@
         "salt": 0
       },
       "shelfLifeDays": 5,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -784,7 +888,11 @@
         "salt": 0.08
       },
       "shelfLifeDays": 5,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -814,7 +922,11 @@
         "salt": 0.03
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-chou-fleur",
@@ -843,7 +955,11 @@
         "salt": 0.03
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-haricot-vert",
@@ -872,7 +988,11 @@
         "salt": 0
       },
       "shelfLifeDays": 6,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-champignon",
@@ -901,7 +1021,11 @@
         "salt": 0
       },
       "shelfLifeDays": 6,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-poireau",
@@ -930,7 +1054,11 @@
         "salt": 0
       },
       "shelfLifeDays": 10,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-celeri",
@@ -959,7 +1087,11 @@
         "salt": 0.08
       },
       "shelfLifeDays": 10,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -989,7 +1121,11 @@
         "salt": 0
       },
       "shelfLifeDays": 30,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-betterave",
@@ -1018,7 +1154,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 12,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -1048,7 +1188,11 @@
         "salt": 0.04
       },
       "shelfLifeDays": 6,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -1078,7 +1222,11 @@
         "salt": 0
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -1108,7 +1256,11 @@
         "salt": 0.06
       },
       "shelfLifeDays": 5,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-basilic",
@@ -1137,7 +1289,11 @@
         "salt": 0
       },
       "shelfLifeDays": 10,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "fl-coriandre",
@@ -1166,7 +1322,11 @@
         "salt": 0
       },
       "shelfLifeDays": 5,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-hache-5",
@@ -1193,7 +1353,11 @@
         "salt": 0.15
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-hache-15",
@@ -1220,7 +1384,11 @@
         "salt": 0.15
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-bourguignon",
@@ -1247,7 +1415,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-entrecote",
@@ -1274,7 +1446,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-roti-boeuf",
@@ -1301,7 +1477,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-cote-porc",
@@ -1326,7 +1506,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-echine",
@@ -1351,7 +1535,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-roti-porc",
@@ -1376,7 +1564,11 @@
         "salt": 0.12
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-jarret",
@@ -1401,7 +1593,11 @@
         "salt": 1.4
       },
       "shelfLifeDays": 4,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-lardon",
@@ -1426,7 +1622,11 @@
         "salt": 2.2
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-toulouse",
@@ -1451,7 +1651,11 @@
         "salt": 1.5
       },
       "shelfLifeDays": 4,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-merguez",
@@ -1478,7 +1682,11 @@
         "salt": 1.7
       },
       "shelfLifeDays": 4,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-agneau",
@@ -1505,7 +1713,11 @@
         "salt": 0.15
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bo-veau",
@@ -1532,7 +1744,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "vo-filet-poulet",
@@ -1559,7 +1775,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "vo-aiguillette",
@@ -1586,7 +1806,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "vo-cuisse-poulet",
@@ -1613,7 +1837,11 @@
         "salt": 0.12
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "vo-poulet-entier",
@@ -1640,7 +1868,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 4,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "vo-escalope-dinde",
@@ -1667,7 +1899,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "vo-magret",
@@ -1694,7 +1930,11 @@
         "salt": 0.15
       },
       "shelfLifeDays": 4,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "po-saumon",
@@ -1721,7 +1961,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 2,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "po-cabillaud",
@@ -1748,7 +1992,11 @@
         "salt": 0.2
       },
       "shelfLifeDays": 2,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "po-lieu",
@@ -1775,7 +2023,11 @@
         "salt": 0.25
       },
       "shelfLifeDays": 2,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "po-truite",
@@ -1802,7 +2054,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 2,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "po-crevette",
@@ -1829,7 +2085,11 @@
         "salt": 1.5
       },
       "shelfLifeDays": 2,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "po-moule",
@@ -1856,7 +2116,11 @@
         "salt": 0.6
       },
       "shelfLifeDays": 2,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "po-saumon-fume",
@@ -1883,7 +2147,11 @@
         "salt": 3
       },
       "shelfLifeDays": 7,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -1911,7 +2179,11 @@
         "salt": 0.15
       },
       "shelfLifeDays": 2,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "ch-jambon",
@@ -1936,7 +2208,11 @@
         "salt": 2
       },
       "shelfLifeDays": 6,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -1964,7 +2240,11 @@
         "salt": 2
       },
       "shelfLifeDays": 6,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -1990,7 +2270,11 @@
         "salt": 3.5
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2016,7 +2300,11 @@
         "salt": 4.5
       },
       "shelfLifeDays": 30,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2042,7 +2330,11 @@
         "salt": 3.8
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2068,7 +2360,11 @@
         "salt": 2.8
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "ch-rillettes",
@@ -2093,7 +2389,11 @@
         "salt": 1.6
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2119,7 +2419,11 @@
         "salt": 1.8
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2147,7 +2451,11 @@
         "salt": 0.9
       },
       "shelfLifeDays": 2,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2175,7 +2483,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 90,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-lait-entier",
@@ -2202,7 +2514,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 90,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-creme-epaisse",
@@ -2229,7 +2545,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-creme-liquide",
@@ -2256,7 +2576,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 60,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-beurre",
@@ -2283,7 +2607,11 @@
         "salt": 0.02
       },
       "shelfLifeDays": 45,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-beurre-sale",
@@ -2310,7 +2638,11 @@
         "salt": 1.7
       },
       "shelfLifeDays": 45,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-oeuf",
@@ -2338,7 +2670,11 @@
         "salt": 0.35
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-oeuf-bio",
@@ -2366,7 +2702,11 @@
         "salt": 0.35
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-emmental",
@@ -2393,7 +2733,11 @@
         "salt": 1
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-comte",
@@ -2420,7 +2764,11 @@
         "salt": 0.8
       },
       "shelfLifeDays": 30,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-mozzarella",
@@ -2447,7 +2795,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2475,7 +2827,11 @@
         "salt": 1.6
       },
       "shelfLifeDays": 60,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-chevre",
@@ -2502,7 +2858,11 @@
         "salt": 1.4
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2530,7 +2890,11 @@
         "salt": 1.6
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2558,7 +2922,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2586,7 +2954,11 @@
         "salt": 1.5
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-boursin",
@@ -2613,7 +2985,11 @@
         "salt": 1.4
       },
       "shelfLifeDays": 30,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2641,7 +3017,11 @@
         "salt": 0.3
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2669,7 +3049,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2697,7 +3081,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2725,7 +3113,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2753,7 +3145,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2781,7 +3177,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 21,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -2808,7 +3208,11 @@
         "salt": 1
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-pate-brisee",
@@ -2834,7 +3238,11 @@
         "salt": 1.1
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-pate-pizza",
@@ -2862,7 +3270,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "cr-tofu",
@@ -2891,7 +3303,11 @@
         "salt": 0.02
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-baguette",
@@ -2919,7 +3335,11 @@
         "salt": 1.3
       },
       "shelfLifeDays": 1,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-campagne",
@@ -2947,7 +3367,11 @@
         "salt": 1.3
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-mie-complet",
@@ -2975,7 +3399,11 @@
         "salt": 1
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-cereales",
@@ -3003,7 +3431,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 4,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-buns",
@@ -3031,7 +3463,11 @@
         "salt": 1
       },
       "shelfLifeDays": 8,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-wrap",
@@ -3059,7 +3495,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 20,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-pita",
@@ -3087,7 +3527,11 @@
         "salt": 1.1
       },
       "shelfLifeDays": 10,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-croissant",
@@ -3113,7 +3557,11 @@
         "salt": 0.9
       },
       "shelfLifeDays": 3,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bl-biscotte",
@@ -3141,7 +3589,11 @@
         "salt": 1.5
       },
       "shelfLifeDays": 90,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-penne",
@@ -3169,7 +3621,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-spaghetti",
@@ -3197,7 +3653,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-coquillette",
@@ -3225,7 +3685,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-tagliatelle",
@@ -3251,7 +3715,11 @@
         "salt": 0.5
       },
       "shelfLifeDays": 20,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-lasagne",
@@ -3279,7 +3747,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-riz-long",
@@ -3308,7 +3780,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-basmati",
@@ -3337,7 +3813,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-arborio",
@@ -3366,7 +3846,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-quinoa",
@@ -3395,7 +3879,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-boulgour",
@@ -3423,7 +3911,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-semoule",
@@ -3451,7 +3943,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-lentille",
@@ -3480,7 +3976,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-pois-chiche-sec",
@@ -3509,7 +4009,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-pois-chiche",
@@ -3538,7 +4042,11 @@
         "salt": 0.4
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3568,7 +4076,11 @@
         "salt": 0.4
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3598,7 +4110,11 @@
         "salt": 0.4
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3628,7 +4144,11 @@
         "salt": 0.5
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3658,7 +4178,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-tomate-concassee",
@@ -3687,7 +4211,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-passata",
@@ -3716,7 +4244,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-concentre",
@@ -3745,7 +4277,11 @@
         "salt": 0.2
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-mais",
@@ -3774,7 +4310,11 @@
         "salt": 0.4
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3804,7 +4344,11 @@
         "salt": 0.5
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3834,7 +4378,11 @@
         "salt": 0.7
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3864,7 +4412,11 @@
         "salt": 2.5
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3894,7 +4446,11 @@
         "salt": 2
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3922,7 +4478,11 @@
         "salt": 0.9
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3950,7 +4510,11 @@
         "salt": 1.1
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -3980,7 +4544,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-huile-tournesol",
@@ -4009,7 +4577,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-balsamique",
@@ -4038,7 +4610,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-vinaigre-vin",
@@ -4067,7 +4643,11 @@
         "salt": 0
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-moutarde",
@@ -4096,7 +4676,11 @@
         "salt": 6
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4126,7 +4710,11 @@
         "salt": 2
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4155,7 +4743,11 @@
         "salt": 1.3
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4184,7 +4776,11 @@
         "salt": 16
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4214,7 +4810,11 @@
         "salt": 0.03
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-curry-pate",
@@ -4243,7 +4843,11 @@
         "salt": 6
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4273,7 +4877,11 @@
         "salt": 4
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4302,7 +4910,11 @@
         "salt": 0.5
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4332,7 +4944,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-paprika",
@@ -4361,7 +4977,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-cumin",
@@ -4390,7 +5010,11 @@
         "salt": 0.4
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-herbes",
@@ -4419,7 +5043,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-sel",
@@ -4448,7 +5076,11 @@
         "salt": 100
       },
       "shelfLifeDays": 900,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-poivre",
@@ -4477,7 +5109,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-bouillon",
@@ -4504,7 +5140,11 @@
         "salt": 45
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-bouillon-legume",
@@ -4533,7 +5173,11 @@
         "salt": 44
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-farine",
@@ -4561,7 +5205,11 @@
         "salt": 0
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-levure",
@@ -4590,7 +5238,11 @@
         "salt": 25
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-chapelure",
@@ -4618,7 +5270,11 @@
         "salt": 1.3
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-nouille",
@@ -4646,7 +5302,11 @@
         "salt": 0.5
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "es-galette-riz",
@@ -4675,7 +5335,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4705,7 +5369,11 @@
         "salt": 0
       },
       "shelfLifeDays": 900,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "su-sucre-vanille",
@@ -4734,7 +5402,11 @@
         "salt": 0
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "su-miel",
@@ -4762,7 +5434,11 @@
         "salt": 0
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4792,7 +5468,11 @@
         "salt": 0.02
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4820,7 +5500,11 @@
         "salt": 0.2
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4850,7 +5534,11 @@
         "salt": 0.05
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "su-tartinade",
@@ -4876,7 +5564,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4906,7 +5598,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4936,7 +5632,11 @@
         "salt": 0
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4963,7 +5663,11 @@
         "salt": 0.6
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -4991,7 +5695,11 @@
         "salt": 0.05
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5020,7 +5728,11 @@
         "salt": 0
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "su-amande",
@@ -5048,7 +5760,11 @@
         "salt": 0.01
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5077,7 +5793,11 @@
         "salt": 0.6
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5107,7 +5827,11 @@
         "salt": 0.05
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5137,7 +5861,11 @@
         "salt": 0.02
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5167,7 +5895,11 @@
         "salt": 0.1
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-haricot",
@@ -5196,7 +5928,11 @@
         "salt": 0.01
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-poelee",
@@ -5225,7 +5961,11 @@
         "salt": 0.3
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-petit-pois",
@@ -5254,7 +5994,11 @@
         "salt": 0.01
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-ratatouille",
@@ -5283,7 +6027,11 @@
         "salt": 0.5
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-frite",
@@ -5312,7 +6060,11 @@
         "salt": 0.3
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-potatoes",
@@ -5340,7 +6092,11 @@
         "salt": 0.7
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-colin",
@@ -5367,7 +6123,11 @@
         "salt": 0.3
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-crevette-crue",
@@ -5394,7 +6154,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-saumon-portion",
@@ -5421,7 +6185,11 @@
         "salt": 0.2
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-nugget",
@@ -5447,7 +6215,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-cordon-bleu",
@@ -5472,7 +6244,11 @@
         "salt": 1.4
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-pizza",
@@ -5498,7 +6274,11 @@
         "salt": 1.3
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-lasagne",
@@ -5523,7 +6303,11 @@
         "salt": 0.7
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-glace",
@@ -5550,7 +6334,11 @@
         "salt": 0.15
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5580,7 +6368,11 @@
         "salt": 0
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "sg-pain-ail",
@@ -5606,7 +6398,11 @@
         "salt": 1.3
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bs-eau",
@@ -5635,7 +6431,11 @@
         "salt": 0
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5665,7 +6465,11 @@
         "salt": 0.02
       },
       "shelfLifeDays": 700,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5695,7 +6499,11 @@
         "salt": 0
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5725,7 +6533,11 @@
         "salt": 0
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5755,7 +6567,11 @@
         "salt": 0
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5785,7 +6601,11 @@
         "salt": 0
       },
       "shelfLifeDays": 300,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5814,7 +6634,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5843,7 +6667,11 @@
         "salt": 0
       },
       "shelfLifeDays": 900,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5872,7 +6700,11 @@
         "salt": 0
       },
       "shelfLifeDays": 900,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5902,7 +6734,11 @@
         "salt": 0
       },
       "shelfLifeDays": 400,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bs-the",
@@ -5931,7 +6767,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon"
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu"
     },
     {
       "id": "bs-sirop",
@@ -5960,7 +6800,11 @@
         "salt": 0
       },
       "shelfLifeDays": 500,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -5990,7 +6834,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 150,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -6020,7 +6868,11 @@
         "salt": 1.6
       },
       "shelfLifeDays": 150,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -6049,7 +6901,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -6079,7 +6935,11 @@
         "salt": 1.1
       },
       "shelfLifeDays": 150,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -6109,7 +6969,11 @@
         "salt": 1.2
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -6139,7 +7003,11 @@
         "salt": 1.1
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -6167,7 +7035,11 @@
         "salt": 1
       },
       "shelfLifeDays": 14,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -6197,7 +7069,11 @@
         "salt": 1.4
       },
       "shelfLifeDays": 200,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     },
     {
@@ -6226,7 +7102,11 @@
         "salt": 2.2
       },
       "shelfLifeDays": 150,
-      "stock": "en_rayon",
+      "priceFrom": {
+        "source": "estimation",
+        "at": "2026-09-04"
+      },
+      "stock": "inconnu",
       "readyToEat": true
     }
   ],

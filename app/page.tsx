@@ -5,7 +5,8 @@ import type { Catalog, MealPlan, PlanRequest } from "@/lib/types";
 import { applyOverrides, seedCatalog, type StoreOverride } from "@/lib/catalog";
 import { generatePlan } from "@/lib/planner";
 import {
-  DEFAULT_REQUEST, KEYS, loadOverrides, loadPlan, loadRequest, read, remove, write,
+  DEFAULT_REQUEST, KEYS, loadCatalog, loadOverrides, loadPlan, loadRequest,
+  read, remove, write,
 } from "@/lib/storage";
 import { PlanForm } from "@/components/PlanForm";
 import { PlanResult } from "@/components/PlanResult";
@@ -40,6 +41,7 @@ export default function Home() {
     setOverrides(loadOverrides());
     setAssumeStaples(read(KEYS.staples, true));
     setChecked(read<string[]>(KEYS.checked, []));
+    setImportedCatalog(loadCatalog());
 
     const saved = loadPlan();
     if (saved) {
@@ -55,6 +57,11 @@ export default function Home() {
   useEffect(() => { if (ready) write(KEYS.overrides, overrides); }, [ready, overrides]);
   useEffect(() => { if (ready) write(KEYS.staples, assumeStaples); }, [ready, assumeStaples]);
   useEffect(() => { if (ready) write(KEYS.checked, checked); }, [ready, checked]);
+  useEffect(() => {
+    if (!ready) return;
+    if (importedCatalog) write(KEYS.catalog, importedCatalog);
+    else remove(KEYS.catalog);
+  }, [ready, importedCatalog]);
 
   /** Le catalogue effectif : la source choisie, corrigée des relevés magasin. */
   const catalog = useMemo(
