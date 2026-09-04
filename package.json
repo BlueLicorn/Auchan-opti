@@ -23,5 +23,9 @@
     "@types/react-dom": "^19.1.7",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2"
+  },
+  "overrides": {
+    "sharp": "^0.35.0",
+    "postcss": "^8.5.28"
   }
 }
