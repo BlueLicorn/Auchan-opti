@@ -65,6 +65,7 @@ export const DEFAULT_REQUEST: PlanRequest = {
   exclusions: [],
   maxPrepMinutes: 60,
   pantry: [],
+  verifiedOnly: false,
 };
 
 export function loadRequest(): PlanRequest {

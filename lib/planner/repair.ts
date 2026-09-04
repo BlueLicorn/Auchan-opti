@@ -1,6 +1,7 @@
 import type { DietTag, Product, Recipe, ShoppingList } from "@/lib/types";
 import {
-  comparablePrice, formatPrice, substitutesFor, unitPrice,
+  averagePieceWeight, comparablePrice, formatPrice, gramsToProductQuantity,
+  quantityLabel, substitutesFor, unitPrice,
 } from "@/lib/catalog";
 import { buildShoppingList, type CostOptions } from "@/lib/planner/cost";
 
@@ -56,7 +57,16 @@ const PROTEINES_ANIMALES = new Set([
   "poisson-surgele", "conserve-poisson",
 ]);
 
-const PROTEINES_ABORDABLES = ["legumineuse", "oeuf", "vegetal", "graine"];
+/**
+ * Ce qui peut réellement tenir la place d'une viande.
+ *
+ * « graine » en faisait partie : la semoule est le moins cher au kilo de tout
+ * le catalogue, elle gagnait donc à chaque fois, et un filet de lieu se
+ * retrouvait remplacé par de la semoule au nom de la protéine. C'est un
+ * féculent. Il est sorti de la liste, et les candidats restants sont classés
+ * au prix du gramme de protéine, pas au prix du kilo.
+ */
+const PROTEINES_ABORDABLES = ["legumineuse", "oeuf", "vegetal"];
 
 export function fitToBudget(input: RepairInput): RepairResult {
   const { productsById, pool, budget, diet, costOptions } = input;
@@ -152,7 +162,7 @@ export function fitToBudget(input: RepairInput): RepairResult {
     if (list.total <= budget) break;
     if (!PROTEINES_ANIMALES.has(line.product.category)) continue;
 
-    const remplacant = cheapestIn(PROTEINES_ABORDABLES, pool, diet);
+    const remplacant = cheapestProtein(PROTEINES_ABORDABLES, pool, diet);
     if (!remplacant || comparablePrice(remplacant) >= comparablePrice(line.product)) continue;
 
     const candidate = recipes.map((recipe) => swapProduct(recipe, line.product, remplacant));
@@ -213,14 +223,37 @@ function cheapestIn(
   pool: Product[],
   requiredDiet: DietTag[],
 ): Product | undefined {
-  return pool
-    .filter(
-      (p) =>
-        categories.includes(p.category) &&
-        p.stock !== "rupture" &&
-        requiredDiet.every((tag) => p.diet.includes(tag)),
-    )
+  return candidats(categories, pool, requiredDiet)
     .sort((a, b) => comparablePrice(a) - comparablePrice(b))[0];
+}
+
+/**
+ * Le moins cher au gramme de protéine — la seule comparaison qui a du sens
+ * quand il s'agit de remplacer une viande. Au prix du kilo, un produit peu
+ * protéiné gagne toujours, et le repas perd ce qu'il était censé garder.
+ */
+function cheapestProtein(
+  categories: string[],
+  pool: Product[],
+  requiredDiet: DietTag[],
+): Product | undefined {
+  const coutParGrammeDeProteine = (p: Product) => {
+    const proteine = p.nutrition?.protein ?? 0;
+    return proteine > 0 ? comparablePrice(p) / (proteine * 10) : Number.POSITIVE_INFINITY;
+  };
+
+  return candidats(categories, pool, requiredDiet)
+    .filter((p) => Number.isFinite(coutParGrammeDeProteine(p)))
+    .sort((a, b) => coutParGrammeDeProteine(a) - coutParGrammeDeProteine(b))[0];
+}
+
+function candidats(categories: string[], pool: Product[], requiredDiet: DietTag[]): Product[] {
+  return pool.filter(
+    (p) =>
+      categories.includes(p.category) &&
+      p.stock !== "rupture" &&
+      requiredDiet.every((tag) => p.diet.includes(tag)),
+  );
 }
 
 /** Remplace un produit par un autre dans une recette, en convertissant la quantité. */
@@ -229,17 +262,42 @@ function swapProduct(recipe: Recipe, from: Product, to: Product): Recipe {
 
   return {
     ...recipe,
+    // Le titre et les étapes ne sont pas réécrits : substituer le nom donnait
+    // « lentilles vertes poêlé » et « poêler le lentilles vertes ». On note la
+    // substitution sur la recette, et l'écran l'affiche — le lecteur voit donc
+    // que le titre parle d'un poisson qui n'est plus dans sa liste, au lieu de
+    // le découvrir en rayon.
+    substitutions: [...(recipe.substitutions ?? []), { from: from.name, to: to.name }],
     ingredients: recipe.ingredients.map((ing) => {
       if (ing.productId !== from.id) return ing;
+      const quantity = roundQuantity(convertQuantity(ing.quantity, from, to), to);
       return {
         ...ing,
         productId: to.id,
-        quantity: roundQuantity(ing.quantity, to),
-        label: ing.label.replace(from.name, to.name),
+        quantity,
+        // Libellé reconstruit plutôt que rapiécé : `label.replace(from.name…)`
+        // était sensible à la casse et au pluriel, et laissait donc souvent
+        // l'ancien nom en place — avec l'ancienne quantité, dans la mauvaise
+        // unité.
+        label: `${quantityLabel(quantity, to.unit)} de ${to.name.toLowerCase()}`,
       };
     }),
   };
 }
+
+/**
+ * Convertit une quantité d'un produit vers un autre en passant par les grammes.
+ *
+ * Sans cela, remplacer 300 g de carottes par des concombres — vendus à la
+ * pièce, même catégorie — donnait 300 concombres.
+ */
+function convertQuantity(quantity: number, from: Product, to: Product): number {
+  if (from.unit === to.unit) return quantity;
+  const grammes = from.unit === "piece" ? quantity * averagePieceWeight(from) : quantity;
+  return gramsToProductQuantity(grammes, to);
+}
+
+
 
 /** Arrondit une quantité à un pas réaliste : pas de « 137,4 g de crème ». */
 function roundQuantity(quantity: number, product: Product): number {

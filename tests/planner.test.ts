@@ -5,6 +5,7 @@ import { filterCatalog, seedCatalog, indexById } from "@/lib/catalog";
 import { buildShoppingList } from "@/lib/planner/cost";
 import { fitToBudget, suggestExtras } from "@/lib/planner/repair";
 import { planOffline } from "@/lib/planner/offline";
+import { generatePlan } from "@/lib/planner";
 import { balanceScore, summarize } from "@/lib/planner/scoring";
 import { leftoverValue } from "@/lib/planner/cost";
 import { validatePlan } from "@/lib/planner/validate";
@@ -612,5 +613,130 @@ describe("élision devant une voyelle", () => {
         );
       }
     }
+  });
+});
+
+/**
+ * Signalé sur un plan réel : « 30 × Concombre — 35,70 € » pour une seule
+ * recette, soit la moitié du panier, et des recettes dont le titre annonçait
+ * un poisson que la liste ne contenait plus.
+ */
+describe("la réparation ne fabrique pas d'absurdités", () => {
+  const pool = filterCatalog(seedCatalog.products, {});
+  const byId = indexById(seedCatalog);
+
+  const brut = (productId: string, quantity: number) => ({
+    recipes: [{
+      title: "Wrap au thon et crudités",
+      description: "x", servings: 1, prepMinutes: 10, cookMinutes: 0,
+      skill: 1, equipment: [], indulgence: 30,
+      steps: ["Garnir le pain."], tips: [],
+      ingredients: [
+        { productId, quantity, label: "x" },
+        { productId: "es-thon", quantity: 80, label: "80 g de thon" },
+        { productId: "bl-pita", quantity: 1, label: "1 pain pita" },
+      ],
+    }],
+  });
+
+  it("lit des grammes quand le nombre est impossible en pièces", () => {
+    // « 150 g de salade » arrivait dans un champ qui compte des pièces, et le
+    // plafond le ramenait à 30 — un nombre de salades parfaitement recevable.
+    const request = { ...baseRequest, servingsPerMeal: 1 } as PlanRequest;
+    const v = validatePlan(brut("fl-salade", 150) as never, pool, request);
+    const salade = v.recipes[0]!.ingredients.find((i) => i.productId === "fl-salade");
+    assert.equal(salade?.quantity, 1, "150 g de salade font une salade, pas trente");
+  });
+
+  it("laisse passer un nombre de pièces plausible", () => {
+    const request = { ...baseRequest, servingsPerMeal: 4 } as PlanRequest;
+    const v = validatePlan(brut("cr-oeuf", 8) as never, pool, request);
+    assert.equal(v.recipes[0]!.ingredients.find((i) => i.productId === "cr-oeuf")?.quantity, 8);
+  });
+
+  it("borne les grammes à la portion, pas à la recette", () => {
+    const request = { ...baseRequest, servingsPerMeal: 1 } as PlanRequest;
+    const v = validatePlan(brut("fl-carotte", 4000) as never, pool, request);
+    const carotte = v.recipes[0]!.ingredients.find((i) => i.productId === "fl-carotte");
+    assert.ok((carotte?.quantity ?? 0) <= 900, `${carotte?.quantity} g de carottes pour une portion`);
+  });
+
+  it("convertit l'unité quand le substitut ne se vend pas comme l'original", () => {
+    // Carottes au poids remplacées par un concombre à la pièce : sans
+    // conversion, 300 g devenaient 300 concombres.
+    const recipe = {
+      id: "r1", title: "Salade", description: "", servings: 2,
+      prepMinutes: 5, cookMinutes: 0, skill: 1 as const, equipment: [],
+      ingredients: [{ productId: "fl-carotte", quantity: 300, label: "300 g de carottes" }],
+      steps: [], tips: [], diet: [], indulgence: 20,
+    };
+    const carotte = byId.get("fl-carotte")!;
+    const concombre = byId.get("fl-concombre")!;
+    const swapped = fitToBudget({
+      recipes: [recipe], productsById: byId, pool: [carotte, concombre],
+      budget: 0.01, diet: [], costOptions: {},
+    });
+    const ligne = swapped.recipes[0]!.ingredients[0]!;
+    const produit = byId.get(ligne.productId)!;
+    if (produit.unit === "piece") {
+      assert.ok(ligne.quantity <= 3, `${ligne.quantity} concombres pour 300 g de carottes`);
+    }
+  });
+
+  it("remet le titre et les étapes d'accord avec ce qu'on achète", () => {
+    const recipe = {
+      id: "r1", title: "Filet de lieu poêlé et haricots verts",
+      description: "", servings: 2, prepMinutes: 5, cookMinutes: 10,
+      skill: 1 as const, equipment: [],
+      ingredients: [{ productId: "po-lieu", quantity: 200, label: "200 g de filets de lieu noir" }],
+      steps: ["Poêler le filet de lieu noir 4 minutes par face."],
+      tips: [], diet: [], indulgence: 30,
+    };
+    const lieu = byId.get("po-lieu")!;
+    const substitut = pool.find((p) => p.category === lieu.category && p.id !== lieu.id)!;
+
+    const r = fitToBudget({
+      recipes: [recipe], productsById: byId, pool: [lieu, substitut],
+      budget: 0.01, diet: [], costOptions: {},
+    });
+
+    const retenu = byId.get(r.recipes[0]!.ingredients[0]!.productId)!;
+    if (retenu.id === lieu.id) return; // pas de substitution possible : rien à vérifier
+
+    const texte = `${r.recipes[0]!.title} ${r.recipes[0]!.steps.join(" ")}`.toLowerCase();
+    assert.ok(
+      !texte.includes("lieu noir"),
+      `« ${r.recipes[0]!.title} » parle encore d'un poisson qui n'est plus dans la liste`,
+    );
+  });
+});
+
+describe("n'utiliser que des prix relevés", () => {
+  const releve = { source: "collecte" as const, at: "2026-09-01", store: "Auchan Corte" };
+
+  it("écarte les produits dont le prix n'est qu'une estimation", () => {
+    const products = seedCatalog.products.map((p, i) =>
+      i % 10 === 0 ? { ...p, priceFrom: releve } : p,
+    );
+    const filtre = filterCatalog(products, { verifiedPriceOnly: true });
+    assert.equal(filtre.length, products.filter((p) => p.priceFrom.source === "collecte").length);
+    assert.ok(filtre.every((p) => p.priceFrom.source !== "estimation"));
+  });
+
+  it("ne change rien quand l'option est absente", () => {
+    assert.equal(filterCatalog(seedCatalog.products, {}).length, seedCatalog.products.length);
+  });
+
+  it("explique le vrai blocage plutôt que d'accuser les régimes", async () => {
+    // Sur le catalogue embarqué, tous les prix sont estimés : exiger des
+    // relevés vide le panier. Le message doit nommer la bonne cause.
+    await assert.rejects(
+      () => generatePlan({
+        request: { ...baseRequest, verifiedOnly: true },
+        catalog: seedCatalog,
+        assumeStaples: true,
+      }),
+      /prix relevé/,
+    );
   });
 });

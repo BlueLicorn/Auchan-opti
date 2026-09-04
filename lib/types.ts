@@ -208,6 +208,12 @@ export interface PlanRequest {
   maxPrepMinutes: number;
   /** Produits déjà présents dans les placards, à ne pas racheter. */
   pantry: PantryItem[];
+  /**
+   * N'employer que des produits dont le prix vient d'un relevé, jamais d'une
+   * estimation. Le plan est alors plus court en choix, mais son total est un
+   * vrai total.
+   */
+  verifiedOnly?: boolean;
 }
 
 export interface PantryItem {
@@ -231,6 +237,12 @@ export interface RecipeIngredient {
   optional?: boolean;
 }
 
+/** Un produit remplacé par un autre pour tenir le budget. */
+export interface Substitution {
+  from: string;
+  to: string;
+}
+
 export interface Recipe {
   id: string;
   title: string;
@@ -249,6 +261,14 @@ export interface Recipe {
   diet: DietTag[];
   /** Classement sur l'axe équilibre / plaisir, 0 → 100. */
   indulgence: IndulgenceLevel;
+  /**
+   * Produits remplacés par la réparation budgétaire.
+   *
+   * Le titre et les étapes restent ceux du modèle : les réécrire donnait
+   * « lentilles vertes poêlé » et « poêler le lentilles vertes ». On dit donc
+   * ce qui a changé, au lieu de mentir ou d'écorcher la langue.
+   */
+  substitutions?: Substitution[];
 }
 
 /** Une ligne de la liste de courses : un produit, un nombre de paquets. */

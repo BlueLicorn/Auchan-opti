@@ -52,9 +52,23 @@ export async function generatePlan(options: PlanOptions): Promise<MealPlan> {
     diet: request.diet,
     exclusions: request.exclusions,
     excludeOutOfStock: true,
+    verifiedPriceOnly: request.verifiedOnly,
   });
 
   if (pool.length < 20) {
+    // Le cas le plus probable quand on n'exige que des prix relevés : le relevé
+    // ne couvre encore qu'une poignée de produits. Le dire précisément vaut
+    // mieux que renvoyer l'utilisateur vers ses régimes, qui n'y sont pour rien.
+    if (request.verifiedOnly) {
+      const releves = filterCatalog(catalog.products, {
+        excludeOutOfStock: true, verifiedPriceOnly: true,
+      }).length;
+      throw new Error(
+        `Seulement ${releves} produit(s) du catalogue portent un prix relevé, et ${pool.length}`
+        + ` après tes régimes et exclusions : trop peu pour composer des repas. Relève d'autres`
+        + ` rayons dans Réglages → Prix & stock, ou décoche « uniquement des prix relevés ».`,
+      );
+    }
     throw new Error(
       "Trop peu de produits disponibles après filtrage. Assouplis les régimes ou les exclusions.",
     );
@@ -138,6 +152,7 @@ export async function generatePlan(options: PlanOptions): Promise<MealPlan> {
     request, pool, productsById, costOptions, warnings,
     engine: "gemini",
     model: gemini.model,
+    seed,
   });
 }
 
@@ -315,7 +330,20 @@ interface FinalizeInput {
   warnings: string[];
   engine: "gemini" | "offline";
   model?: string;
+  /**
+   * Plan de secours chiffré au plus juste, quand le plan du modèle ne peut pas
+   * être ramené près du budget. Absent pour le plan hors-ligne lui-même : il
+   * est déjà ce recours.
+   */
+  seed?: number;
 }
+
+/**
+ * Au-delà de ce rapport entre le plan servi et le budget demandé, on préfère
+ * le planificateur local s'il fait nettement mieux. En deçà, le plan du modèle
+ * reste meilleur : plus varié, mieux écrit, et le dépassement est annoncé.
+ */
+const DEPASSEMENT_INACCEPTABLE = 1.6;
 
 /** Réparation budgétaire, chiffrage définitif et bilan nutritionnel. */
 function finalize(input: FinalizeInput): MealPlan {
@@ -335,28 +363,70 @@ function finalize(input: FinalizeInput): MealPlan {
     costOptions,
   });
 
-  if (!repaired.withinBudget) {
-    warnings.push(...explainOverBudget(request, repaired.shoppingList.total, pool, productsById));
+  let retenu = repaired;
+  let engine = input.engine;
+
+  // Le plan du modèle peut être irréparable : ses recettes sont ce qu'elles
+  // sont, et les substitutions ne remplacent un produit que par un autre de sa
+  // catégorie. On servait alors un plan à 4,54 € la portion pour 1,00 €
+  // demandé, tout en annonçant dans le même écran qu'environ 1,81 € était
+  // atteignable — le planificateur local savait donc faire trois fois mieux,
+  // et on ne le lui demandait pas.
+  if (
+    input.engine === "gemini"
+    && !repaired.withinBudget
+    && repaired.shoppingList.total > request.budget * DEPASSEMENT_INACCEPTABLE
+  ) {
+    const secours = fitToBudget({
+      recipes: planOffline(request, pool, input.seed ?? 0),
+      productsById, pool,
+      budget: request.budget,
+      diet: request.diet,
+      costOptions,
+    });
+
+    if (secours.recipes.length > 0 && secours.shoppingList.total < repaired.shoppingList.total * 0.9) {
+      warnings.push(
+        `Les recettes du modèle revenaient à ${formatPrice(repaired.shoppingList.total)},`
+        + ` soit ${formatPrice(repaired.shoppingList.total / servingsDe(request))} par portion,`
+        + ` sans qu'aucune substitution ne les rapproche des ${formatPrice(request.budget)} demandés.`
+        + ` Repli sur le planificateur local, moins varié mais nettement moins cher.`,
+      );
+      retenu = secours;
+      engine = "offline";
+    }
+  }
+
+  if (!retenu.withinBudget) {
+    warnings.push(...explainOverBudget(request, retenu.shoppingList.total, pool, productsById));
   }
 
   // Budget nettement sous-employé : on propose de quoi le compléter plutôt
   // que de laisser croire que le plan a coûté tout ce qui était prévu.
-  const remaining = request.budget - repaired.shoppingList.total;
+  const remaining = request.budget - retenu.shoppingList.total;
   const suggestions = remaining >= Math.max(5, request.budget * 0.12)
-    ? suggestExtras(remaining, pool, new Set(repaired.shoppingList.lines.map((l) => l.product.id)))
+    ? suggestExtras(remaining, pool, new Set(retenu.shoppingList.lines.map((l) => l.product.id)))
     : [];
 
   return {
-    recipes: repaired.recipes,
-    shoppingList: repaired.shoppingList,
+    recipes: retenu.recipes,
+    shoppingList: retenu.shoppingList,
     suggestions,
-    nutrition: summarize(repaired.recipes, productsById, request.indulgence),
+    nutrition: summarize(retenu.recipes, productsById, request.indulgence),
     request,
     warnings,
     provenance: {
-      engine: input.engine,
-      ...(input.model ? { model: input.model } : {}),
-      repairs: repaired.repairs,
+      engine,
+      // Le modèle n'est nommé que s'il a bien écrit le plan servi : après un
+      // repli, l'afficher attribuerait au modèle des recettes qui ne sont pas
+      // les siennes.
+      ...(input.model && engine === "gemini" ? { model: input.model } : {}),
+      repairs: retenu.repairs,
     },
   };
+}
+
+/** Portions du plan, jamais nulle : sert de dénominateur aux prix affichés. */
+function servingsDe(request: PlanRequest): number {
+  return Math.max(1, request.meals * request.servingsPerMeal);
 }

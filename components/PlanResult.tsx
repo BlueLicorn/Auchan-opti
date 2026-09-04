@@ -397,6 +397,17 @@ function RecipeListView({
             </p>
           </div>
 
+          {recipe.substitutions && recipe.substitutions.length > 0 && (
+            <p className="mt-3 rounded-lg border border-line bg-canvas px-3 py-2 text-xs text-muted">
+              <strong className="text-fg">Adapté au budget.</strong> Le titre et les
+              étapes sont ceux d&apos;origine ;{" "}
+              {recipe.substitutions
+                .map((s) => `${s.from.toLowerCase()} est remplacé par ${s.to.toLowerCase()}`)
+                .join(", ")}
+              .
+            </p>
+          )}
+
           <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
             <div>
               <h4 className="mb-2 text-sm font-bold uppercase tracking-wide">Ingrédients</h4>

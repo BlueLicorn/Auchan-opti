@@ -47,6 +47,7 @@ export type BudgetMode = "total" | "parRepas";
 
 export function PlanForm({
   request, onChange, onSubmit, busy, progress, budgetMode, onBudgetModeChange,
+  releves, total,
 }: {
   request: PlanRequest;
   onChange: (next: PlanRequest) => void;
@@ -55,6 +56,9 @@ export function PlanForm({
   progress?: string;
   budgetMode: BudgetMode;
   onBudgetModeChange: (mode: BudgetMode) => void;
+  /** Produits du catalogue dont le prix vient d'un relevé, et taille totale. */
+  releves: number;
+  total: number;
 }) {
   const set = <K extends keyof PlanRequest>(key: K, value: PlanRequest[K]) =>
     onChange({ ...request, [key]: value });
@@ -286,6 +290,32 @@ export function PlanForm({
               }
             />
           </Field>
+
+          <Field
+            label="Prix"
+            hint={
+              releves > 0
+                ? `${releves} produit(s) du catalogue portent un prix relevé sur ${total}.`
+                : "Aucun prix relevé pour l'instant : relève un rayon dans Réglages → Prix & stock."
+            }
+          >
+            <SegmentGroup<"tout" | "releves">
+              value={request.verifiedOnly ? "releves" : "tout"}
+              onChange={(value) => set("verifiedOnly", value === "releves")}
+              options={[
+                { value: "tout", label: "Tout le catalogue", hint: "prix estimés inclus" },
+                { value: "releves", label: "Prix relevés", hint: "vérifiés sur auchan.fr" },
+              ]}
+            />
+          </Field>
+
+          {request.verifiedOnly && releves < 40 && (
+            <p className="text-sm text-warn">
+              {releves} produit(s) relevés, c&apos;est peu pour composer des repas
+              variés — et certains repas risquent de ne pas passer. Relève d&apos;autres
+              rayons, ou repasse sur tout le catalogue.
+            </p>
+          )}
         </div>
       </Card>
 

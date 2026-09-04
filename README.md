@@ -42,6 +42,20 @@ dans ton navigateur.
 - **Les régimes et allergies ne se négocient pas.** Une recette qui contient
   un ingrédient exclu est rejetée entièrement, jamais rafistolée en retirant
   discrètement la ligne.
+- **Option « prix relevés uniquement ».** Le catalogue embarqué est estimé ;
+  cette option restreint le plan aux seuls produits dont le prix vient d'un
+  relevé sur le site, d'un import CSV ou d'une saisie. Le choix est plus
+  étroit, mais le total est un vrai total. Le formulaire affiche combien de
+  produits sont relevés, et dit quand c'est trop peu.
+- **Une substitution s'affiche sur la recette.** Quand le budget force à
+  remplacer un produit, le titre et les étapes restent ceux d'origine — les
+  réécrire donnait « lentilles vertes poêlé » — et un encart annonce le
+  remplacement. Le lecteur ne découvre plus en rayon que son « filet de lieu »
+  est devenu des lentilles.
+- **Le repli local quand le plan du modèle est irréparable.** Si aucune
+  substitution ne rapproche le plan du budget, l'application sert le plan du
+  planificateur local plutôt qu'une liste à quatre fois le budget demandé, et
+  le dit.
 - **Liste cochable en rayon**, exportable en texte, CSV, Markdown, ou
   imprimable en PDF. Un bouton copie les désignations une par ligne, format
   qui se colle directement dans la recherche d'un drive.

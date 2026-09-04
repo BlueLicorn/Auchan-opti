@@ -111,6 +111,12 @@ export interface CatalogFilter {
   exclusions?: string[];
   /** Exclut les produits marqués en rupture dans le magasin de l'utilisateur. */
   excludeOutOfStock?: boolean;
+  /**
+   * Ne garde que les produits dont le prix a été relevé — collecte sur le site,
+   * import CSV, saisie manuelle — et écarte les estimations du catalogue
+   * embarqué.
+   */
+  verifiedPriceOnly?: boolean;
 }
 
 /**
@@ -125,6 +131,7 @@ export function filterCatalog(products: Product[], filter: CatalogFilter): Produ
 
   return products.filter((product) => {
     if (filter.excludeOutOfStock && product.stock === "rupture") return false;
+    if (filter.verifiedPriceOnly && isEstimate(product)) return false;
 
     for (const tag of filter.diet ?? []) {
       if (!product.diet.includes(tag)) return false;

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Catalog, MealPlan, PlanRequest } from "@/lib/types";
-import { applyOverrides, seedCatalog, type StoreOverride } from "@/lib/catalog";
+import { applyOverrides, isEstimate, seedCatalog, type StoreOverride } from "@/lib/catalog";
 import { generatePlan } from "@/lib/planner";
 import { GeminiError, listModels, preferredModel } from "@/lib/ai/gemini";
 import {
@@ -71,6 +71,12 @@ export default function Home() {
   const catalog = useMemo(
     () => applyOverrides(importedCatalog ?? seedCatalog, overrides),
     [importedCatalog, overrides],
+  );
+
+  /** Combien de produits portent un prix relevé, pour l'option « prix relevés ». */
+  const releves = useMemo(
+    () => catalog.products.filter((product) => !isEstimate(product)).length,
+    [catalog],
   );
 
   const generate = useCallback(async () => {
@@ -235,6 +241,8 @@ export default function Home() {
             progress={progress}
             budgetMode={budgetMode}
             onBudgetModeChange={setBudgetMode}
+            releves={releves}
+            total={catalog.products.length}
           />
         </div>
       )}

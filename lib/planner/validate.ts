@@ -2,7 +2,7 @@ import type {
   Equipment, PlanRequest, Product, Recipe, RecipeIngredient, SkillLevel,
 } from "@/lib/types";
 import { EQUIPMENT } from "@/lib/types";
-import { findProduct, normalize } from "@/lib/catalog";
+import { findProduct, gramsToProductQuantity, normalize } from "@/lib/catalog";
 import type { RawPlan } from "@/lib/ai/prompts";
 
 /**
@@ -20,8 +20,15 @@ export interface ValidationResult {
   warnings: string[];
 }
 
-/** Bornes de bon sens par unité, pour une recette entière. */
-const MAX_QUANTITY: Record<Product["unit"], number> = { g: 4000, ml: 4000, piece: 30 };
+/**
+ * Bornes de bon sens PAR PORTION, et non par recette.
+ *
+ * Un plafond fixe pour la recette entière ne veut rien dire : 4 kg pour deux
+ * personnes est absurde, et le plafond à 30 pièces a produit une facture de
+ * 35,70 € de concombres — le modèle avait écrit des grammes, le plafond les a
+ * ramenés à 30, et 30 est un nombre de concombres parfaitement recevable.
+ */
+const MAX_PAR_PORTION: Record<Product["unit"], number> = { g: 900, ml: 900, piece: 3 };
 
 export function validatePlan(
   raw: RawPlan,
@@ -69,7 +76,9 @@ export function validatePlan(
         break;
       }
 
-      const quantity = clampQuantity(Number(rawIngredient.quantity), resolved);
+      const quantity = clampQuantity(
+        Number(rawIngredient.quantity), resolved, request.servingsPerMeal,
+      );
       if (quantity === undefined) {
         warnings.push(`« ${title} » : quantité illisible pour ${resolved.name}, ingrédient retiré.`);
         continue;
@@ -159,9 +168,23 @@ function resolveProduct(
   return findProduct(id, pool) ?? findProduct(String(rawIngredient.label ?? ""), pool);
 }
 
-function clampQuantity(quantity: number, product: Product): number | undefined {
+function clampQuantity(
+  quantity: number,
+  product: Product,
+  servings: number,
+): number | undefined {
   if (!Number.isFinite(quantity) || quantity <= 0) return undefined;
-  const max = MAX_QUANTITY[product.unit];
+
+  const max = MAX_PAR_PORTION[product.unit] * Math.max(1, servings);
+
+  // Un produit vendu à la pièce est le piège : le modèle raisonne en grammes
+  // — « 150 g de concombre » — et le nombre arrive tel quel dans un champ qui
+  // compte des pièces. Au-delà du plausible, on lit donc des grammes et on
+  // convertit, plutôt que de rogner un nombre qui reste crédible en pièces.
+  if (product.unit === "piece" && quantity > max) {
+    return Math.min(max, gramsToProductQuantity(quantity, product));
+  }
+
   return Math.min(quantity, max);
 }
 
