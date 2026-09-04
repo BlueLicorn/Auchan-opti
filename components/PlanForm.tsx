@@ -51,12 +51,29 @@ export function PlanForm({
   const toggle = <T extends string>(list: T[], value: T): T[] =>
     list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
 
-  const perServing = useMemo(() => {
-    const servings = request.meals * request.servingsPerMeal;
-    return servings > 0 ? request.budget / servings : 0;
-  }, [request.budget, request.meals, request.servingsPerMeal]);
+  const servings = request.meals * request.servingsPerMeal;
+  const perServing = useMemo(
+    () => (servings > 0 ? request.budget / servings : 0),
+    [request.budget, servings],
+  );
 
-  const tight = perServing > 0 && perServing < 1.8;
+  /**
+   * Diagnostic avant génération.
+   *
+   * Le seuil de faisabilité dépend du nombre de portions, pas seulement du
+   * prix : on achète des paquets entiers, si bien que 1 € la portion est
+   * atteignable pour une famille et hors de portée pour cinq repas solo.
+   */
+  const plancher = servings >= 16 ? 1.0 : servings >= 10 ? 1.3 : servings >= 6 ? 1.8 : 2.3;
+  const diagnostic = perServing <= 0
+    ? null
+    : perServing < plancher
+      ? "impossible"
+      : perServing < plancher * 1.5
+        ? "serre"
+        : perServing > 12
+          ? "large"
+          : "normal";
 
   return (
     <form
@@ -96,13 +113,27 @@ export function PlanForm({
           </Field>
         </div>
 
-        <p className={`mt-3 text-sm ${tight ? "text-warn" : "text-muted"}`}>
-          {formatPrice(perServing)} par portion.{" "}
-          {tight
-            ? "C'est très serré : attends-toi à des pâtes, des œufs et des légumineuses."
-            : perServing > 12
-              ? "Large : il y aura de quoi se faire plaisir."
-              : "Cohérent pour de la cuisine maison."}
+        <p
+          className={`mt-3 text-sm ${
+            diagnostic === "impossible" ? "text-warn" : "text-muted"
+          }`}
+        >
+          <strong>{formatPrice(perServing)} par portion</strong>
+          {" "}pour {servings} portion{servings > 1 ? "s" : ""}.{" "}
+          {diagnostic === "impossible" && (
+            <>
+              Ce budget ne passera pas : avec {servings} portion
+              {servings > 1 ? "s" : ""}, on paie des paquets entiers même en
+              n&apos;en utilisant qu&apos;une part, et le minimum réaliste tourne
+              autour de {formatPrice(plancher)} par portion. Augmente le budget,
+              ou cuisine plus de couverts par repas — c&apos;est ce qui fait le
+              plus baisser le prix unitaire.
+            </>
+          )}
+          {diagnostic === "serre" &&
+            "C'est serré : attends-toi à des pâtes, des légumineuses et des œufs, avec peu de viande."}
+          {diagnostic === "normal" && "Cohérent pour de la cuisine maison."}
+          {diagnostic === "large" && "Large : il y aura de quoi se faire plaisir."}
         </p>
       </Card>
 

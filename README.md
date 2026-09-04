@@ -12,7 +12,12 @@ dans ton navigateur.
 - **Un plan qui tient dans le budget.** Le coût n'est jamais estimé par l'IA :
   il est calculé à partir des conditionnements réels. 350 g de pâtes coûtent
   le prix d'un paquet de 500 g, et les 150 g restants sont affichés comme
-  surplus.
+  surplus. Le budget pilote réellement la composition : quand il serre, la
+  protéine animale recule, le féculent avance, et les paquets déjà ouverts
+  sont réutilisés d'un repas à l'autre.
+- **Quand le budget est intenable, l'application le dit** — avant de générer,
+  et après. Elle nomme la cause (le conditionnement domine quand les portions
+  sont peu nombreuses) et chiffre le minimum réellement atteignable.
 - **Le curseur équilibré ↔ gros porc** déplace réellement les repères
   nutritionnels au lieu de maquiller la note. Un plan gourmand assumé est
   bien noté parce qu'il fait ce qu'on lui a demandé.
@@ -147,10 +152,10 @@ se trompe sur un prix ne peut donc pas fausser ton budget.
 npm test
 ```
 
-75 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
+88 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
 la validation des réponses du modèle, le score nutritionnel, l'import CSV,
-l'import d'un relevé magasin, la lecture des réponses Open Prices et
-l'arbitrage entre sources de prix.
+l'import d'un relevé magasin, la lecture des réponses Open Prices,
+l'arbitrage entre sources de prix, et le respect du budget de bout en bout.
 
 ## Régénérer le catalogue
 
@@ -176,6 +181,9 @@ La source lisible est dans le script ; le JSON est un artefact.
 - **Le planificateur hors-ligne n'épuise pas le budget** : il minimise le coût.
   Quand il reste plus de 12 % du budget, l'application le dit et propose des
   compléments.
+- **Sous 10 portions, le conditionnement fixe un plancher.** Cinq repas pour
+  une personne ne descendront pas à 1 € la portion : on achète un paquet de
+  pâtes, pas 110 g. L'application annonce ce plancher au lieu de le subir.
 - **Les poids à la pièce sont des moyennes** (un œuf 55 g, un oignon 60 g).
   Le bilan nutritionnel en hérite l'approximation.
 

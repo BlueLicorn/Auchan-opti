@@ -1,5 +1,7 @@
 import type { DietTag, Product, Recipe, ShoppingList } from "@/lib/types";
-import { formatPrice, substitutesFor, unitPrice } from "@/lib/catalog";
+import {
+  comparablePrice, formatPrice, substitutesFor, unitPrice,
+} from "@/lib/catalog";
 import { buildShoppingList, type CostOptions } from "@/lib/planner/cost";
 
 /**
@@ -38,6 +40,23 @@ const FLEXIBLE_CATEGORIES = new Set([
   "fromage", "creme", "beurre", "apero", "dip", "chocolat", "fruit-sec",
   "condiment", "matiere-grasse", "alcool", "soda", "biscuit",
 ]);
+
+/**
+ * Protéines animales, classées de la plus chère à la plus abordable, et les
+ * substituts qui les remplacent quand le budget ne suit pas.
+ *
+ * C'est le poste le plus lourd d'un panier, et il était jusqu'ici intouchable :
+ * le moteur pouvait rogner le fromage mais pas remplacer une entrecôte par des
+ * lentilles, ce qui est pourtant le premier geste de quiconque cuisine à
+ * budget serré.
+ */
+const PROTEINES_ANIMALES = new Set([
+  "boeuf", "porc", "agneau", "veau", "canard", "poulet", "dinde",
+  "poisson-blanc", "poisson-gras", "fruits-de-mer", "charcuterie",
+  "poisson-surgele", "conserve-poisson",
+]);
+
+const PROTEINES_ABORDABLES = ["legumineuse", "oeuf", "vegetal", "graine"];
 
 export function fitToBudget(input: RepairInput): RepairResult {
   const { productsById, pool, budget, diet, costOptions } = input;
@@ -123,12 +142,85 @@ export function fitToBudget(input: RepairInput): RepairResult {
     }
   }
 
+  if (list.total <= budget) return { recipes, shoppingList: list, repairs, withinBudget: true };
+
+  // --- 4. Report des protéines animales vers des protéines abordables -------
+  // Dernier levier avant l'aveu d'échec, et le plus efficace : la viande pèse
+  // souvent la moitié du panier. On l'annonce clairement plutôt que de
+  // substituer en silence — ce n'est plus tout à fait le plat proposé.
+  for (const line of [...list.lines].sort((a, b) => b.cost - a.cost)) {
+    if (list.total <= budget) break;
+    if (!PROTEINES_ANIMALES.has(line.product.category)) continue;
+
+    const remplacant = cheapestIn(PROTEINES_ABORDABLES, pool, diet);
+    if (!remplacant || comparablePrice(remplacant) >= comparablePrice(line.product)) continue;
+
+    const candidate = recipes.map((recipe) => swapProduct(recipe, line.product, remplacant));
+    const candidateList = buildShoppingList(candidate, productsById, costOptions);
+    if (candidateList.total >= list.total) continue;
+
+    const saved = list.total - candidateList.total;
+    recipes = candidate;
+    list = candidateList;
+    repairs.push(
+      `${line.product.name} remplacé par ${remplacant.name} : le budget ne permettait pas de protéine animale ici (${formatPrice(saved)} économisés).`,
+    );
+  }
+
+  if (list.total <= budget) return { recipes, shoppingList: list, repairs, withinBudget: true };
+
+  // --- 5. Réduction des protéines restantes ---------------------------------
+  // Jamais en dessous de la moitié : au-delà, ce n'est plus un repas, et il
+  // vaut mieux dire que le budget ne passe pas.
+  for (const factor of [0.85, 0.7, 0.55]) {
+    if (list.total <= budget) break;
+
+    const candidate = recipes.map((recipe) => ({
+      ...recipe,
+      ingredients: recipe.ingredients.map((ing) => {
+        const product = productsById.get(ing.productId);
+        if (!product || !PROTEINES_ANIMALES.has(product.category)) return ing;
+        const base = input.recipes
+          .find((r) => r.id === recipe.id)?.ingredients
+          .find((o) => o.productId === ing.productId);
+        return { ...ing, quantity: roundQuantity((base?.quantity ?? ing.quantity) * factor, product) };
+      }),
+    }));
+
+    const candidateList = buildShoppingList(candidate, productsById, costOptions);
+    if (candidateList.total < list.total) {
+      recipes = candidate;
+      list = candidateList;
+      if (candidateList.total <= budget || factor === 0.55) {
+        repairs.push(
+          `Portions de viande et de poisson réduites de ${Math.round((1 - factor) * 100)} % pour tenir le budget.`,
+        );
+      }
+    }
+  }
+
   return {
     recipes,
     shoppingList: list,
     repairs,
     withinBudget: list.total <= budget,
   };
+}
+
+/** Produit le moins cher au kilo équivalent parmi une liste de catégories. */
+function cheapestIn(
+  categories: string[],
+  pool: Product[],
+  requiredDiet: DietTag[],
+): Product | undefined {
+  return pool
+    .filter(
+      (p) =>
+        categories.includes(p.category) &&
+        p.stock !== "rupture" &&
+        requiredDiet.every((tag) => p.diet.includes(tag)),
+    )
+    .sort((a, b) => comparablePrice(a) - comparablePrice(b))[0];
 }
 
 /** Remplace un produit par un autre dans une recette, en convertissant la quantité. */

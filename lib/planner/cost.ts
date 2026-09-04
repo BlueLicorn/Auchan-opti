@@ -25,8 +25,16 @@ export interface CostOptions {
   assumeStaples?: boolean;
 }
 
-/** Catégories considérées comme fond de placard quand `assumeStaples` est vrai. */
-const STAPLE_CATEGORIES = new Set(["epice", "herbe", "matiere-grasse", "condiment", "farine"]);
+/**
+ * Catégories considérées comme fond de placard quand `assumeStaples` est vrai.
+ *
+ * Les aromates en font partie : oignon, ail et échalote se vendent au kilo, se
+ * gardent des mois, et facturer un sac entier parce qu'une recette en demande
+ * 15 g fait exploser un petit panier sans rien dire de vrai sur la dépense.
+ */
+const STAPLE_CATEGORIES = new Set([
+  "epice", "herbe", "matiere-grasse", "condiment", "farine", "aromate",
+]);
 
 export function buildShoppingList(
   recipes: Recipe[],

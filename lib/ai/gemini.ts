@@ -10,13 +10,17 @@
 const API_ROOT = "https://generativelanguage.googleapis.com/v1beta";
 
 export class GeminiError extends Error {
-  constructor(
-    message: string,
-    readonly status?: number,
-    readonly retryable = false,
-  ) {
+  // Champs déclarés puis assignés, plutôt que des propriétés de constructeur :
+  // celles-ci ne sont pas du JavaScript et empêchent d'exécuter ce module
+  // — et tout ce qui l'importe — avec le runner de tests natif de Node.
+  readonly status?: number;
+  readonly retryable: boolean;
+
+  constructor(message: string, status?: number, retryable = false) {
     super(message);
     this.name = "GeminiError";
+    this.status = status;
+    this.retryable = retryable;
   }
 }
 

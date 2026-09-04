@@ -1,5 +1,5 @@
 import type { Catalog, MealPlan, PlanRequest, Product } from "@/lib/types";
-import { filterCatalog, indexById } from "@/lib/catalog";
+import { filterCatalog, formatPrice, indexById } from "@/lib/catalog";
 import { buildShoppingList } from "@/lib/planner/cost";
 import { fitToBudget, suggestExtras } from "@/lib/planner/repair";
 import { planOffline } from "@/lib/planner/offline";
@@ -143,6 +143,63 @@ export async function generatePlan(options: PlanOptions): Promise<MealPlan> {
   });
 }
 
+/**
+ * Explique un dépassement au lieu de le constater.
+ *
+ * Annoncer « budget dépassé de 12 € » sans dire pourquoi ni de combien on
+ * aurait besoin laisse l'utilisateur devant un échec muet. On calcule donc le
+ * minimum réellement atteignable avec ses contraintes — en refaisant un plan
+ * sous contrainte maximale — et on nomme la cause dominante.
+ */
+function explainOverBudget(
+  request: PlanRequest,
+  total: number,
+  pool: Product[],
+  productsById: Map<string, Product>,
+): string[] {
+  const servings = Math.max(1, request.meals * request.servingsPerMeal);
+  const demande = request.budget / servings;
+  const obtenu = total / servings;
+
+  // Plan de référence au plus serré, passé par la même réparation budgétaire
+  // que le plan réel : sans cela on annoncerait un « minimum » supérieur à ce
+  // qui vient d'être servi, ce qui n'a aucun sens.
+  const costOptions = { pantry: request.pantry, assumeStaples: true };
+  const serre = planOffline({ ...request, budget: servings * 0.2 }, pool);
+  const plancherRepare = serre.length > 0
+    ? fitToBudget({
+        recipes: serre, productsById, pool,
+        budget: servings * 0.2, diet: request.diet, costOptions,
+      }).shoppingList.total / servings
+    : obtenu;
+
+  // Le plan servi fait foi : le plancher ne peut pas lui être supérieur.
+  const coutPlancher = Math.min(plancherRepare, obtenu);
+
+  const messages = [
+    `Budget non tenu : ${formatPrice(obtenu)} par portion au lieu des ${formatPrice(demande)} demandés`
+    + ` (${formatPrice(total)} au total pour ${formatPrice(request.budget)} prévus).`,
+  ];
+
+  // En dessous d'une douzaine de portions, ce sont les conditionnements qui
+  // décident : on n'achète pas 110 g de pâtes, on achète un paquet de 500 g.
+  if (servings <= 10) {
+    messages.push(
+      `Avec seulement ${servings} portion(s), le conditionnement domine le prix :`
+      + ` un paquet entier est facturé même si la recette n'en utilise qu'une part.`
+      + ` Cuisiner plus de portions du même plat ferait davantage baisser le prix unitaire`
+      + ` que réduire le nombre de repas.`,
+    );
+  }
+
+  messages.push(
+    `Le minimum atteignable avec ces contraintes est d'environ ${formatPrice(coutPlancher)} par portion,`
+    + ` soit ${formatPrice(coutPlancher * servings)} pour l'ensemble.`,
+  );
+
+  return messages;
+}
+
 interface FinalizeInput {
   recipes: MealPlan["recipes"];
   request: PlanRequest;
@@ -173,10 +230,7 @@ function finalize(input: FinalizeInput): MealPlan {
   });
 
   if (!repaired.withinBudget) {
-    const gap = repaired.shoppingList.total - request.budget;
-    warnings.push(
-      `Budget dépassé de ${gap.toFixed(2)} € malgré les ajustements : réduis le nombre de repas, ou augmente le budget d'autant.`,
-    );
+    warnings.push(...explainOverBudget(request, repaired.shoppingList.total, pool, productsById));
   }
 
   // Budget nettement sous-employé : on propose de quoi le compléter plutôt
