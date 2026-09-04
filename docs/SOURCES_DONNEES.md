@@ -50,6 +50,13 @@ C'est la partie intéressante de ta question, et la réponse surprend souvent :
 **les comparateurs sérieux ne scrapent pas, ou très peu.** Ils obtiennent les
 données à la source, avec l'accord des enseignes.
 
+### 0. La réponse courte, si tu ne lis que ça
+
+Un comparateur te donne le prix d'**un** magasin, pas de **ton** magasin — et
+aucun ne connaît le stock. Les prix varient réellement d'un Auchan à l'autre
+selon le format et la région. C'est pourquoi le collecteur navigateur reste la
+source de référence de cette application, et Open Prices un complément.
+
 ### 1. Les flux produits fournis par les enseignes
 
 C'est le mécanisme dominant. Une enseigne qui veut être visible sur un
@@ -90,9 +97,20 @@ connaît les prix de *ton* magasin mieux que toi qui y vas.
 ### 4. Les données ouvertes
 
 - **Open Food Facts** — base collaborative sous licence ouverte : EAN,
-  ingrédients, allergènes, Nutri-Score, catégories. Aucune donnée de prix,
-  mais c'est la meilleure source publique pour la partie nutritionnelle, et
-  son API est faite pour être appelée.
+  ingrédients, allergènes, Nutri-Score, catégories. C'est la meilleure source
+  publique pour la partie nutritionnelle, et son API est faite pour être
+  appelée.
+- **Open Prices** (`prices.openfoodfacts.org`) — le volet prix du même projet,
+  sous licence ouverte. C'est le seul « comparateur » réellement exploitable
+  par un particulier, et sa particularité est décisive : **chaque prix est
+  rattaché à un magasin identifié** par OpenStreetMap, pas à une moyenne
+  nationale. Il est branché dans l'application (`lib/catalog/openprices.ts`,
+  relayé par `app/api/openprices/`).
+
+  Ses limites sont structurelles et l'interface les annonce : la couverture
+  dépend des contributeurs — pour beaucoup de magasins la base est vide — et
+  **il n'y a aucune donnée de stock**. Un prix qui en vient ne remplace donc
+  jamais un relevé personnel : il ne comble que les estimations.
 - **prix-carburants.gouv.fr** — souvent cité comme précédent d'open data prix,
   mais il n'a aucun équivalent pour l'alimentaire : il n'existe pas
   d'obligation légale de publication des prix en grande distribution.
@@ -116,6 +134,7 @@ branchées :
 | **Collecteur navigateur** | oui | **exacts** | **exact** | héritée | actif |
 | Mode rayon (étiquette) | — | **exacts** | **exact** | — | actif |
 | Import CSV | oui | **exacts** | oui | héritée | actif |
+| Open Prices | oui | réels, d'un tiers | **aucun** | héritée | actif |
 
 ### Chaque donnée porte sa provenance
 
@@ -125,6 +144,9 @@ transporte sa source et sa date (`Provenance` dans `lib/types.ts`) :
 - `estimation` — le relevé indicatif embarqué. Bon ordre de grandeur, pas un
   montant de caisse.
 - `collecte` — lu sur auchan.fr, dans ton navigateur, pour ton magasin.
+- `communaute` — saisi par un contributeur d'Open Prices, dans un magasin
+  identifié, à une date connue. Un prix réel, mais ni le tien ni forcément
+  celui de ton magasin : le libellé affiché précise lequel et quand.
 - `saisie` — relevé par toi en rayon, devant l'étiquette.
 - `import` — venu de ton fichier CSV.
 
@@ -133,8 +155,11 @@ courses, et le plan annonce en tête le pourcentage du panier chiffré sur des
 prix réels. Un total calculé à 100 % sur des estimations le dit ; il ne se
 présente pas comme un montant exact.
 
-En cas de conflit, **la donnée la plus récente gagne** : une correction saisie
-il y a trois semaines n'écrase pas un prix relevé ce matin.
+En cas de conflit, **la donnée la plus récente gagne** entre sources de même
+rang : une correction saisie il y a trois semaines n'écrase pas un prix relevé
+ce matin. Et **un prix communautaire ne prime jamais sur un relevé
+personnel**, même plus ancien — ce que tu as constaté de tes yeux dans ton
+magasin vaut mieux que la contribution d'un inconnu.
 
 ### Le stock par défaut est « inconnu », pas « en rayon »
 

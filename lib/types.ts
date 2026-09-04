@@ -91,6 +91,12 @@ export type DataSource =
   | "import"
   /** Relevé sur le site Auchan par le collecteur, dans le navigateur. */
   | "collecte"
+  /**
+   * Base de prix ouverte Open Prices (Open Food Facts) : un prix saisi par
+   * quelqu'un d'autre, dans un magasin identifié, à une date donnée. Fiable
+   * dans son principe, mais ce n'est ni ton relevé ni forcément ton magasin.
+   */
+  | "communaute"
   /** Saisi à la main, en rayon ou depuis les réglages. */
   | "saisie";
 

@@ -45,9 +45,10 @@ des modèles réellement accessibles avec ta clé — plutôt qu'un nom codé en
 qui finit toujours par renvoyer un 404.
 
 **La clé ne quitte pas ton navigateur.** Les requêtes partent directement vers
-Google ; elles ne transitent par aucun serveur de cette application, qui n'a
-d'ailleurs aucune route d'API. C'est la seule architecture où cette promesse
-est vérifiable.
+Google, sans passer par le serveur de cette application. La seule route
+serveur qui existe (`/api/openprices`) relaie les requêtes vers la base de
+prix ouverte d'Open Food Facts : elle ne voit ni ta clé, ni tes listes, ni
+aucune donnée personnelle.
 
 ## Les prix réels et le stock de ton magasin
 
@@ -72,6 +73,20 @@ Il lit en priorité le JSON-LD `schema.org/Product` publié par le site pour les
 moteurs de recherche — format normalisé et stable, qui porte le prix et la
 disponibilité. Deux stratégies de repli suivent, et l'encart affiche toujours
 celle qui a servi.
+
+### Open Prices, la base de prix ouverte
+
+**Réglages → Prix & stock → Compléter avec Open Prices.** C'est le seul
+« comparateur » exploitable par un particulier : API documentée, licence
+ouverte, et des prix **rattachés à un magasin identifié** via OpenStreetMap
+plutôt qu'à une moyenne nationale.
+
+Cherche ton magasin, charge ses prix, applique-les. Deux limites structurelles,
+annoncées à l'écran : la couverture dépend des contributeurs et reste souvent
+partielle, et il n'y a **aucune donnée de stock**.
+
+Un prix venu d'Open Prices ne remplace jamais un relevé que tu as fait
+toi-même — il ne comble que les estimations.
 
 ### Le mode rayon
 
@@ -104,10 +119,12 @@ données — est dans [`docs/SOURCES_DONNEES.md`](docs/SOURCES_DONNEES.md).
 data/catalog.json          Catalogue embarqué, généré par scripts/build-catalog.mjs
 public/auchan-collect.user.js  Collecteur de prix et de stock, exécuté dans TON navigateur
 lib/types.ts               Modèle de données, dont la provenance de chaque donnée
+app/api/openprices/        Relais vers Open Prices (aucune donnée personnelle)
 lib/catalog/
   index.ts                 Chargement, filtrage, substitutions, fiabilité
   sources.ts               Import/export CSV
   collect.ts               Import du relevé navigateur
+  openprices.ts            Base de prix ouverte Open Food Facts
 lib/planner/
   cost.ts                  Chiffrage au conditionnement — le cœur du budget
   scoring.ts               Bilan nutritionnel et score d'équilibre
@@ -130,9 +147,10 @@ se trompe sur un prix ne peut donc pas fausser ton budget.
 npm test
 ```
 
-60 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
+75 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
 la validation des réponses du modèle, le score nutritionnel, l'import CSV,
-l'import d'un relevé magasin et l'arbitrage entre sources de prix.
+l'import d'un relevé magasin, la lecture des réponses Open Prices et
+l'arbitrage entre sources de prix.
 
 ## Régénérer le catalogue
 
@@ -152,6 +170,9 @@ La source lisible est dans le script ; le JSON est un artefact.
 - **Le collecteur dépend de la structure des pages Auchan.** Il essaie trois
   stratégies et annonce laquelle a fonctionné ; si le site change en
   profondeur, les sélecteurs devront être ajustés.
+- **La couverture d'Open Prices est inégale.** Pour beaucoup de magasins, la
+  base est vide ou ancienne. C'est le propre d'une base participative, et
+  l'interface le dit plutôt que de faire semblant.
 - **Le planificateur hors-ligne n'épuise pas le budget** : il minimise le coût.
   Quand il reste plus de 12 % du budget, l'application le dit et propose des
   compléments.

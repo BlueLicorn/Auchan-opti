@@ -139,12 +139,18 @@ export function filterCatalog(products: Product[], filter: CatalogFilter): Produ
   });
 }
 
-/** Minuscules sans accents, pour comparer « Épinard » et « epinards ». */
+/**
+ * Minuscules, sans accents, espaces réduits : « Épinard » et « epinards »
+ * se comparent, comme « Auchan  Villars » et « auchan villars ». Les libellés
+ * venus d'OpenStreetMap ou du site marchand ont une ponctuation irrégulière
+ * qu'il faut absorber avant toute comparaison.
+ */
 export function normalize(value: string): string {
   return value
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
+    .replace(/\s+/g, " ")
     .trim();
 }
 
@@ -282,6 +288,7 @@ export function provenanceLabel(provenance: Provenance | undefined): string {
   switch (provenance.source) {
     case "estimation": return "prix estimé";
     case "collecte": return `relevé sur auchan.fr${quand}`;
+    case "communaute": return `Open Prices${provenance.store ? ` · ${provenance.store}` : ""}${quand}`;
     case "import": return `importé${quand}`;
     case "saisie": return `saisi${quand}`;
   }

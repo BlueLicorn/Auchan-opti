@@ -5,6 +5,7 @@ import type { Catalog } from "@/lib/types";
 import { coverage, seedCatalog } from "@/lib/catalog";
 import { importReleve, type CollectResult } from "@/lib/catalog/collect";
 import { Button, Card, Notice, Stat } from "@/components/ui";
+import { CommunityPrices } from "@/components/CommunityPrices";
 
 /**
  * Écran du relevé en magasin.
@@ -173,6 +174,8 @@ export function CollectPanel({
           {result && <ImportReport result={result} />}
         </div>
       </Card>
+
+      <CommunityPrices catalog={catalog} onCatalogChange={onCatalogChange} />
     </div>
   );
 }
