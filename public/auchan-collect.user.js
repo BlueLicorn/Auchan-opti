@@ -39,6 +39,14 @@
    * normalisé (schema.org/Product). Les autres stratégies sont des filets.
    */
   function extraireProduits() {
+    // Le site publie lui-même ses produits dans une file globale, avec prix,
+    // disponibilité, rayon et magasin. C'est la source la plus riche et la
+    // plus stable : on la lit avant tout le reste.
+    const parFileAuchan = extraireFileAuchan();
+    if (parFileAuchan.length > 0) {
+      return { produits: parFileAuchan, methode: "données de page Auchan" };
+    }
+
     const parJsonLd = extraireJsonLd();
     if (parJsonLd.length > 0) return { produits: parJsonLd, methode: "JSON-LD" };
 
@@ -47,6 +55,58 @@
 
     const parDom = extraireDom();
     return { produits: parDom, methode: parDom.length > 0 ? "lecture d'écran" : "aucune" };
+  }
+
+  /**
+   * File de produits publiée par le site : window.G.productSearchQueue.
+   *
+   * Chaque fiche de rayon y pousse un objet complet — nom, prix TTC affiché,
+   * disponibilité, arborescence de rayon, marque, référence interne et nom du
+   * point de retrait. C'est incomparablement plus fiable que de lire le texte
+   * affiché, et ça donne le stock, qu'aucune autre source ne fournit.
+   */
+  function extraireFileAuchan() {
+    const file = window.G && window.G.productSearchQueue;
+    const collectes = capturesEvenement.slice();
+    if (Array.isArray(file)) collectes.push(...file);
+    if (collectes.length === 0) return [];
+
+    const produits = [];
+    const vus = new Set();
+
+    for (const entree of collectes) {
+      const produit = normaliserProduitAuchan(entree && entree.product);
+      if (!produit) continue;
+      const cle = produit.ref || produit.nom;
+      if (vus.has(cle)) continue;
+      vus.add(cle);
+      produits.push(produit);
+    }
+
+    return produits;
+  }
+
+  function normaliserProduitAuchan(p) {
+    if (!p || typeof p !== "object") return undefined;
+
+    const nom = texte(p.name);
+    const prix = nombre(p.price && (p.price.displayed_tax ?? p.price.discountfree_tax));
+    if (!nom || prix === undefined) return undefined;
+
+    const statut = p.availability && p.availability.status;
+    const categorie = p.category || {};
+
+    return {
+      nom,
+      // « cug » est la référence interne d'Auchan, pas un code-barres : on ne
+      // la range surtout pas dans le champ ean, qui sert aux bases publiques.
+      ref: texte(p.id && (p.id.cug || p.id.ref_fo)),
+      prix,
+      dispo: statut === true ? "en_rayon" : statut === false ? "rupture" : "inconnu",
+      marque: texte(p.brand && p.brand.name),
+      rayon: texte(categorie.level2 || categorie.level1),
+      url: location.href,
+    };
   }
 
   /** schema.org/Product embarqué dans les balises <script type="application/ld+json">. */
@@ -229,8 +289,16 @@
     return propre.length > 0 ? propre : undefined;
   }
 
-  /** Nom du magasin sélectionné, s'il apparaît sur la page. */
+  /** Nom du point de retrait, tel que le site le déclare avec ses produits. */
   function detecterMagasin() {
+    const file = window.G && window.G.productSearchQueue;
+    const sources = capturesEvenement.concat(Array.isArray(file) ? file : []);
+    for (const entree of sources) {
+      const vendeur = entree && entree.product && entree.product.seller;
+      const nom = texte(vendeur && vendeur.name);
+      if (nom) return nom;
+    }
+
     const candidats = document.querySelectorAll(
       '[class*="store"], [class*="magasin"], [data-testid*="store"], [class*="drive"]',
     );
@@ -269,11 +337,13 @@
     let nouveaux = 0;
 
     for (const produit of produits) {
-      const cle = produit.ean || produit.nom.toLowerCase();
+      const cle = produit.ean || produit.ref || produit.nom.toLowerCase();
       if (!releve[cle]) nouveaux++;
       releve[cle] = {
         nom: produit.nom,
         ean: produit.ean,
+        ref: produit.ref,
+        rayon: produit.rayon,
         prix: produit.prix,
         stock: produit.dispo,
         marque: produit.marque,
@@ -474,6 +544,22 @@
     ajouter("types JSON-LD", [...types].slice(0, 12).join(", ") || "aucun");
     if (exemple) ajouter("exemple de Product", JSON.stringify(exemple));
 
+    // --- Stratégie 0 : file de produits publiée par le site
+    const file = window.G && window.G.productSearchQueue;
+    ajouter("file productSearchQueue", Array.isArray(file) ? file.length : "absente");
+    ajouter("captures par évènement", capturesEvenement.length);
+    const echantillon = normaliserProduitAuchan(
+      (capturesEvenement[0] || (Array.isArray(file) ? file[0] : undefined) || {}).product,
+    );
+    if (echantillon) {
+      ajouter("exemple de la file", JSON.stringify({
+        prix: echantillon.prix,
+        dispo: echantillon.dispo,
+        rayon: echantillon.rayon,
+        aUneRef: Boolean(echantillon.ref),
+      }));
+    }
+
     // --- Stratégie 2 : état applicatif
     const etats = [...document.querySelectorAll('script[id], script[type="application/json"]')]
       .filter((b) => (b.textContent || "").length > 200)
@@ -557,6 +643,18 @@
   /** Empêche deux défilements concurrents, qui se gêneraient mutuellement. */
   let defilementEnCours = false;
 
+  /**
+   * Produits annoncés par l'évènement du site au fil du chargement.
+   *
+   * Doubler la lecture de la file globale par cette écoute protège du cas où
+   * le site viderait sa file après l'avoir consommée : ce qui est passé par
+   * l'évènement reste acquis.
+   */
+  const capturesEvenement = [];
+  document.addEventListener("ProductSearchUpdate", (evenement) => {
+    if (evenement && evenement.detail) capturesEvenement.push(evenement.detail);
+  });
+
   function passer() {
     const { produits, methode } = extraireProduits();
     const magasin = detecterMagasin();
@@ -577,8 +675,18 @@
     if (resume === dernierResume) return;
     dernierResume = resume;
 
+    // Le site annonce combien de produits contient le rayon : le dire évite de
+    // croire le relevé terminé alors qu'il en reste treize pages.
+    const pagination = window.G
+      && window.G.configuration
+      && window.G.configuration.searchPages
+      && window.G.configuration.searchPages.trackingObject
+      && window.G.configuration.searchPages.trackingObject.page;
+    const attendus = pagination && Number(pagination.total);
+
     afficher({
       message: `${total} produit(s) relevés${nouveaux > 0 ? ` (+${nouveaux})` : ""}`
+        + (Number.isFinite(attendus) && attendus > 0 ? ` sur ${attendus} dans ce rayon` : "")
         + ` — lecture par ${methode}${magasin ? ` · ${magasin}` : ""}.`,
     });
   }

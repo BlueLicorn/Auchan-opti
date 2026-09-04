@@ -218,3 +218,103 @@ Frais de livraison 3,90 €
     assert.equal(penne.priceFrom.source, "collecte");
   });
 });
+
+describe("relevé issu des données de page Auchan", () => {
+  /** Reproduit fidèlement ce que le collecteur extrait d'une page de rayon. */
+  const releveAuchan = releve([
+    { nom: "Lait demi-écrémé UHT", ref: "14460", rayon: "CREMERIE", prix: 5.85,
+      stock: "en_rayon", marque: "POUCE", magasin: "CLICK-AND-COLLECT CORTE" },
+    { nom: "Noix de cajou grillées", ref: "848499", rayon: "FRUITS ET LEGUMES NEGOCE LS",
+      prix: 5.29, stock: "rupture", magasin: "CLICK-AND-COLLECT CORTE" },
+    { nom: "Lardons fumés", ref: "321576", rayon: "CHARCUTERIE LS", prix: 1.22,
+      stock: "en_rayon", magasin: "CLICK-AND-COLLECT CORTE" },
+    { nom: "Panés au poisson", ref: "303915", rayon: "POISSONNERIE LS", prix: 3.1,
+      stock: "en_rayon", magasin: "CLICK-AND-COLLECT CORTE" },
+  ]);
+
+  it("applique prix et disponibilité aux produits reconnus", () => {
+    const result = importReleve(releveAuchan);
+    assert.ok(result.matched >= 2, `${result.matched} appariements`);
+    assert.equal(result.storeLabel, "CLICK-AND-COLLECT CORTE");
+
+    const lardons = result.catalog.products.find((p) => p.id === "bo-lardon")!;
+    assert.equal(lardons.price, 1.22);
+    assert.equal(lardons.stock, "en_rayon");
+    assert.equal(lardons.priceFrom.store, "CLICK-AND-COLLECT CORTE");
+  });
+
+  it("traduit l'arborescence de rayons d'Auchan vers la nôtre", () => {
+    const result = importReleve(releve([
+      { nom: "Produit inédit crémerie", ref: "z1", rayon: "CREMERIE", prix: 2 },
+      { nom: "Produit inédit charcuterie", ref: "z2", rayon: "CHARCUTERIE LS", prix: 3 },
+      { nom: "Produit inédit poisson", ref: "z3", rayon: "POISSONNERIE LS", prix: 4 },
+      { nom: "Produit inédit primeur", ref: "z4", rayon: "FRUITS ET LEGUMES NEGOCE LS", prix: 5 },
+      { nom: "Produit inédit surgelé", ref: "z5", rayon: "Surgelés", prix: 6 },
+    ]));
+
+    const rayonDe = (nom: string) =>
+      result.catalog.products.find((p) => p.name === nom)!.rayon;
+
+    assert.equal(rayonDe("Produit inédit crémerie"), "Crémerie");
+    assert.equal(rayonDe("Produit inédit charcuterie"), "Charcuterie & Traiteur");
+    assert.equal(rayonDe("Produit inédit poisson"), "Poissonnerie");
+    assert.equal(rayonDe("Produit inédit primeur"), "Fruits & Légumes");
+    assert.equal(rayonDe("Produit inédit surgelé"), "Surgelés");
+  });
+
+  it("mémorise la référence magasin pour réapparier le relevé suivant", () => {
+    const premier = importReleve(releve([
+      { nom: "Lardons fumés", ref: "321576", prix: 1.22 },
+    ])).catalog;
+
+    // Le site change le libellé : seule la référence permet de retrouver le produit.
+    const second = importReleve(
+      releve([{ nom: "Allumettes de lardons fumés Pouce", ref: "321576", prix: 1.35 }]),
+      premier,
+    );
+
+    assert.equal(second.added, 0, "la référence doit éviter un doublon");
+    assert.equal(second.catalog.products.find((p) => p.id === "bo-lardon")!.price, 1.35);
+  });
+
+  it("ne range jamais une référence interne dans le champ code-barres", () => {
+    const result = importReleve(releve([{ nom: "Lardons fumés", ref: "321576", prix: 1.22 }]));
+    const lardons = result.catalog.products.find((p) => p.id === "bo-lardon")!;
+    assert.equal(lardons.storeRef, "321576");
+    assert.equal(lardons.ean, undefined, "un cug n'est pas un EAN et ne doit pas polluer Open Prices");
+  });
+});
+
+describe("intégrité d'un import volumineux", () => {
+  it("ne fusionne pas deux nouveaux produits aux libellés voisins", () => {
+    // Le défaut d'origine : le premier produit ajouté servait de cible au
+    // rapprochement de libellés pour les suivants, et les conditionnements
+    // d'un même produit se confondaient.
+    const result = importReleve(releve([
+      { nom: "Yaourt nature brebis 4x125g", ref: "a1", prix: 2.4 },
+      { nom: "Yaourt nature brebis 12x125g", ref: "a2", prix: 5.9 },
+      { nom: "Yaourt nature brebis 16x125g", ref: "a3", prix: 7.2 },
+    ]));
+
+    // Le premier peut légitimement se rattacher au yaourt générique du
+    // catalogue ; ce qui compte, c'est que les trois prix survivent sur trois
+    // produits distincts au lieu de s'écraser sur un seul.
+    const porteurs = result.catalog.products.filter((p) =>
+      [2.4, 5.9, 7.2].includes(p.price),
+    );
+    assert.equal(porteurs.length, 3, "chaque conditionnement doit garder son prix");
+    assert.equal(
+      new Set(porteurs.map((p) => p.id)).size,
+      3,
+      "les trois prix doivent porter sur trois produits différents",
+    );
+  });
+
+  it("dédoublonne malgré tout sur la référence, au sein d'un même import", () => {
+    const result = importReleve(releve([
+      { nom: "Produit vu deux fois", ref: "b1", prix: 2 },
+      { nom: "Produit vu deux fois", ref: "b1", prix: 2.5 },
+    ]));
+    assert.equal(result.added, 1, "la même référence ne crée qu'un produit");
+  });
+});

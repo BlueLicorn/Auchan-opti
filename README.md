@@ -89,10 +89,13 @@ Le collecteur ne navigue jamais tout seul : il ne suit aucun lien et n'ouvre
 aucune page. « Dérouler la page » fait défiler *la page que tu as ouverte*,
 exactement comme si tu faisais glisser ton doigt.
 
-Il lit en priorité le JSON-LD `schema.org/Product` publié par le site pour les
-moteurs de recherche — format normalisé et stable, qui porte le prix et la
-disponibilité. Deux stratégies de repli suivent, et l'encart affiche toujours
-celle qui a servi.
+Il lit en priorité les **données de page publiées par Auchan lui-même** :
+le site pousse chaque produit dans `window.G.productSearchQueue` et annonce un
+évènement `ProductSearchUpdate`, avec le prix TTC affiché, la **disponibilité**,
+l'arborescence de rayon, la marque, la référence interne et le point de retrait.
+Trois stratégies de repli suivent (JSON-LD, état applicatif, lecture d'écran),
+et l'encart affiche toujours celle qui a servi ainsi que le nombre de produits
+que contient le rayon — pour savoir s'il reste à dérouler.
 
 ### Open Prices, la base de prix ouverte
 
@@ -180,7 +183,7 @@ se trompe sur un prix ne peut donc pas fausser ton budget.
 npm test
 ```
 
-96 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
+102 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
 la validation des réponses du modèle, le score nutritionnel, l'import CSV,
 l'import d'un relevé magasin, la lecture des réponses Open Prices,
 l'arbitrage entre sources de prix, la lecture d'un ticket de caisse, et le

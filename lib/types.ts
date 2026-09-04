@@ -144,6 +144,11 @@ export interface Product {
   readyToEat?: boolean;
   /** Code-barres, quand il est connu, pour l'enrichissement Open Food Facts. */
   ean?: string;
+  /**
+   * Référence interne du magasin (Auchan : « cug »). Distincte du code-barres :
+   * elle réapparie un relevé au suivant, mais n'a aucun sens ailleurs.
+   */
+  storeRef?: string;
 }
 
 /** Le catalogue tel que chargé, avec sa provenance. */

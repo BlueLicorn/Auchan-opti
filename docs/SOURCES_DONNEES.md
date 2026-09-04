@@ -207,6 +207,37 @@ et colle-le dans l'application.
 Ce bouton ne navigue pas : il fait défiler la page que tu as ouverte, comme ton
 doigt le ferait. Aucun lien n'est suivi, aucune page n'est ouverte à ta place.
 
+### Ce que les pages Auchan exposent réellement
+
+Contrairement à beaucoup de sites marchands, les pages de rayon d'Auchan ne
+publient pas de JSON-LD `schema.org/Product`. Elles font mieux : le site pousse
+lui-même chaque produit dans `window.G.productSearchQueue` et émet un évènement
+`ProductSearchUpdate`, sous cette forme :
+
+```
+{"product":{
+   "name":"Lait demi-écrémé UHT",
+   "price":{"displayed_tax":5.85,"discountfree_tax":5.85,"reduction":false},
+   "availability":{"status":true},
+   "category":{"level1":"PRODUITS FRAIS","level2":"CREMERIE", …},
+   "brand":{"name":"POUCE"},
+   "id":{"cug":"14460","ref_fo":"C1177651"},
+   "seller":{"name":"CLICK-AND-COLLECT CORTE"}
+}}
+```
+
+C'est la source idéale : le prix TTC réellement affiché, la **disponibilité**
+que rien d'autre ne fournit, le rayon, et le point de retrait. La page annonce
+aussi le total du rayon dans
+`G.configuration.searchPages.trackingObject.page.total`, ce qui permet de dire
+combien de produits restent à dérouler.
+
+Attention à un piège : `cug` est la **référence interne** d'Auchan, pas un
+code-barres. Elle est parfaite pour réapparier un relevé au suivant même si le
+libellé change, mais la ranger dans le champ `ean` empoisonnerait
+l'appariement avec Open Prices, qui travaille sur de vrais EAN. Les deux sont
+donc stockées séparément.
+
 Le collecteur lit d'abord le JSON-LD (`schema.org/Product`) que le site publie
 pour les moteurs de recherche : c'est la source la plus stable, normalisée, et
 elle contient `offers.price` et `offers.availability`. À défaut il lit l'état

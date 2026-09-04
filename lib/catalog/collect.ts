@@ -1,4 +1,4 @@
-import type { Catalog, Product, Provenance, StockStatus } from "@/lib/types";
+import type { Catalog, Product, Provenance, Rayon, StockStatus } from "@/lib/types";
 import { findProduct, normalize, seedCatalog } from "@/lib/catalog";
 
 /**
@@ -16,13 +16,51 @@ import { findProduct, normalize, seedCatalog } from "@/lib/catalog";
 
 export interface ReleveEntry {
   nom?: string;
+  /** Code-barres public (EAN/GTIN), quand la source en fournit un. */
   ean?: string;
+  /**
+   * Référence interne Auchan (« cug » ou « ref_fo »).
+   *
+   * Ce n'est pas un code-barres et il ne faut surtout pas la confondre avec :
+   * elle est stable et parfaite pour réapparier un relevé au suivant, mais
+   * elle n'a aucun sens pour les bases publiques comme Open Prices.
+   */
+  ref?: string;
+  /** Rayon tel que le site le classe, à traduire vers nos propres rayons. */
+  rayon?: string;
   prix?: number;
   stock?: string;
   marque?: string;
   magasin?: string;
   url?: string;
   releveLe?: string;
+}
+
+/**
+ * Traduction de l'arborescence de rayons d'Auchan vers la nôtre.
+ *
+ * Le site classe sur cinq niveaux, en majuscules pour les niveaux internes
+ * (« CREMERIE », « CHARCUTERIE LS ») et en libellés lisibles dans ses filtres
+ * (« Épicerie salée »). On accepte les deux formes.
+ */
+const RAYONS_AUCHAN: { motif: RegExp; rayon: Rayon }[] = [
+  { motif: /fruits?\s*(et|,)?\s*legumes?|f\s*&\s*l/, rayon: "Fruits & Légumes" },
+  { motif: /boucherie|viande|volaille/, rayon: "Boucherie" },
+  { motif: /poissonnerie|maree|poisson/, rayon: "Poissonnerie" },
+  { motif: /charcuterie|traiteur/, rayon: "Charcuterie & Traiteur" },
+  { motif: /cremerie|fromage|produits laitiers|oeufs|ultra frais/, rayon: "Crémerie" },
+  { motif: /boulangerie|patisserie|viennoiserie|pain/, rayon: "Boulangerie" },
+  { motif: /surgel/, rayon: "Surgelés" },
+  { motif: /epicerie sucree|biscuit|confiserie|chocolat/, rayon: "Épicerie sucrée" },
+  { motif: /epicerie salee|epicerie|conserve/, rayon: "Épicerie salée" },
+  { motif: /boisson|eaux|jus|soda|vins?|bieres?|alcool/, rayon: "Boissons" },
+  { motif: /apero|monde|snacking/, rayon: "Monde & Apéritif" },
+];
+
+function parseRayon(value: unknown): Rayon | undefined {
+  const texte = normalize(String(value ?? ""));
+  if (!texte) return undefined;
+  return RAYONS_AUCHAN.find((entree) => entree.motif.test(texte))?.rayon;
 }
 
 export interface ReleveFile {
@@ -72,8 +110,36 @@ export function mergeEntries(
 ): CollectResult {
   const products = base.products.map((p) => ({ ...p }));
   const byId = new Map(products.map((p) => [p.id, p]));
+
+  /**
+   * Le rapprochement de libellés ne s'applique qu'au catalogue de départ.
+   *
+   * Sans cette précaution, un produit ajouté en début d'import devient une
+   * cible pour les suivants : « Yaourt nature 4x125g » et « Yaourt nature
+   * 12x125g » fusionneraient en un seul, et le second prix écraserait le
+   * premier. L'appariement exact par référence ou code-barres, lui, reste
+   * valable sur les nouveaux produits — c'est justement son rôle.
+   */
+  const fuzzyPool = products.slice();
+
+  /**
+   * Un produit du catalogue ne peut être réclamé qu'une fois par
+   * rapprochement de libellé.
+   *
+   * Trois conditionnements d'un même yaourt ressemblent tous au produit
+   * générique du catalogue : sans cette règle, les trois s'y écrasaient l'un
+   * après l'autre et seul le dernier prix survivait. Le premier le prend, les
+   * suivants deviennent des produits à part entière. L'appariement exact par
+   * référence reste, lui, toujours autorisé : il ne se trompe pas.
+   */
+  const reclames = new Set<string>();
   const byEan = new Map(
     products.filter((p) => p.ean).map((p) => [p.ean as string, p]),
+  );
+  // La référence interne du magasin est l'appariement le plus fiable d'un
+  // relevé au suivant : elle ne bouge pas, contrairement aux libellés.
+  const byRef = new Map(
+    products.filter((p) => p.storeRef).map((p) => [p.storeRef as string, p]),
   );
 
   const rejected: CollectResult["rejected"] = [];
@@ -116,9 +182,19 @@ export function mergeEntries(
       ...(entry.magasin ? { store: entry.magasin } : {}),
     };
 
-    // Le code-barres est l'appariement sûr ; le libellé n'est qu'un repli.
-    const target = (entry.ean ? byEan.get(entry.ean) : undefined)
-      ?? findProduct(name, products);
+    // Par ordre de fiabilité décroissante : référence magasin, code-barres,
+    // puis rapprochement de libellé — ce dernier une seule fois par produit.
+    const exact = (entry.ref ? byRef.get(entry.ref) : undefined)
+      ?? (entry.ean ? byEan.get(entry.ean) : undefined);
+
+    let approche: Product | undefined;
+    if (!exact) {
+      const candidat = findProduct(name, fuzzyPool);
+      if (candidat && !reclames.has(candidat.id)) approche = candidat;
+    }
+
+    const target = exact ?? approche;
+    if (approche) reclames.add(approche.id);
 
     if (target) {
       if (hasPrice) {
@@ -135,6 +211,10 @@ export function mergeEntries(
         target.ean = entry.ean;
         byEan.set(entry.ean, target);
       }
+      if (entry.ref && !target.storeRef) {
+        target.storeRef = entry.ref;
+        byRef.set(entry.ref, target);
+      }
       continue;
     }
 
@@ -146,9 +226,9 @@ export function mergeEntries(
     const product: Product = {
       id: uniqueId(`col-${slug(name)}`, byId),
       name,
-      // Sans classement fiable, le produit atterrit en épicerie salée et
-      // l'interface signale qu'il demande d'être complété.
-      rayon: "Épicerie salée",
+      // Le rayon annoncé par le site est traduit quand on le reconnaît ;
+      // sinon le produit atterrit en épicerie salée, à corriger à la main.
+      rayon: parseRayon(entry.rayon) ?? "Épicerie salée",
       category: "divers",
       brandTier: "national",
       unit: "piece",
@@ -160,11 +240,13 @@ export function mergeEntries(
       stock,
       ...(stock !== "inconnu" ? { stockFrom: provenance } : {}),
       ...(entry.ean ? { ean: entry.ean } : {}),
+      ...(entry.ref ? { storeRef: entry.ref } : {}),
     };
 
     products.push(product);
     byId.set(product.id, product);
     if (product.ean) byEan.set(product.ean, product);
+    if (product.storeRef) byRef.set(product.storeRef, product);
     added++;
     if (stock !== "inconnu") stockUpdated++;
   }
