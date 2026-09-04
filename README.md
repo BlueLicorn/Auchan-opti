@@ -111,6 +111,13 @@ partielle, et il n'y a **aucune donnée de stock**.
 Un prix venu d'Open Prices ne remplace jamais un relevé que tu as fait
 toi-même — il ne comble que les estimations.
 
+### Ce qui n'entre pas au catalogue
+
+Un relevé de rayon ramène aussi la lessive, le dentifrice, les couches et les
+croquettes pour chat. Ces rayons sont écartés à l'import, et le rapport le
+dit. Un rayon que la table de correspondance ne connaît pas est conservé mais
+signalé, pour que le classement ne dérive pas en silence.
+
 ### Coller une commande ou un ticket
 
 **Réglages → Prix & stock → Coller une commande ou un ticket.** Le meilleur
@@ -183,7 +190,7 @@ se trompe sur un prix ne peut donc pas fausser ton budget.
 npm test
 ```
 
-102 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
+109 tests couvrent le chiffrage au conditionnement, la réparation budgétaire,
 la validation des réponses du modèle, le score nutritionnel, l'import CSV,
 l'import d'un relevé magasin, la lecture des réponses Open Prices,
 l'arbitrage entre sources de prix, la lecture d'un ticket de caisse, et le

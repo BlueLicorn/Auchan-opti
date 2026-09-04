@@ -318,3 +318,102 @@ describe("intégrité d'un import volumineux", () => {
     assert.equal(result.added, 1, "la même référence ne crée qu'un produit");
   });
 });
+
+describe("rapprochement de libellés, sur des cas réels du site", () => {
+  it("ne confond pas un ingrédient avec un plat qui le contient", () => {
+    // Défaut d'origine : « Sardines à l'huile d'olive » contient le texte
+    // « huile d'olive », et le prix de la bouteille écrasait celui de la boîte.
+    const result = importReleve(releve([
+      { nom: "Huile d'olive", ref: "861991", prix: 7.02 },
+    ]));
+
+    assert.equal(
+      result.catalog.products.find((p) => p.id === "es-huile-olive")!.price,
+      7.02,
+    );
+    assert.equal(
+      result.catalog.products.find((p) => p.id === "es-sardine")!.price,
+      seedCatalog.products.find((p) => p.id === "es-sardine")!.price,
+      "les sardines ne doivent pas hériter du prix de l'huile",
+    );
+  });
+
+  it("refuse un rapprochement fondé sur un seul mot générique", () => {
+    // « Huile de friture » et « Huile d'olive » ne partagent que « huile ».
+    const result = importReleve(releve([
+      { nom: "Huile de friture", ref: "763372", prix: 2.36 },
+    ]));
+
+    assert.equal(result.added, 1, "ce doit être un nouveau produit");
+    assert.equal(
+      result.catalog.products.find((p) => p.id === "es-huile-olive")!.price,
+      seedCatalog.products.find((p) => p.id === "es-huile-olive")!.price,
+    );
+  });
+
+  it("accepte un libellé qui précise le produit du catalogue", () => {
+    const result = importReleve(releve([
+      { nom: "Saumon fumé de l'Atlantique", ref: "15972", prix: 4.84 },
+      { nom: "Rôti de porc cuit", ref: "943251", prix: 1.39 },
+      { nom: "Double concentré de tomates", ref: "15934", prix: 1.37 },
+    ]));
+
+    assert.equal(result.matched, 3, "ces trois libellés précisent un produit connu");
+    assert.equal(result.catalog.products.find((p) => p.id === "po-saumon-fume")!.price, 4.84);
+    assert.equal(result.catalog.products.find((p) => p.id === "es-concentre")!.price, 1.37);
+  });
+});
+
+describe("rayons non alimentaires", () => {
+  const nonAlimentaires = releve([
+    { nom: "Croquettes à la volaille pour chat", ref: "309258", rayon: "ANIMALERIE ALIMENTATION", prix: 2.51 },
+    { nom: "Liquide vaisselle citron", ref: "39268", rayon: "ENTRETIEN DE LA MAISON", prix: 0.74 },
+    { nom: "Dentifrice goût menthe", ref: "347480", rayon: "HYGIENE", prix: 0.53 },
+    { nom: "Couches taille 4 (7-18kg)", ref: "25798", rayon: "BEBE ALIMENTS ET PUERICULTURE", prix: 8.07 },
+    { nom: "Crème hydratante visage et corps", ref: "429344", rayon: "BEAUTE PARFUMERIE", prix: 1.67 },
+    { nom: "Adoucissant liquide concentré", ref: "439419", rayon: "ENTRETIEN DU LINGE", prix: 2.3 },
+    { nom: "FOIN", ref: "262163", rayon: "ANIMALERIE ACCESSOIRES", prix: 1.87 },
+    { nom: "Bougies chauffe plats", ref: "545495", rayon: "ARTS DE LA TABLE", prix: 3.99 },
+    { nom: "Allume feux liquide", ref: "460745", rayon: "JARDIN LS", prix: 3.79 },
+  ]);
+
+  it("n'en laisse entrer aucun dans un catalogue alimentaire", () => {
+    const result = importReleve(nonAlimentaires);
+    assert.equal(result.nonFood, 9);
+    assert.equal(result.added, 0);
+    assert.equal(result.matched, 0);
+    assert.equal(
+      result.catalog.products.length,
+      seedCatalog.products.length,
+      "le catalogue ne doit pas grossir d'un seul produit",
+    );
+  });
+
+  it("écarte aussi un produit d'entretien qui ressemble à un aliment", () => {
+    // « Lait nettoyant pour bébé » n'est pas du lait : le filtre passe avant
+    // tout rapprochement de libellé.
+    const result = importReleve(releve([
+      { nom: "Lait nettoyant pour bébé", ref: "522582", rayon: "BEBE ALIMENTS ET PUERICULTURE", prix: 1.14 },
+    ]));
+    assert.equal(result.nonFood, 1);
+    assert.equal(
+      result.catalog.products.find((p) => p.id === "cr-lait-demi")!.price,
+      seedCatalog.products.find((p) => p.id === "cr-lait-demi")!.price,
+    );
+  });
+
+  it("signale un rayon inconnu au lieu de le classer en silence", () => {
+    const result = importReleve(releve([
+      { nom: "Cassoulet", ref: "749206", rayon: "SELF-DISCOUNT", prix: 1.99 },
+    ]));
+    assert.deepEqual(result.unknownAisles, ["SELF-DISCOUNT"]);
+    assert.equal(result.added, 1, "le produit est conservé, seul son rayon est incertain");
+  });
+
+  it("laisse passer un relevé sans rayon, comme celui d'un ticket", () => {
+    const { entries } = parseReceiptText("PENNE 500G   1,42 €");
+    const result = mergeEntries(entries);
+    assert.equal(result.nonFood, 0);
+    assert.equal(result.matched, 1);
+  });
+});

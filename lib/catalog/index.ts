@@ -193,20 +193,54 @@ export function findProduct(query: string, pool: Product[]): Product | undefined
     .sort((a, b) => b.score - a.score);
 
   const best = scored[0];
-  return best && best.score >= 0.5 ? best.product : undefined;
+  return best && best.score >= FUZZY_THRESHOLD ? best.product : undefined;
 }
 
-/** Score de recouvrement des mots, suffisant pour du rapprochement de libellés. */
+/**
+ * Seuil au-delà duquel deux libellés désignent le même produit.
+ *
+ * Calibré pour laisser passer les prolongements de nom (« Huile d'olive » et
+ * « Huile d'olive vierge extra ») tout en refusant les simples cousinages :
+ * « Huile de friture » et « Huile d'olive » ne partagent qu'un mot générique.
+ */
+const FUZZY_THRESHOLD = 0.62;
+
+/**
+ * Proximité de deux libellés de produit, entre 0 et 1.
+ *
+ * La règle naïve — un libellé qui contient l'autre vaut 1 — se trompait
+ * lourdement : « Sardines à l'huile d'olive » contient « Huile d'olive », et
+ * le prix de la bouteille venait écraser celui de la boîte. Ce qui compte
+ * n'est pas la présence du texte n'importe où, mais que l'un des deux
+ * libellés soit un prolongement ou une précision de l'autre.
+ */
 function similarity(query: string, candidate: string): number {
-  if (candidate.includes(query) || query.includes(candidate)) return 1;
-  const queryWords = new Set(query.split(/\s+/).filter((w) => w.length > 2));
-  if (queryWords.size === 0) return 0;
-  const candidateWords = candidate.split(/\s+/);
-  let hits = 0;
-  for (const word of queryWords) {
-    if (candidateWords.some((c) => c.startsWith(word) || word.startsWith(c))) hits++;
-  }
-  return hits / queryWords.size;
+  if (query === candidate) return 1;
+
+  // « Huile d'olive » → « Huile d'olive vierge extra » : même produit précisé.
+  if (candidate.startsWith(query) || query.startsWith(candidate)) return 0.9;
+
+  const queryWords = words(query);
+  const candidateWords = words(candidate);
+  if (queryWords.length === 0 || candidateWords.length === 0) return 0;
+
+  // Tous les mots du candidat figurent dans la requête : celle-ci en est une
+  // version plus détaillée. « Saumon fumé » ⊂ « Saumon fumé de l'Atlantique ».
+  if (candidateWords.every((word) => matchesAny(word, queryWords))) return 0.85;
+
+  // Sinon, part des mots de la requête retrouvés — plafonnée sous les cas
+  // précédents, car un recouvrement partiel reste une conjecture.
+  const hits = queryWords.filter((word) => matchesAny(word, candidateWords)).length;
+  return (hits / queryWords.length) * 0.8;
+}
+
+/** Mots porteurs de sens : les particules de deux lettres n'en sont pas. */
+function words(value: string): string[] {
+  return value.split(/\s+/).filter((word) => word.length > 2);
+}
+
+function matchesAny(word: string, pool: string[]): boolean {
+  return pool.some((other) => other.startsWith(word) || word.startsWith(other));
 }
 
 /** Applique les surcharges magasin de l'utilisateur (prix relevés, ruptures). */

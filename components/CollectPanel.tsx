@@ -335,6 +335,24 @@ function ImportReport({ result }: { result: CollectResult }) {
         </p>
       )}
 
+      {result.nonFood > 0 && (
+        <p className="mt-1">
+          {result.nonFood} produit(s) écarté(s) : entretien, hygiène, beauté,
+          animalerie ou puériculture — ils n&apos;ont rien à faire dans un
+          catalogue alimentaire.
+        </p>
+      )}
+
+      {result.unknownAisles.length > 0 && (
+        <p className="mt-1">
+          Rayon{result.unknownAisles.length > 1 ? "s" : ""} non reconnu
+          {result.unknownAisles.length > 1 ? "s" : ""} :{" "}
+          <span className="font-mono">{result.unknownAisles.slice(0, 5).join(", ")}</span>
+          {result.unknownAisles.length > 5 && "…"} — ces produits sont conservés
+          mais rangés par défaut en épicerie salée.
+        </p>
+      )}
+
       {result.rejected.length > 0 && (
         <ul className="mt-2 list-disc space-y-1 pl-4">
           {result.rejected.slice(0, 6).map((entry, i) => (

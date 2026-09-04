@@ -232,7 +232,24 @@ aussi le total du rayon dans
 `G.configuration.searchPages.trackingObject.page.total`, ce qui permet de dire
 combien de produits restent à dérouler.
 
-Attention à un piège : `cug` est la **référence interne** d'Auchan, pas un
+Deux pièges, tous deux rencontrés sur un relevé réel :
+
+**Un relevé de rayon ramène tout le magasin.** Sur 250 produits relevés dans
+une catégorie « marque distributeur », 90 environ venaient de rayons non
+alimentaires : entretien, hygiène, beauté, animalerie, puériculture, jardin,
+arts de la table. Sans filtre, « Croquettes à la volaille pour chat » entrait
+au catalogue comme source de protéine. Ces rayons sont donc écartés à
+l'import, avant même tout rapprochement de libellé — « Lait nettoyant pour
+bébé » ne doit pas non plus venir écraser le prix du lait.
+
+**Le rapprochement de libellés doit être strict.** « Sardines à l'huile
+d'olive » contient le texte « huile d'olive » : une règle naïve y voyait le
+même produit, et le prix de la bouteille écrasait celui de la boîte. À
+l'inverse, « Huile de friture » et « Huile d'olive » ne partagent qu'un mot
+générique. Ce qui vaut rapprochement, c'est qu'un libellé soit le prolongement
+ou la précision de l'autre, pas qu'il en contienne le texte quelque part.
+
+Attention aussi : `cug` est la **référence interne** d'Auchan, pas un
 code-barres. Elle est parfaite pour réapparier un relevé au suivant même si le
 libellé change, mais la ranger dans le champ `ean` empoisonnerait
 l'appariement avec Open Prices, qui travaille sur de vrais EAN. Les deux sont

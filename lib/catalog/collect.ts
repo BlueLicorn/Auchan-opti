@@ -57,6 +57,33 @@ const RAYONS_AUCHAN: { motif: RegExp; rayon: Rayon }[] = [
   { motif: /apero|monde|snacking/, rayon: "Monde & Apéritif" },
 ];
 
+/**
+ * Rayons dont rien ne doit entrer dans un catalogue alimentaire.
+ *
+ * Un relevé de rayon Auchan ramène aussi la lessive, le dentifrice, les
+ * couches et les croquettes pour chat. Sans ce filtre, tout cela atterrissait
+ * dans le rayon par défaut « Épicerie salée » — et « Croquettes à la volaille
+ * pour chat » devenait une source de protéine que le planificateur pouvait
+ * choisir. Un produit d'un de ces rayons est écarté, même s'il ressemble à un
+ * produit connu : « Lait nettoyant pour bébé » n'est pas du lait.
+ */
+const RAYONS_NON_ALIMENTAIRES = [
+  /entretien/,
+  /hygiene/,
+  /beaute|parfumerie/,
+  /animalerie/,
+  /bebe|puericulture/,
+  /arts de la table|bazar|vaisselle/,
+  /jardin/,
+  /textile|papeterie|culture|bricolage|auto/,
+];
+
+export function estNonAlimentaire(rayon: unknown): boolean {
+  const texte = normalize(String(rayon ?? ""));
+  if (!texte) return false;
+  return RAYONS_NON_ALIMENTAIRES.some((motif) => motif.test(texte));
+}
+
 function parseRayon(value: unknown): Rayon | undefined {
   const texte = normalize(String(value ?? ""));
   if (!texte) return undefined;
@@ -76,6 +103,16 @@ export interface CollectResult {
   added: number;
   /** Disponibilités renseignées, tous produits confondus. */
   stockUpdated: number;
+  /** Produits écartés parce qu'ils viennent d'un rayon non alimentaire. */
+  nonFood: number;
+  /**
+   * Rayons rencontrés que la table de correspondance ne connaît pas.
+   *
+   * Leurs produits sont conservés dans un rayon par défaut, mais les nommer
+   * permet d'enrichir la table plutôt que de laisser le classement dériver
+   * en silence.
+   */
+  unknownAisles: string[];
   rejected: { label: string; reason: string }[];
   storeLabel?: string;
 }
@@ -146,6 +183,8 @@ export function mergeEntries(
   let matched = 0;
   let added = 0;
   let stockUpdated = 0;
+  let nonFood = 0;
+  const unknownAisles = new Set<string>();
   const stores = new Map<string, number>();
 
   for (const entry of entries) {
@@ -153,6 +192,17 @@ export function mergeEntries(
     if (name.length < 2) {
       rejected.push({ label: entry.ean ?? "(sans nom)", reason: "Libellé manquant." });
       continue;
+    }
+
+    // Le filtre s'applique avant tout appariement : un produit d'entretien ne
+    // doit pas non plus venir écraser le prix d'un produit alimentaire par
+    // ressemblance de libellé.
+    if (estNonAlimentaire(entry.rayon)) {
+      nonFood++;
+      continue;
+    }
+    if (entry.rayon && !parseRayon(entry.rayon)) {
+      unknownAisles.add(String(entry.rayon));
     }
 
     const price = Number(entry.prix);
@@ -263,6 +313,8 @@ export function mergeEntries(
     matched,
     added,
     stockUpdated,
+    nonFood,
+    unknownAisles: [...unknownAisles],
     rejected,
     storeLabel,
   };
@@ -271,6 +323,7 @@ export function mergeEntries(
 function empty(base: Catalog, reason: string): CollectResult {
   return {
     catalog: base, matched: 0, added: 0, stockUpdated: 0,
+    nonFood: 0, unknownAisles: [],
     rejected: [{ label: "—", reason }],
   };
 }
