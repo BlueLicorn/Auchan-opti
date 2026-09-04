@@ -209,6 +209,18 @@ node scripts/build-catalog.mjs
 
 La source lisible est dans le script ; le JSON est un artefact.
 
+## Déployer
+
+Le projet est relié à Vercel : `main` est la branche de production, tout push
+y déclenche un déploiement. `npm run prebuild` régénère le favori avant chaque
+build, pour que le collecteur livré ne diverge jamais du script source.
+
+Un piège à connaître : Vercel ne construit qu'une fois un même commit. Pousser
+d'abord la branche de travail puis la même révision sur `main` peut donc ne
+produire aucun déploiement de production — le SHA a déjà été vu. Pousser
+`main` en premier évite le problème ; sinon il faut promouvoir le
+déploiement existant depuis le tableau de bord.
+
 ## Limites connues
 
 - **Les prix embarqués sont des estimations**, et l'application le dit sur
