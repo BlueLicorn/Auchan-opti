@@ -740,3 +740,36 @@ describe("n'utiliser que des prix relevés", () => {
     );
   });
 });
+
+describe("un plan enregistré par une version antérieure", () => {
+  it("est marqué comme périmé quand la version a changé", async () => {
+    const { KEYS, PLAN_VERSION, loadPlan, savePlan } = await import("@/lib/storage");
+
+    // Faux localStorage : le module lit `window.localStorage`.
+    const boite = new Map<string, string>();
+    (globalThis as { window?: unknown }).window = {
+      localStorage: {
+        getItem: (k: string) => boite.get(k) ?? null,
+        setItem: (k: string, v: string) => void boite.set(k, v),
+        removeItem: (k: string) => void boite.delete(k),
+      },
+    };
+
+    try {
+      const plan = { recipes: [], shoppingList: { lines: [], total: 0 } } as never;
+      savePlan(plan);
+      assert.equal(loadPlan()?.current, true, "un plan tout juste écrit est à jour");
+
+      boite.set(KEYS.planVersion, JSON.stringify(PLAN_VERSION - 1));
+      assert.equal(loadPlan()?.current, false, "une version antérieure doit être signalée");
+
+      boite.delete(KEYS.planVersion);
+      assert.equal(loadPlan()?.current, false, "un plan sans version est antérieur au marquage");
+
+      boite.delete(KEYS.plan);
+      assert.equal(loadPlan(), null);
+    } finally {
+      delete (globalThis as { window?: unknown }).window;
+    }
+  });
+});

@@ -7,7 +7,7 @@ import { generatePlan } from "@/lib/planner";
 import { GeminiError, listModels, preferredModel } from "@/lib/ai/gemini";
 import {
   DEFAULT_REQUEST, KEYS, loadCatalog, loadOverrides, loadPlan, loadRequest,
-  read, remove, write,
+  read, remove, savePlan, write,
 } from "@/lib/storage";
 import { PlanForm, type BudgetMode } from "@/components/PlanForm";
 import { PlanResult } from "@/components/PlanResult";
@@ -29,6 +29,8 @@ export default function Home() {
   const [budgetMode, setBudgetMode] = useState<BudgetMode>("total");
 
   const [plan, setPlan] = useState<MealPlan | null>(null);
+  /** Le plan restauré vient d'une version antérieure de l'application. */
+  const [planPerime, setPlanPerime] = useState(false);
   const [checked, setChecked] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState("");
@@ -48,7 +50,8 @@ export default function Home() {
 
     const saved = loadPlan();
     if (saved) {
-      setPlan(saved);
+      setPlan(saved.plan);
+      setPlanPerime(!saved.current);
       setView("result");
     }
     setReady(true);
@@ -127,7 +130,8 @@ export default function Home() {
 
       setPlan(result);
       setChecked([]);
-      write(KEYS.plan, result);
+      setPlanPerime(false);
+      savePlan(result);
       setView("result");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (caught) {
@@ -141,7 +145,9 @@ export default function Home() {
   const reset = () => {
     setPlan(null);
     setChecked([]);
+    setPlanPerime(false);
     remove(KEYS.plan);
+    remove(KEYS.planVersion);
     setView("form");
   };
 
@@ -198,18 +204,38 @@ export default function Home() {
           onAssumeStaplesChange={setAssumeStaples}
         />
       ) : view === "result" && plan ? (
-        <PlanResult
-          plan={plan}
-          checked={checked}
-          onToggleChecked={(productId) =>
-            setChecked((current) =>
-              current.includes(productId)
-                ? current.filter((id) => id !== productId)
-                : [...current, productId],
-            )
-          }
-          onReset={reset}
-        />
+        <>
+          {planPerime && (
+            <div className="mb-5">
+              <Notice tone="warn" title="Ce plan vient d'une version précédente">
+                Il a été composé avant une correction de l&apos;application et peut
+                contenir des quantités erronées — c&apos;est ainsi qu&apos;une recette
+                se retrouvait avec cinquante salades. Regénère-le pour repartir sur
+                des règles à jour.{" "}
+                <button
+                  type="button"
+                  className="text-accent underline"
+                  onClick={() => setView("form")}
+                >
+                  Modifier ma demande
+                </button>
+                .
+              </Notice>
+            </div>
+          )}
+          <PlanResult
+            plan={plan}
+            checked={checked}
+            onToggleChecked={(productId) =>
+              setChecked((current) =>
+                current.includes(productId)
+                  ? current.filter((id) => id !== productId)
+                  : [...current, productId],
+              )
+            }
+            onReset={reset}
+          />
+        </>
       ) : (
         <div className="space-y-5">
           {error && (
