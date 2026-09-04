@@ -1,0 +1,6236 @@
+{
+  "products": [
+    {
+      "id": "fl-pomme-gala",
+      "name": "Pommes Gala",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 52,
+        "protein": 0.3,
+        "carbs": 14,
+        "fat": 0.2,
+        "fiber": 2.4,
+        "salt": 0
+      },
+      "shelfLifeDays": 12,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-banane",
+      "name": "Bananes",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 89,
+        "protein": 1.1,
+        "carbs": 23,
+        "fat": 0.3,
+        "fiber": 2.6,
+        "salt": 0
+      },
+      "shelfLifeDays": 7,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-orange",
+      "name": "Oranges à jus",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 2000,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 47,
+        "protein": 0.9,
+        "carbs": 12,
+        "fat": 0.1,
+        "fiber": 2.4,
+        "salt": 0
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-clementine",
+      "name": "Clémentines",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 53,
+        "protein": 0.8,
+        "carbs": 13,
+        "fat": 0.2,
+        "fiber": 1.7,
+        "salt": 0
+      },
+      "shelfLifeDays": 10,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-poire",
+      "name": "Poires Conférence",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 57,
+        "protein": 0.4,
+        "carbs": 15,
+        "fat": 0.1,
+        "fiber": 3.1,
+        "salt": 0
+      },
+      "shelfLifeDays": 10,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-kiwi",
+      "name": "Kiwis",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 6,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 61,
+        "protein": 1.1,
+        "carbs": 15,
+        "fat": 0.5,
+        "fiber": 3,
+        "salt": 0
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-citron",
+      "name": "Citrons jaunes",
+      "rayon": "Fruits & Légumes",
+      "category": "agrume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 4,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 29,
+        "protein": 1.1,
+        "carbs": 9,
+        "fat": 0.3,
+        "fiber": 2.8,
+        "salt": 0
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-citron-vert",
+      "name": "Citrons verts",
+      "rayon": "Fruits & Légumes",
+      "category": "agrume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 3,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 30,
+        "protein": 0.7,
+        "carbs": 11,
+        "fat": 0.2,
+        "fiber": 2.8,
+        "salt": 0
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-fraise",
+      "name": "Fraises",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 250,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 32,
+        "protein": 0.7,
+        "carbs": 8,
+        "fat": 0.3,
+        "fiber": 2,
+        "salt": 0
+      },
+      "shelfLifeDays": 4,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-raisin",
+      "name": "Raisin blanc",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 69,
+        "protein": 0.7,
+        "carbs": 18,
+        "fat": 0.2,
+        "fiber": 0.9,
+        "salt": 0
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-ananas",
+      "name": "Ananas",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 1,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 50,
+        "protein": 0.5,
+        "carbs": 13,
+        "fat": 0.1,
+        "fiber": 1.4,
+        "salt": 0
+      },
+      "shelfLifeDays": 7,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-avocat",
+      "name": "Avocats",
+      "rayon": "Fruits & Légumes",
+      "category": "fruit",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 2,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 160,
+        "protein": 2,
+        "carbs": 9,
+        "fat": 15,
+        "fiber": 7,
+        "salt": 0
+      },
+      "shelfLifeDays": 6,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-pdt",
+      "name": "Pommes de terre à chair ferme",
+      "rayon": "Fruits & Légumes",
+      "category": "feculent-frais",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 2500,
+      "price": 3.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 77,
+        "protein": 2,
+        "carbs": 17,
+        "fat": 0.1,
+        "fiber": 2.2,
+        "salt": 0
+      },
+      "shelfLifeDays": 30,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-patate-douce",
+      "name": "Patates douces",
+      "rayon": "Fruits & Légumes",
+      "category": "feculent-frais",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 3.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 86,
+        "protein": 1.6,
+        "carbs": 20,
+        "fat": 0.1,
+        "fiber": 3,
+        "salt": 0.06
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-carotte",
+      "name": "Carottes",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 1.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 41,
+        "protein": 0.9,
+        "carbs": 10,
+        "fat": 0.2,
+        "fiber": 2.8,
+        "salt": 0.07
+      },
+      "shelfLifeDays": 18,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-oignon",
+      "name": "Oignons jaunes",
+      "rayon": "Fruits & Légumes",
+      "category": "aromate",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 1.59,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 40,
+        "protein": 1.1,
+        "carbs": 9,
+        "fat": 0.1,
+        "fiber": 1.7,
+        "salt": 0
+      },
+      "shelfLifeDays": 90,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-echalote",
+      "name": "Échalotes",
+      "rayon": "Fruits & Légumes",
+      "category": "aromate",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 72,
+        "protein": 2.5,
+        "carbs": 17,
+        "fat": 0.1,
+        "fiber": 3.2,
+        "salt": 0
+      },
+      "shelfLifeDays": 90,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-ail",
+      "name": "Ail",
+      "rayon": "Fruits & Légumes",
+      "category": "aromate",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 3,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 149,
+        "protein": 6.4,
+        "carbs": 33,
+        "fat": 0.5,
+        "fiber": 2.1,
+        "salt": 0
+      },
+      "shelfLifeDays": 120,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-gingembre",
+      "name": "Gingembre frais",
+      "rayon": "Fruits & Légumes",
+      "category": "aromate",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 150,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 80,
+        "protein": 1.8,
+        "carbs": 18,
+        "fat": 0.8,
+        "fiber": 2,
+        "salt": 0
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-courgette",
+      "name": "Courgettes",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 17,
+        "protein": 1.2,
+        "carbs": 3.1,
+        "fat": 0.3,
+        "fiber": 1,
+        "salt": 0
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-aubergine",
+      "name": "Aubergines",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 25,
+        "protein": 1,
+        "carbs": 6,
+        "fat": 0.2,
+        "fiber": 3,
+        "salt": 0
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-poivron",
+      "name": "Poivrons rouges",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 2,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 31,
+        "protein": 1,
+        "carbs": 6,
+        "fat": 0.3,
+        "fiber": 2.1,
+        "salt": 0
+      },
+      "shelfLifeDays": 10,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-tomate",
+      "name": "Tomates grappe",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 18,
+        "protein": 0.9,
+        "carbs": 3.9,
+        "fat": 0.2,
+        "fiber": 1.2,
+        "salt": 0
+      },
+      "shelfLifeDays": 7,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-tomate-cerise",
+      "name": "Tomates cerises",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 18,
+        "protein": 0.9,
+        "carbs": 3.9,
+        "fat": 0.2,
+        "fiber": 1.2,
+        "salt": 0
+      },
+      "shelfLifeDays": 7,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "fl-concombre",
+      "name": "Concombre",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 1,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 15,
+        "protein": 0.7,
+        "carbs": 3.6,
+        "fat": 0.1,
+        "fiber": 0.5,
+        "salt": 0
+      },
+      "shelfLifeDays": 7,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "fl-salade",
+      "name": "Salade batavia",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 1,
+      "price": 1.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 15,
+        "protein": 1.4,
+        "carbs": 2.9,
+        "fat": 0.2,
+        "fiber": 1.3,
+        "salt": 0
+      },
+      "shelfLifeDays": 5,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "fl-epinard",
+      "name": "Pousses d'épinard",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 300,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 23,
+        "protein": 2.9,
+        "carbs": 3.6,
+        "fat": 0.4,
+        "fiber": 2.2,
+        "salt": 0.08
+      },
+      "shelfLifeDays": 5,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "fl-brocoli",
+      "name": "Brocoli",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 34,
+        "protein": 2.8,
+        "carbs": 7,
+        "fat": 0.4,
+        "fiber": 2.6,
+        "salt": 0.03
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-chou-fleur",
+      "name": "Chou-fleur",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 1,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 25,
+        "protein": 1.9,
+        "carbs": 5,
+        "fat": 0.3,
+        "fiber": 2,
+        "salt": 0.03
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-haricot-vert",
+      "name": "Haricots verts frais",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 31,
+        "protein": 1.8,
+        "carbs": 7,
+        "fat": 0.1,
+        "fiber": 2.7,
+        "salt": 0
+      },
+      "shelfLifeDays": 6,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-champignon",
+      "name": "Champignons de Paris",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 22,
+        "protein": 3.1,
+        "carbs": 3.3,
+        "fat": 0.3,
+        "fiber": 1,
+        "salt": 0
+      },
+      "shelfLifeDays": 6,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-poireau",
+      "name": "Poireaux",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 61,
+        "protein": 1.5,
+        "carbs": 14,
+        "fat": 0.3,
+        "fiber": 1.8,
+        "salt": 0
+      },
+      "shelfLifeDays": 10,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-celeri",
+      "name": "Céleri branche",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 1,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 16,
+        "protein": 0.7,
+        "carbs": 3,
+        "fat": 0.2,
+        "fiber": 1.6,
+        "salt": 0.08
+      },
+      "shelfLifeDays": 10,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "fl-butternut",
+      "name": "Courge butternut",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 1,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 45,
+        "protein": 1,
+        "carbs": 12,
+        "fat": 0.1,
+        "fiber": 2,
+        "salt": 0
+      },
+      "shelfLifeDays": 30,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-betterave",
+      "name": "Betteraves cuites",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 2.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 43,
+        "protein": 1.6,
+        "carbs": 10,
+        "fat": 0.2,
+        "fiber": 2.8,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 12,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "fl-radis",
+      "name": "Radis",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "piece",
+      "packSize": 1,
+      "price": 1.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 16,
+        "protein": 0.7,
+        "carbs": 3.4,
+        "fat": 0.1,
+        "fiber": 1.6,
+        "salt": 0.04
+      },
+      "shelfLifeDays": 6,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "fl-endive",
+      "name": "Endives",
+      "rayon": "Fruits & Légumes",
+      "category": "legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 17,
+        "protein": 1,
+        "carbs": 4,
+        "fat": 0.1,
+        "fiber": 3.1,
+        "salt": 0
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "fl-persil",
+      "name": "Persil plat",
+      "rayon": "Fruits & Légumes",
+      "category": "herbe",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 30,
+      "price": 0.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 36,
+        "protein": 3,
+        "carbs": 6,
+        "fat": 0.8,
+        "fiber": 3.3,
+        "salt": 0.06
+      },
+      "shelfLifeDays": 5,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-basilic",
+      "name": "Basilic en pot",
+      "rayon": "Fruits & Légumes",
+      "category": "herbe",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 40,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 23,
+        "protein": 3.2,
+        "carbs": 2.7,
+        "fat": 0.6,
+        "fiber": 1.6,
+        "salt": 0
+      },
+      "shelfLifeDays": 10,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "fl-coriandre",
+      "name": "Coriandre fraîche",
+      "rayon": "Fruits & Légumes",
+      "category": "herbe",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 30,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 23,
+        "protein": 2.1,
+        "carbs": 3.7,
+        "fat": 0.5,
+        "fiber": 2.8,
+        "salt": 0
+      },
+      "shelfLifeDays": 5,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-hache-5",
+      "name": "Steaks hachés 5% MG",
+      "rayon": "Boucherie",
+      "category": "boeuf",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 250,
+      "price": 3.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 130,
+        "protein": 21,
+        "carbs": 0,
+        "fat": 5,
+        "fiber": 0,
+        "salt": 0.15
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-hache-15",
+      "name": "Steaks hachés 15% MG",
+      "rayon": "Boucherie",
+      "category": "boeuf",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 5.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 220,
+        "protein": 19,
+        "carbs": 0,
+        "fat": 15,
+        "fiber": 0,
+        "salt": 0.15
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-bourguignon",
+      "name": "Bœuf à braiser (bourguignon)",
+      "rayon": "Boucherie",
+      "category": "boeuf",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 800,
+      "price": 11.9,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 180,
+        "protein": 20,
+        "carbs": 0,
+        "fat": 11,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-entrecote",
+      "name": "Entrecôte de bœuf",
+      "rayon": "Boucherie",
+      "category": "boeuf",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 300,
+      "price": 8.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 240,
+        "protein": 20,
+        "carbs": 0,
+        "fat": 18,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-roti-boeuf",
+      "name": "Rôti de bœuf",
+      "rayon": "Boucherie",
+      "category": "boeuf",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 800,
+      "price": 14.9,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 175,
+        "protein": 21,
+        "carbs": 0,
+        "fat": 10,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-cote-porc",
+      "name": "Côtes de porc",
+      "rayon": "Boucherie",
+      "category": "porc",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 700,
+      "price": 6.49,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 210,
+        "protein": 22,
+        "carbs": 0,
+        "fat": 14,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-echine",
+      "name": "Échine de porc",
+      "rayon": "Boucherie",
+      "category": "porc",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 7.99,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 250,
+        "protein": 19,
+        "carbs": 0,
+        "fat": 20,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-roti-porc",
+      "name": "Rôti de porc",
+      "rayon": "Boucherie",
+      "category": "porc",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 900,
+      "price": 8.49,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 200,
+        "protein": 21,
+        "carbs": 0,
+        "fat": 13,
+        "fiber": 0,
+        "salt": 0.12
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-jarret",
+      "name": "Jarret de porc demi-sel",
+      "rayon": "Boucherie",
+      "category": "porc",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 800,
+      "price": 5.49,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 230,
+        "protein": 20,
+        "carbs": 0,
+        "fat": 17,
+        "fiber": 0,
+        "salt": 1.4
+      },
+      "shelfLifeDays": 4,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-lardon",
+      "name": "Lardons fumés",
+      "rayon": "Boucherie",
+      "category": "porc",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 200,
+      "price": 2.79,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 250,
+        "protein": 16,
+        "carbs": 1,
+        "fat": 20,
+        "fiber": 0,
+        "salt": 2.2
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-toulouse",
+      "name": "Saucisses de Toulouse",
+      "rayon": "Boucherie",
+      "category": "porc",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 400,
+      "price": 4.99,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 290,
+        "protein": 16,
+        "carbs": 1,
+        "fat": 25,
+        "fiber": 0,
+        "salt": 1.5
+      },
+      "shelfLifeDays": 4,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-merguez",
+      "name": "Merguez",
+      "rayon": "Boucherie",
+      "category": "agneau",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 400,
+      "price": 4.79,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 300,
+        "protein": 15,
+        "carbs": 1,
+        "fat": 26,
+        "fiber": 0,
+        "salt": 1.7
+      },
+      "shelfLifeDays": 4,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-agneau",
+      "name": "Épaule d'agneau",
+      "rayon": "Boucherie",
+      "category": "agneau",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 13.9,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 235,
+        "protein": 18,
+        "carbs": 0,
+        "fat": 18,
+        "fiber": 0,
+        "salt": 0.15
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bo-veau",
+      "name": "Escalopes de veau",
+      "rayon": "Boucherie",
+      "category": "veau",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 300,
+      "price": 6.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 120,
+        "protein": 21,
+        "carbs": 0,
+        "fat": 4,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "vo-filet-poulet",
+      "name": "Filets de poulet",
+      "rayon": "Volaille",
+      "category": "poulet",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 8.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 110,
+        "protein": 23,
+        "carbs": 0,
+        "fat": 1.5,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "vo-aiguillette",
+      "name": "Aiguillettes de poulet",
+      "rayon": "Volaille",
+      "category": "poulet",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 4.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 110,
+        "protein": 23,
+        "carbs": 0,
+        "fat": 1.5,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "vo-cuisse-poulet",
+      "name": "Cuisses de poulet",
+      "rayon": "Volaille",
+      "category": "poulet",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 900,
+      "price": 4.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 180,
+        "protein": 19,
+        "carbs": 0,
+        "fat": 11,
+        "fiber": 0,
+        "salt": 0.12
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "vo-poulet-entier",
+      "name": "Poulet fermier entier",
+      "rayon": "Volaille",
+      "category": "poulet",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1400,
+      "price": 7.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 165,
+        "protein": 20,
+        "carbs": 0,
+        "fat": 9,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 4,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "vo-escalope-dinde",
+      "name": "Escalopes de dinde",
+      "rayon": "Volaille",
+      "category": "dinde",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 5.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 105,
+        "protein": 24,
+        "carbs": 0,
+        "fat": 1,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "vo-magret",
+      "name": "Magret de canard",
+      "rayon": "Volaille",
+      "category": "canard",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 350,
+      "price": 9.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 200,
+        "protein": 19,
+        "carbs": 0,
+        "fat": 14,
+        "fiber": 0,
+        "salt": 0.15
+      },
+      "shelfLifeDays": 4,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "po-saumon",
+      "name": "Pavés de saumon",
+      "rayon": "Poissonnerie",
+      "category": "poisson-gras",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 250,
+      "price": 6.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 208,
+        "protein": 20,
+        "carbs": 0,
+        "fat": 13,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 2,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "po-cabillaud",
+      "name": "Dos de cabillaud",
+      "rayon": "Poissonnerie",
+      "category": "poisson-blanc",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 300,
+      "price": 6.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 82,
+        "protein": 18,
+        "carbs": 0,
+        "fat": 0.7,
+        "fiber": 0,
+        "salt": 0.2
+      },
+      "shelfLifeDays": 2,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "po-lieu",
+      "name": "Filets de lieu noir",
+      "rayon": "Poissonnerie",
+      "category": "poisson-blanc",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 5.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 90,
+        "protein": 19,
+        "carbs": 0,
+        "fat": 1,
+        "fiber": 0,
+        "salt": 0.25
+      },
+      "shelfLifeDays": 2,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "po-truite",
+      "name": "Filets de truite",
+      "rayon": "Poissonnerie",
+      "category": "poisson-gras",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 250,
+      "price": 5.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 145,
+        "protein": 20,
+        "carbs": 0,
+        "fat": 7,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 2,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "po-crevette",
+      "name": "Crevettes roses cuites",
+      "rayon": "Poissonnerie",
+      "category": "fruits-de-mer",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 200,
+      "price": 5.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 99,
+        "protein": 24,
+        "carbs": 0.2,
+        "fat": 0.3,
+        "fiber": 0,
+        "salt": 1.5
+      },
+      "shelfLifeDays": 2,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "po-moule",
+      "name": "Moules de bouchot",
+      "rayon": "Poissonnerie",
+      "category": "fruits-de-mer",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 4.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 86,
+        "protein": 12,
+        "carbs": 3.7,
+        "fat": 2.2,
+        "fiber": 0,
+        "salt": 0.6
+      },
+      "shelfLifeDays": 2,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "po-saumon-fume",
+      "name": "Saumon fumé",
+      "rayon": "Poissonnerie",
+      "category": "poisson-gras",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 140,
+      "price": 5.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 180,
+        "protein": 23,
+        "carbs": 0.5,
+        "fat": 10,
+        "fiber": 0,
+        "salt": 3
+      },
+      "shelfLifeDays": 7,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "po-sardine-fraiche",
+      "name": "Sardines fraîches",
+      "rayon": "Poissonnerie",
+      "category": "poisson-gras",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 4.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 165,
+        "protein": 21,
+        "carbs": 0,
+        "fat": 9,
+        "fiber": 0,
+        "salt": 0.15
+      },
+      "shelfLifeDays": 2,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "ch-jambon",
+      "name": "Jambon blanc découenné",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "charcuterie",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 160,
+      "price": 2.49,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 110,
+        "protein": 20,
+        "carbs": 1,
+        "fat": 3,
+        "fiber": 0,
+        "salt": 2
+      },
+      "shelfLifeDays": 6,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ch-jambon-dinde",
+      "name": "Jambon de dinde",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "charcuterie",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 160,
+      "price": 1.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 100,
+        "protein": 19,
+        "carbs": 1.5,
+        "fat": 2,
+        "fiber": 0,
+        "salt": 2
+      },
+      "shelfLifeDays": 6,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ch-chorizo",
+      "name": "Chorizo doux",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "charcuterie",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 100,
+      "price": 2.79,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 380,
+        "protein": 24,
+        "carbs": 2,
+        "fat": 30,
+        "fiber": 0,
+        "salt": 3.5
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ch-saucisson",
+      "name": "Saucisson sec",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "charcuterie",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 200,
+      "price": 3.49,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 420,
+        "protein": 25,
+        "carbs": 2,
+        "fat": 35,
+        "fiber": 0,
+        "salt": 4.5
+      },
+      "shelfLifeDays": 30,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ch-coppa",
+      "name": "Coppa",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "charcuterie",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 80,
+      "price": 3.49,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 340,
+        "protein": 27,
+        "carbs": 1,
+        "fat": 26,
+        "fiber": 0,
+        "salt": 3.8
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ch-bacon",
+      "name": "Bacon en tranches",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "charcuterie",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 150,
+      "price": 2.29,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 210,
+        "protein": 22,
+        "carbs": 1,
+        "fat": 13,
+        "fiber": 0,
+        "salt": 2.8
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "ch-rillettes",
+      "name": "Rillettes du Mans",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "charcuterie",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 220,
+      "price": 2.49,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 420,
+        "protein": 17,
+        "carbs": 0.5,
+        "fat": 39,
+        "fiber": 0,
+        "salt": 1.6
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ch-pate",
+      "name": "Pâté de campagne",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "charcuterie",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 180,
+      "price": 2.19,
+      "diet": [
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 330,
+        "protein": 14,
+        "carbs": 2,
+        "fat": 29,
+        "fiber": 0,
+        "salt": 1.8
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ch-poulet-roti",
+      "name": "Poulet rôti prêt à manger",
+      "rayon": "Charcuterie & Traiteur",
+      "category": "traiteur",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1100,
+      "price": 8.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 190,
+        "protein": 22,
+        "carbs": 1,
+        "fat": 11,
+        "fiber": 0,
+        "salt": 0.9
+      },
+      "shelfLifeDays": 2,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-lait-demi",
+      "name": "Lait demi-écrémé UHT",
+      "rayon": "Crémerie",
+      "category": "lait",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 6000,
+      "price": 6.29,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 46,
+        "protein": 3.2,
+        "carbs": 4.8,
+        "fat": 1.5,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 90,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-lait-entier",
+      "name": "Lait entier UHT",
+      "rayon": "Crémerie",
+      "category": "lait",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 1000,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 64,
+        "protein": 3.2,
+        "carbs": 4.8,
+        "fat": 3.6,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 90,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-creme-epaisse",
+      "name": "Crème fraîche épaisse 30%",
+      "rayon": "Crémerie",
+      "category": "creme",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 200,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 300,
+        "protein": 2.4,
+        "carbs": 3,
+        "fat": 30,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-creme-liquide",
+      "name": "Crème liquide entière",
+      "rayon": "Crémerie",
+      "category": "creme",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 200,
+      "price": 1.09,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 300,
+        "protein": 2.3,
+        "carbs": 3.2,
+        "fat": 30,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 60,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-beurre",
+      "name": "Beurre doux",
+      "rayon": "Crémerie",
+      "category": "beurre",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 250,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 745,
+        "protein": 0.7,
+        "carbs": 0.7,
+        "fat": 82,
+        "fiber": 0,
+        "salt": 0.02
+      },
+      "shelfLifeDays": 45,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-beurre-sale",
+      "name": "Beurre demi-sel",
+      "rayon": "Crémerie",
+      "category": "beurre",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 250,
+      "price": 2.89,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 740,
+        "protein": 0.7,
+        "carbs": 0.7,
+        "fat": 81,
+        "fiber": 0,
+        "salt": 1.7
+      },
+      "shelfLifeDays": 45,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-oeuf",
+      "name": "Œufs plein air",
+      "rayon": "Crémerie",
+      "category": "oeuf",
+      "brandTier": "mdd",
+      "unit": "piece",
+      "packSize": 12,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 143,
+        "protein": 12.6,
+        "carbs": 0.7,
+        "fat": 9.5,
+        "fiber": 0,
+        "salt": 0.35
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-oeuf-bio",
+      "name": "Œufs bio",
+      "rayon": "Crémerie",
+      "category": "oeuf",
+      "brandTier": "bio",
+      "unit": "piece",
+      "packSize": 6,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 143,
+        "protein": 12.6,
+        "carbs": 0.7,
+        "fat": 9.5,
+        "fiber": 0,
+        "salt": 0.35
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-emmental",
+      "name": "Emmental râpé",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 200,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 380,
+        "protein": 28,
+        "carbs": 1,
+        "fat": 29,
+        "fiber": 0,
+        "salt": 1
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-comte",
+      "name": "Comté 12 mois",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 200,
+      "price": 4.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 410,
+        "protein": 27,
+        "carbs": 0.5,
+        "fat": 33,
+        "fiber": 0,
+        "salt": 0.8
+      },
+      "shelfLifeDays": 30,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-mozzarella",
+      "name": "Mozzarella",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 125,
+      "price": 1.09,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 280,
+        "protein": 18,
+        "carbs": 1,
+        "fat": 22,
+        "fiber": 0,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-parmesan",
+      "name": "Parmesan râpé",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 100,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 400,
+        "protein": 32,
+        "carbs": 0.5,
+        "fat": 29,
+        "fiber": 0,
+        "salt": 1.6
+      },
+      "shelfLifeDays": 60,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-chevre",
+      "name": "Bûche de chèvre",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 180,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 290,
+        "protein": 18,
+        "carbs": 1,
+        "fat": 23,
+        "fiber": 0,
+        "salt": 1.4
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-camembert",
+      "name": "Camembert",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 250,
+      "price": 2.19,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 300,
+        "protein": 20,
+        "carbs": 0.5,
+        "fat": 24,
+        "fiber": 0,
+        "salt": 1.6
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-reblochon",
+      "name": "Reblochon",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 450,
+      "price": 6.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 330,
+        "protein": 21,
+        "carbs": 0.5,
+        "fat": 27,
+        "fiber": 0,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-raclette",
+      "name": "Fromage à raclette en tranches",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 4.99,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 23,
+        "carbs": 1,
+        "fat": 28,
+        "fiber": 0,
+        "salt": 1.5
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-boursin",
+      "name": "Fromage ail & fines herbes",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 150,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 400,
+        "protein": 7,
+        "carbs": 2,
+        "fat": 39,
+        "fiber": 0,
+        "salt": 1.4
+      },
+      "shelfLifeDays": 30,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-ricotta",
+      "name": "Ricotta",
+      "rayon": "Crémerie",
+      "category": "fromage",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 250,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 150,
+        "protein": 9,
+        "carbs": 3,
+        "fat": 11,
+        "fiber": 0,
+        "salt": 0.3
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-yaourt-nature",
+      "name": "Yaourts nature",
+      "rayon": "Crémerie",
+      "category": "yaourt",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1500,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 60,
+        "protein": 4,
+        "carbs": 5,
+        "fat": 2.5,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-yaourt-grec",
+      "name": "Yaourts à la grecque",
+      "rayon": "Crémerie",
+      "category": "yaourt",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 600,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 115,
+        "protein": 4.5,
+        "carbs": 4,
+        "fat": 9,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-fromage-blanc",
+      "name": "Fromage blanc 3,2%",
+      "rayon": "Crémerie",
+      "category": "yaourt",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 75,
+        "protein": 7.5,
+        "carbs": 4,
+        "fat": 3.2,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-skyr",
+      "name": "Skyr nature",
+      "rayon": "Crémerie",
+      "category": "yaourt",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 450,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 60,
+        "protein": 11,
+        "carbs": 4,
+        "fat": 0.2,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-petit-suisse",
+      "name": "Petits-suisses",
+      "rayon": "Crémerie",
+      "category": "yaourt",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 720,
+      "price": 2.19,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 145,
+        "protein": 9,
+        "carbs": 3,
+        "fat": 10,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 21,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "cr-pate-feuilletee",
+      "name": "Pâte feuilletée",
+      "rayon": "Crémerie",
+      "category": "pate",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 230,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 380,
+        "protein": 5,
+        "carbs": 35,
+        "fat": 24,
+        "fiber": 1.5,
+        "salt": 1
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-pate-brisee",
+      "name": "Pâte brisée",
+      "rayon": "Crémerie",
+      "category": "pate",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 230,
+      "price": 1.39,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 375,
+        "protein": 5.5,
+        "carbs": 40,
+        "fat": 21,
+        "fiber": 1.8,
+        "salt": 1.1
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-pate-pizza",
+      "name": "Pâte à pizza",
+      "rayon": "Crémerie",
+      "category": "pate",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 260,
+      "price": 1.59,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 270,
+        "protein": 7,
+        "carbs": 45,
+        "fat": 6,
+        "fiber": 2,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "cr-tofu",
+      "name": "Tofu nature",
+      "rayon": "Crémerie",
+      "category": "vegetal",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 200,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 130,
+        "protein": 14,
+        "carbs": 2,
+        "fat": 8,
+        "fiber": 1,
+        "salt": 0.02
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-baguette",
+      "name": "Baguette",
+      "rayon": "Boulangerie",
+      "category": "pain",
+      "brandTier": "mdd",
+      "unit": "piece",
+      "packSize": 1,
+      "price": 0.95,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 270,
+        "protein": 9,
+        "carbs": 55,
+        "fat": 1,
+        "fiber": 3,
+        "salt": 1.3
+      },
+      "shelfLifeDays": 1,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-campagne",
+      "name": "Pain de campagne",
+      "rayon": "Boulangerie",
+      "category": "pain",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 2.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 260,
+        "protein": 8.5,
+        "carbs": 52,
+        "fat": 1.2,
+        "fiber": 3.5,
+        "salt": 1.3
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-mie-complet",
+      "name": "Pain de mie complet",
+      "rayon": "Boulangerie",
+      "category": "pain",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 250,
+        "protein": 9,
+        "carbs": 44,
+        "fat": 4,
+        "fiber": 5,
+        "salt": 1
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-cereales",
+      "name": "Pain aux céréales",
+      "rayon": "Boulangerie",
+      "category": "pain",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 265,
+        "protein": 9.5,
+        "carbs": 45,
+        "fat": 4.5,
+        "fiber": 6,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 4,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-buns",
+      "name": "Buns à burger",
+      "rayon": "Boulangerie",
+      "category": "pain",
+      "brandTier": "mdd",
+      "unit": "piece",
+      "packSize": 4,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 280,
+        "protein": 8,
+        "carbs": 48,
+        "fat": 5.5,
+        "fiber": 2.5,
+        "salt": 1
+      },
+      "shelfLifeDays": 8,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-wrap",
+      "name": "Galettes wrap",
+      "rayon": "Boulangerie",
+      "category": "pain",
+      "brandTier": "mdd",
+      "unit": "piece",
+      "packSize": 6,
+      "price": 1.89,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 300,
+        "protein": 8,
+        "carbs": 50,
+        "fat": 7,
+        "fiber": 3,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 20,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-pita",
+      "name": "Pains pita",
+      "rayon": "Boulangerie",
+      "category": "pain",
+      "brandTier": "mdd",
+      "unit": "piece",
+      "packSize": 6,
+      "price": 1.59,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 275,
+        "protein": 9,
+        "carbs": 53,
+        "fat": 1.5,
+        "fiber": 2.5,
+        "salt": 1.1
+      },
+      "shelfLifeDays": 10,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-croissant",
+      "name": "Croissants pur beurre",
+      "rayon": "Boulangerie",
+      "category": "viennoiserie",
+      "brandTier": "mdd",
+      "unit": "piece",
+      "packSize": 6,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 420,
+        "protein": 7,
+        "carbs": 45,
+        "fat": 23,
+        "fiber": 2,
+        "salt": 0.9
+      },
+      "shelfLifeDays": 3,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bl-biscotte",
+      "name": "Biscottes",
+      "rayon": "Boulangerie",
+      "category": "pain",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 300,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 390,
+        "protein": 12,
+        "carbs": 72,
+        "fat": 5,
+        "fiber": 4,
+        "salt": 1.5
+      },
+      "shelfLifeDays": 90,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-penne",
+      "name": "Penne",
+      "rayon": "Épicerie salée",
+      "category": "pates",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 1.15,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 12,
+        "carbs": 70,
+        "fat": 1.5,
+        "fiber": 3,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-spaghetti",
+      "name": "Spaghetti",
+      "rayon": "Épicerie salée",
+      "category": "pates",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 1.15,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 12,
+        "carbs": 70,
+        "fat": 1.5,
+        "fiber": 3,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-coquillette",
+      "name": "Coquillettes",
+      "rayon": "Épicerie salée",
+      "category": "pates",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 12,
+        "carbs": 70,
+        "fat": 1.5,
+        "fiber": 3,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-tagliatelle",
+      "name": "Tagliatelles fraîches",
+      "rayon": "Épicerie salée",
+      "category": "pates",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 400,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 270,
+        "protein": 10,
+        "carbs": 50,
+        "fat": 2.5,
+        "fiber": 2.5,
+        "salt": 0.5
+      },
+      "shelfLifeDays": 20,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-lasagne",
+      "name": "Plaques à lasagnes",
+      "rayon": "Épicerie salée",
+      "category": "pates",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 12,
+        "carbs": 70,
+        "fat": 1.5,
+        "fiber": 3,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-riz-long",
+      "name": "Riz long grain",
+      "rayon": "Épicerie salée",
+      "category": "riz",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 7,
+        "carbs": 78,
+        "fat": 0.6,
+        "fiber": 1.4,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-basmati",
+      "name": "Riz basmati",
+      "rayon": "Épicerie salée",
+      "category": "riz",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 8,
+        "carbs": 77,
+        "fat": 0.9,
+        "fiber": 1.5,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-arborio",
+      "name": "Riz à risotto",
+      "rayon": "Épicerie salée",
+      "category": "riz",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 7,
+        "carbs": 78,
+        "fat": 0.6,
+        "fiber": 1.4,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-quinoa",
+      "name": "Quinoa",
+      "rayon": "Épicerie salée",
+      "category": "graine",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 3.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 368,
+        "protein": 14,
+        "carbs": 58,
+        "fat": 6,
+        "fiber": 7,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-boulgour",
+      "name": "Boulgour",
+      "rayon": "Épicerie salée",
+      "category": "graine",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 12,
+        "carbs": 69,
+        "fat": 1.5,
+        "fiber": 8,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-semoule",
+      "name": "Semoule de blé moyenne",
+      "rayon": "Épicerie salée",
+      "category": "graine",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 12,
+        "carbs": 71,
+        "fat": 1.3,
+        "fiber": 3.5,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-lentille",
+      "name": "Lentilles vertes",
+      "rayon": "Épicerie salée",
+      "category": "legumineuse",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 336,
+        "protein": 24,
+        "carbs": 50,
+        "fat": 1.5,
+        "fiber": 11,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-pois-chiche-sec",
+      "name": "Pois chiches secs",
+      "rayon": "Épicerie salée",
+      "category": "legumineuse",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 19,
+        "carbs": 55,
+        "fat": 5,
+        "fiber": 12,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-pois-chiche",
+      "name": "Pois chiches cuisinés",
+      "rayon": "Épicerie salée",
+      "category": "legumineuse",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 0.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 120,
+        "protein": 7,
+        "carbs": 16,
+        "fat": 2,
+        "fiber": 6,
+        "salt": 0.4
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-haricot-rouge",
+      "name": "Haricots rouges",
+      "rayon": "Épicerie salée",
+      "category": "legumineuse",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 0.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 115,
+        "protein": 8,
+        "carbs": 15,
+        "fat": 0.6,
+        "fiber": 7,
+        "salt": 0.4
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-haricot-blanc",
+      "name": "Haricots blancs",
+      "rayon": "Épicerie salée",
+      "category": "legumineuse",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 0.95,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 110,
+        "protein": 7,
+        "carbs": 15,
+        "fat": 0.5,
+        "fiber": 6.5,
+        "salt": 0.4
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-lentille-boite",
+      "name": "Lentilles cuisinées",
+      "rayon": "Épicerie salée",
+      "category": "legumineuse",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 105,
+        "protein": 7,
+        "carbs": 15,
+        "fat": 0.5,
+        "fiber": 6,
+        "salt": 0.5
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-tomate-pelee",
+      "name": "Tomates pelées",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 0.85,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 20,
+        "protein": 1,
+        "carbs": 3.5,
+        "fat": 0.2,
+        "fiber": 1.2,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-tomate-concassee",
+      "name": "Tomates concassées",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 0.89,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 22,
+        "protein": 1.1,
+        "carbs": 3.8,
+        "fat": 0.2,
+        "fiber": 1.3,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-passata",
+      "name": "Purée de tomates",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 690,
+      "price": 1.59,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 32,
+        "protein": 1.4,
+        "carbs": 5.5,
+        "fat": 0.3,
+        "fiber": 1.5,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-concentre",
+      "name": "Concentré de tomates",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 210,
+      "price": 1.09,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 90,
+        "protein": 4.5,
+        "carbs": 15,
+        "fat": 0.5,
+        "fiber": 3.5,
+        "salt": 0.2
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-mais",
+      "name": "Maïs doux",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 300,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 90,
+        "protein": 3,
+        "carbs": 16,
+        "fat": 1.2,
+        "fiber": 3,
+        "salt": 0.4
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-champignon-boite",
+      "name": "Champignons émincés",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 230,
+      "price": 1.09,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 20,
+        "protein": 2.5,
+        "carbs": 1,
+        "fat": 0.3,
+        "fiber": 2,
+        "salt": 0.5
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-artichaut",
+      "name": "Cœurs d'artichauts",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 390,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 45,
+        "protein": 2.5,
+        "carbs": 4,
+        "fat": 1.5,
+        "fiber": 4,
+        "salt": 0.7
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-olive",
+      "name": "Olives vertes dénoyautées",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 200,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 145,
+        "protein": 1,
+        "carbs": 1,
+        "fat": 15,
+        "fiber": 3,
+        "salt": 2.5
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-cornichon",
+      "name": "Cornichons",
+      "rayon": "Épicerie salée",
+      "category": "conserve-legume",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 350,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 20,
+        "protein": 1,
+        "carbs": 2,
+        "fat": 0.2,
+        "fiber": 1.5,
+        "salt": 2
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-thon",
+      "name": "Thon au naturel",
+      "rayon": "Épicerie salée",
+      "category": "conserve-poisson",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 240,
+      "price": 3.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 110,
+        "protein": 25,
+        "carbs": 0,
+        "fat": 1,
+        "fiber": 0,
+        "salt": 0.9
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-sardine",
+      "name": "Sardines à l'huile d'olive",
+      "rayon": "Épicerie salée",
+      "category": "conserve-poisson",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 120,
+      "price": 1.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 230,
+        "protein": 22,
+        "carbs": 0,
+        "fat": 16,
+        "fiber": 0,
+        "salt": 1.1
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-huile-olive",
+      "name": "Huile d'olive vierge extra",
+      "rayon": "Épicerie salée",
+      "category": "matiere-grasse",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 1000,
+      "price": 8.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 900,
+        "protein": 0,
+        "carbs": 0,
+        "fat": 100,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-huile-tournesol",
+      "name": "Huile de tournesol",
+      "rayon": "Épicerie salée",
+      "category": "matiere-grasse",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 1000,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 900,
+        "protein": 0,
+        "carbs": 0,
+        "fat": 100,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-balsamique",
+      "name": "Vinaigre balsamique",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 250,
+      "price": 2.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 110,
+        "protein": 0.5,
+        "carbs": 25,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-vinaigre-vin",
+      "name": "Vinaigre de vin rouge",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 750,
+      "price": 1.09,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 20,
+        "protein": 0,
+        "carbs": 1,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-moutarde",
+      "name": "Moutarde de Dijon",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 370,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 150,
+        "protein": 8,
+        "carbs": 4,
+        "fat": 11,
+        "fiber": 4,
+        "salt": 6
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-ketchup",
+      "name": "Ketchup",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 560,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 100,
+        "protein": 1.2,
+        "carbs": 22,
+        "fat": 0.1,
+        "fiber": 1,
+        "salt": 2
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-mayonnaise",
+      "name": "Mayonnaise",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 475,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 690,
+        "protein": 1,
+        "carbs": 1.5,
+        "fat": 75,
+        "fiber": 0,
+        "salt": 1.3
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-sauce-soja",
+      "name": "Sauce soja",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "national",
+      "unit": "ml",
+      "packSize": 150,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 60,
+        "protein": 6,
+        "carbs": 6,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 16
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-lait-coco",
+      "name": "Lait de coco",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 400,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 190,
+        "protein": 2,
+        "carbs": 3,
+        "fat": 19,
+        "fiber": 0,
+        "salt": 0.03
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-curry-pate",
+      "name": "Pâte de curry rouge",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 114,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 110,
+        "protein": 2,
+        "carbs": 12,
+        "fat": 5,
+        "fiber": 3,
+        "salt": 6
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-harissa",
+      "name": "Harissa",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 70,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 150,
+        "protein": 4,
+        "carbs": 10,
+        "fat": 10,
+        "fiber": 5,
+        "salt": 4
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-cacahuete-pate",
+      "name": "Beurre de cacahuète",
+      "rayon": "Épicerie salée",
+      "category": "condiment",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 350,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 600,
+        "protein": 25,
+        "carbs": 12,
+        "fat": 50,
+        "fiber": 6,
+        "salt": 0.5
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "es-curry",
+      "name": "Curry en poudre",
+      "rayon": "Épicerie salée",
+      "category": "epice",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 40,
+      "price": 1.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 325,
+        "protein": 13,
+        "carbs": 45,
+        "fat": 14,
+        "fiber": 33,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-paprika",
+      "name": "Paprika doux",
+      "rayon": "Épicerie salée",
+      "category": "epice",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 45,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 280,
+        "protein": 14,
+        "carbs": 34,
+        "fat": 13,
+        "fiber": 35,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-cumin",
+      "name": "Cumin moulu",
+      "rayon": "Épicerie salée",
+      "category": "epice",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 40,
+      "price": 1.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 375,
+        "protein": 18,
+        "carbs": 44,
+        "fat": 22,
+        "fiber": 11,
+        "salt": 0.4
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-herbes",
+      "name": "Herbes de Provence",
+      "rayon": "Épicerie salée",
+      "category": "epice",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 20,
+      "price": 1.09,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 260,
+        "protein": 9,
+        "carbs": 45,
+        "fat": 7,
+        "fiber": 30,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-sel",
+      "name": "Sel fin",
+      "rayon": "Épicerie salée",
+      "category": "epice",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 0.55,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 0,
+        "protein": 0,
+        "carbs": 0,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 100
+      },
+      "shelfLifeDays": 900,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-poivre",
+      "name": "Poivre noir moulu",
+      "rayon": "Épicerie salée",
+      "category": "epice",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 50,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 250,
+        "protein": 10,
+        "carbs": 39,
+        "fat": 3,
+        "fiber": 26,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-bouillon",
+      "name": "Bouillon de volaille en cubes",
+      "rayon": "Épicerie salée",
+      "category": "epice",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 240,
+      "price": 1.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 230,
+        "protein": 10,
+        "carbs": 20,
+        "fat": 12,
+        "fiber": 1,
+        "salt": 45
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-bouillon-legume",
+      "name": "Bouillon de légumes en cubes",
+      "rayon": "Épicerie salée",
+      "category": "epice",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 240,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 220,
+        "protein": 8,
+        "carbs": 22,
+        "fat": 11,
+        "fiber": 1,
+        "salt": 44
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-farine",
+      "name": "Farine de blé T55",
+      "rayon": "Épicerie salée",
+      "category": "farine",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 0.89,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 10,
+        "carbs": 71,
+        "fat": 1,
+        "fiber": 3,
+        "salt": 0
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-levure",
+      "name": "Levure chimique",
+      "rayon": "Épicerie salée",
+      "category": "farine",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 88,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 100,
+        "protein": 0,
+        "carbs": 25,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 25
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-chapelure",
+      "name": "Chapelure",
+      "rayon": "Épicerie salée",
+      "category": "farine",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 250,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 370,
+        "protein": 12,
+        "carbs": 70,
+        "fat": 3,
+        "fiber": 4,
+        "salt": 1.3
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-nouille",
+      "name": "Nouilles chinoises",
+      "rayon": "Épicerie salée",
+      "category": "pates",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 250,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 11,
+        "carbs": 70,
+        "fat": 2,
+        "fiber": 3,
+        "salt": 0.5
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "es-galette-riz",
+      "name": "Galettes de riz",
+      "rayon": "Épicerie salée",
+      "category": "graine",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 100,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 380,
+        "protein": 8,
+        "carbs": 81,
+        "fat": 3,
+        "fiber": 3,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-sucre",
+      "name": "Sucre en poudre",
+      "rayon": "Épicerie sucrée",
+      "category": "sucre",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 400,
+        "protein": 0,
+        "carbs": 100,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 900,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "su-sucre-vanille",
+      "name": "Sucre vanillé",
+      "rayon": "Épicerie sucrée",
+      "category": "sucre",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 60,
+      "price": 0.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 390,
+        "protein": 0,
+        "carbs": 97,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "su-miel",
+      "name": "Miel toutes fleurs",
+      "rayon": "Épicerie sucrée",
+      "category": "sucre",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 4.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 320,
+        "protein": 0.4,
+        "carbs": 80,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-choco-patissier",
+      "name": "Chocolat noir pâtissier",
+      "rayon": "Épicerie sucrée",
+      "category": "chocolat",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 200,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 500,
+        "protein": 6,
+        "carbs": 50,
+        "fat": 32,
+        "fiber": 9,
+        "salt": 0.02
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-choco-lait",
+      "name": "Chocolat au lait",
+      "rayon": "Épicerie sucrée",
+      "category": "chocolat",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 200,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 545,
+        "protein": 7,
+        "carbs": 57,
+        "fat": 31,
+        "fiber": 2,
+        "salt": 0.2
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-cacao",
+      "name": "Cacao en poudre non sucré",
+      "rayon": "Épicerie sucrée",
+      "category": "chocolat",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 250,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 350,
+        "protein": 20,
+        "carbs": 12,
+        "fat": 22,
+        "fiber": 30,
+        "salt": 0.05
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "su-tartinade",
+      "name": "Pâte à tartiner noisettes",
+      "rayon": "Épicerie sucrée",
+      "category": "chocolat",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 400,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 540,
+        "protein": 6,
+        "carbs": 57,
+        "fat": 31,
+        "fiber": 3.5,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-confiture",
+      "name": "Confiture de fraises",
+      "rayon": "Épicerie sucrée",
+      "category": "sucre",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 370,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 250,
+        "protein": 0.4,
+        "carbs": 60,
+        "fat": 0.1,
+        "fiber": 1,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-compote",
+      "name": "Compotes pomme sans sucres ajoutés",
+      "rayon": "Épicerie sucrée",
+      "category": "fruit-transforme",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1440,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 50,
+        "protein": 0.3,
+        "carbs": 11,
+        "fat": 0.1,
+        "fiber": 1.5,
+        "salt": 0
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-sable",
+      "name": "Sablés pur beurre",
+      "rayon": "Épicerie sucrée",
+      "category": "biscuit",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 200,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 490,
+        "protein": 6,
+        "carbs": 65,
+        "fat": 22,
+        "fiber": 2,
+        "salt": 0.6
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-muesli",
+      "name": "Muesli aux fruits",
+      "rayon": "Épicerie sucrée",
+      "category": "cereale",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 750,
+      "price": 3.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 380,
+        "protein": 9,
+        "carbs": 62,
+        "fat": 9,
+        "fiber": 8,
+        "salt": 0.05
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-avoine",
+      "name": "Flocons d'avoine",
+      "rayon": "Épicerie sucrée",
+      "category": "cereale",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 370,
+        "protein": 13,
+        "carbs": 58,
+        "fat": 7,
+        "fiber": 10,
+        "salt": 0
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "su-amande",
+      "name": "Amandes entières",
+      "rayon": "Épicerie sucrée",
+      "category": "fruit-sec",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 200,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 600,
+        "protein": 21,
+        "carbs": 5,
+        "fat": 50,
+        "fiber": 12,
+        "salt": 0.01
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-cajou",
+      "name": "Noix de cajou grillées",
+      "rayon": "Épicerie sucrée",
+      "category": "fruit-sec",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 200,
+      "price": 3.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 580,
+        "protein": 18,
+        "carbs": 27,
+        "fat": 44,
+        "fiber": 3,
+        "salt": 0.6
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-raisin-sec",
+      "name": "Raisins secs",
+      "rayon": "Épicerie sucrée",
+      "category": "fruit-sec",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 250,
+      "price": 2.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 300,
+        "protein": 3,
+        "carbs": 66,
+        "fat": 0.5,
+        "fiber": 4,
+        "salt": 0.05
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "su-creme-marron",
+      "name": "Crème de marrons",
+      "rayon": "Épicerie sucrée",
+      "category": "sucre",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 500,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 280,
+        "protein": 1.5,
+        "carbs": 68,
+        "fat": 0.3,
+        "fiber": 2,
+        "salt": 0.02
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "sg-epinard",
+      "name": "Épinards hachés surgelés",
+      "rayon": "Surgelés",
+      "category": "legume-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 750,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 25,
+        "protein": 3,
+        "carbs": 1.5,
+        "fat": 0.5,
+        "fiber": 3,
+        "salt": 0.1
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-haricot",
+      "name": "Haricots verts très fins surgelés",
+      "rayon": "Surgelés",
+      "category": "legume-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 30,
+        "protein": 2,
+        "carbs": 4,
+        "fat": 0.2,
+        "fiber": 3.5,
+        "salt": 0.01
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-poelee",
+      "name": "Poêlée de légumes du soleil",
+      "rayon": "Surgelés",
+      "category": "legume-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 3.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 45,
+        "protein": 1.5,
+        "carbs": 6,
+        "fat": 1.5,
+        "fiber": 2.5,
+        "salt": 0.3
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-petit-pois",
+      "name": "Petits pois surgelés",
+      "rayon": "Surgelés",
+      "category": "legume-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 75,
+        "protein": 5.5,
+        "carbs": 9,
+        "fat": 0.5,
+        "fiber": 6,
+        "salt": 0.01
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-ratatouille",
+      "name": "Ratatouille surgelée",
+      "rayon": "Surgelés",
+      "category": "legume-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 50,
+        "protein": 1.2,
+        "carbs": 5,
+        "fat": 2.5,
+        "fiber": 2,
+        "salt": 0.5
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-frite",
+      "name": "Frites surgelées",
+      "rayon": "Surgelés",
+      "category": "feculent-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 2.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 160,
+        "protein": 2.5,
+        "carbs": 25,
+        "fat": 5,
+        "fiber": 3,
+        "salt": 0.3
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-potatoes",
+      "name": "Potatoes surgelées",
+      "rayon": "Surgelés",
+      "category": "feculent-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 750,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 175,
+        "protein": 3,
+        "carbs": 26,
+        "fat": 6.5,
+        "fiber": 3,
+        "salt": 0.7
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-colin",
+      "name": "Filets de colin surgelés",
+      "rayon": "Surgelés",
+      "category": "poisson-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 600,
+      "price": 5.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 80,
+        "protein": 17,
+        "carbs": 0,
+        "fat": 1,
+        "fiber": 0,
+        "salt": 0.3
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-crevette-crue",
+      "name": "Crevettes crues surgelées",
+      "rayon": "Surgelés",
+      "category": "poisson-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 6.99,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 85,
+        "protein": 19,
+        "carbs": 0,
+        "fat": 0.8,
+        "fiber": 0,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-saumon-portion",
+      "name": "Portions de saumon surgelées",
+      "rayon": "Surgelés",
+      "category": "poisson-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 8.49,
+      "diet": [
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 200,
+        "protein": 20,
+        "carbs": 0,
+        "fat": 13,
+        "fiber": 0,
+        "salt": 0.2
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-nugget",
+      "name": "Nuggets de poulet",
+      "rayon": "Surgelés",
+      "category": "plat-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 500,
+      "price": 3.99,
+      "diet": [
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 250,
+        "protein": 14,
+        "carbs": 18,
+        "fat": 13,
+        "fiber": 1.5,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-cordon-bleu",
+      "name": "Cordons bleus",
+      "rayon": "Surgelés",
+      "category": "plat-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 3.49,
+      "diet": [
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 240,
+        "protein": 15,
+        "carbs": 17,
+        "fat": 13,
+        "fiber": 1,
+        "salt": 1.4
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-pizza",
+      "name": "Pizza 4 fromages",
+      "rayon": "Surgelés",
+      "category": "plat-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 400,
+      "price": 3.29,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 260,
+        "protein": 11,
+        "carbs": 30,
+        "fat": 10,
+        "fiber": 2,
+        "salt": 1.3
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-lasagne",
+      "name": "Lasagnes bolognaise surgelées",
+      "rayon": "Surgelés",
+      "category": "plat-surgele",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 1000,
+      "price": 5.49,
+      "diet": [
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 130,
+        "protein": 7,
+        "carbs": 13,
+        "fat": 5.5,
+        "fiber": 1.2,
+        "salt": 0.7
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-glace",
+      "name": "Glace vanille",
+      "rayon": "Surgelés",
+      "category": "dessert-surgele",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 1000,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 200,
+        "protein": 3.5,
+        "carbs": 24,
+        "fat": 10,
+        "fiber": 0,
+        "salt": 0.15
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "sg-fruit-rouge",
+      "name": "Fruits rouges surgelés",
+      "rayon": "Surgelés",
+      "category": "fruit-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 450,
+      "price": 3.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 45,
+        "protein": 1,
+        "carbs": 8,
+        "fat": 0.4,
+        "fiber": 4,
+        "salt": 0
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "sg-pain-ail",
+      "name": "Pains à l'ail",
+      "rayon": "Surgelés",
+      "category": "plat-surgele",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 350,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 320,
+        "protein": 8,
+        "carbs": 42,
+        "fat": 13,
+        "fiber": 2.5,
+        "salt": 1.3
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bs-eau",
+      "name": "Eau de source",
+      "rayon": "Boissons",
+      "category": "eau",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 9000,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 0,
+        "protein": 0,
+        "carbs": 0,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-eau-gaz",
+      "name": "Eau gazeuse",
+      "rayon": "Boissons",
+      "category": "eau",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 6000,
+      "price": 2.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 0,
+        "protein": 0,
+        "carbs": 0,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0.02
+      },
+      "shelfLifeDays": 700,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-jus-orange",
+      "name": "Jus d'orange sans pulpe",
+      "rayon": "Boissons",
+      "category": "jus",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 1000,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 45,
+        "protein": 0.7,
+        "carbs": 10,
+        "fat": 0.1,
+        "fiber": 0.2,
+        "salt": 0
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-jus-pomme",
+      "name": "Jus de pomme",
+      "rayon": "Boissons",
+      "category": "jus",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 1000,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 46,
+        "protein": 0.1,
+        "carbs": 11,
+        "fat": 0.1,
+        "fiber": 0.1,
+        "salt": 0
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-cola",
+      "name": "Cola",
+      "rayon": "Boissons",
+      "category": "soda",
+      "brandTier": "national",
+      "unit": "ml",
+      "packSize": 1980,
+      "price": 4.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 42,
+        "protein": 0,
+        "carbs": 10.6,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-limonade",
+      "name": "Limonade",
+      "rayon": "Boissons",
+      "category": "soda",
+      "brandTier": "mdd",
+      "unit": "ml",
+      "packSize": 1500,
+      "price": 1.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 38,
+        "protein": 0,
+        "carbs": 9.5,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 300,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-biere",
+      "name": "Bière blonde",
+      "rayon": "Boissons",
+      "category": "alcool",
+      "brandTier": "national",
+      "unit": "ml",
+      "packSize": 1500,
+      "price": 3.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 40,
+        "protein": 0.4,
+        "carbs": 3,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-vin-rouge",
+      "name": "Vin rouge de Bordeaux",
+      "rayon": "Boissons",
+      "category": "alcool",
+      "brandTier": "national",
+      "unit": "ml",
+      "packSize": 750,
+      "price": 4.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 80,
+        "protein": 0.1,
+        "carbs": 2.6,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 900,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-vin-blanc",
+      "name": "Vin blanc sec",
+      "rayon": "Boissons",
+      "category": "alcool",
+      "brandTier": "national",
+      "unit": "ml",
+      "packSize": 750,
+      "price": 3.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque"
+      ],
+      "nutrition": {
+        "kcal": 75,
+        "protein": 0.1,
+        "carbs": 2.2,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 900,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "bs-cafe",
+      "name": "Café moulu",
+      "rayon": "Boissons",
+      "category": "chaud",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 250,
+      "price": 3.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 5,
+        "protein": 0.2,
+        "carbs": 0,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 400,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bs-the",
+      "name": "Thé vert",
+      "rayon": "Boissons",
+      "category": "chaud",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 45,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 2,
+        "protein": 0,
+        "carbs": 0,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon"
+    },
+    {
+      "id": "bs-sirop",
+      "name": "Sirop de menthe",
+      "rayon": "Boissons",
+      "category": "sirop",
+      "brandTier": "national",
+      "unit": "ml",
+      "packSize": 750,
+      "price": 2.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 260,
+        "protein": 0,
+        "carbs": 65,
+        "fat": 0,
+        "fiber": 0,
+        "salt": 0
+      },
+      "shelfLifeDays": 500,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-chips",
+      "name": "Chips nature",
+      "rayon": "Monde & Apéritif",
+      "category": "apero",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 150,
+      "price": 1.49,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 540,
+        "protein": 6,
+        "carbs": 50,
+        "fat": 34,
+        "fiber": 4,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 150,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-chips-bbq",
+      "name": "Chips saveur barbecue",
+      "rayon": "Monde & Apéritif",
+      "category": "apero",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 150,
+      "price": 1.59,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 520,
+        "protein": 6,
+        "carbs": 52,
+        "fat": 31,
+        "fiber": 4,
+        "salt": 1.6
+      },
+      "shelfLifeDays": 150,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-cacahuete",
+      "name": "Cacahuètes grillées salées",
+      "rayon": "Monde & Apéritif",
+      "category": "apero",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 200,
+      "price": 1.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 600,
+        "protein": 26,
+        "carbs": 12,
+        "fat": 49,
+        "fiber": 8,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-tortilla",
+      "name": "Tortilla chips",
+      "rayon": "Monde & Apéritif",
+      "category": "apero",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 200,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 490,
+        "protein": 7,
+        "carbs": 60,
+        "fat": 24,
+        "fiber": 5,
+        "salt": 1.1
+      },
+      "shelfLifeDays": 150,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-guacamole",
+      "name": "Guacamole",
+      "rayon": "Monde & Apéritif",
+      "category": "dip",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 200,
+      "price": 2.79,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 180,
+        "protein": 2,
+        "carbs": 5,
+        "fat": 16,
+        "fiber": 4,
+        "salt": 1.2
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-houmous",
+      "name": "Houmous",
+      "rayon": "Monde & Apéritif",
+      "category": "dip",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 175,
+      "price": 2.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 280,
+        "protein": 8,
+        "carbs": 12,
+        "fat": 22,
+        "fiber": 6,
+        "salt": 1.1
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-tzatziki",
+      "name": "Tzatziki",
+      "rayon": "Monde & Apéritif",
+      "category": "dip",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 175,
+      "price": 1.99,
+      "diet": [
+        "vegetarien",
+        "sans_porc",
+        "sans_gluten",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 130,
+        "protein": 4,
+        "carbs": 4,
+        "fat": 11,
+        "fiber": 0.5,
+        "salt": 1
+      },
+      "shelfLifeDays": 14,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-salsa",
+      "name": "Sauce salsa",
+      "rayon": "Monde & Apéritif",
+      "category": "dip",
+      "brandTier": "national",
+      "unit": "g",
+      "packSize": 300,
+      "price": 2.19,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_gluten",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 55,
+        "protein": 1.5,
+        "carbs": 9,
+        "fat": 1,
+        "fiber": 2,
+        "salt": 1.4
+      },
+      "shelfLifeDays": 200,
+      "stock": "en_rayon",
+      "readyToEat": true
+    },
+    {
+      "id": "ap-cracker",
+      "name": "Crackers apéritif",
+      "rayon": "Monde & Apéritif",
+      "category": "apero",
+      "brandTier": "mdd",
+      "unit": "g",
+      "packSize": 100,
+      "price": 1.29,
+      "diet": [
+        "vegetarien",
+        "vegan",
+        "sans_porc",
+        "sans_lactose",
+        "sans_fruits_a_coque",
+        "halal_compatible"
+      ],
+      "nutrition": {
+        "kcal": 480,
+        "protein": 9,
+        "carbs": 60,
+        "fat": 22,
+        "fiber": 3,
+        "salt": 2.2
+      },
+      "shelfLifeDays": 150,
+      "stock": "en_rayon",
+      "readyToEat": true
+    }
+  ],
+  "source": "seed",
+  "updatedAt": "2026-09-04",
+  "storeLabel": "Relevé indicatif Auchan métropole"
+}
