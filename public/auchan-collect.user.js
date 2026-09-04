@@ -383,7 +383,24 @@
       info.textContent = "Relevé vidé.";
     });
 
-    actions.append(derouler, copier, vider);
+    // Rapport de structure, à transmettre quand l'extraction ne donne rien.
+    const diagnostic = bouton("Diagnostic", false);
+    diagnostic.addEventListener("click", async () => {
+      const rapport = construireDiagnostic();
+      try {
+        await navigator.clipboard.writeText(rapport);
+        info.textContent = "Diagnostic copié. Colle-le dans la conversation.";
+      } catch {
+        const lien = document.createElement("a");
+        lien.href = URL.createObjectURL(new Blob([rapport], { type: "text/plain" }));
+        lien.download = "diagnostic-auchan.txt";
+        lien.click();
+        URL.revokeObjectURL(lien.href);
+        info.textContent = "Diagnostic téléchargé.";
+      }
+    });
+
+    actions.append(derouler, copier, diagnostic, vider);
     panneau.appendChild(actions);
 
     const astuce = document.createElement("div");
@@ -392,6 +409,108 @@
       + "enregistrée, ou un rayon entier — une seule page y contient des dizaines "
       + "de produits.";
     panneau.appendChild(astuce);
+  }
+
+  /**
+   * Remplace tout ce qui ressemble à un identifiant : adresse électronique,
+   * suite de chiffres, jeton alphanumérique long. Appliqué à tout texte du
+   * rapport qui provient de la page.
+   */
+  function caviarder(texte) {
+    return String(texte)
+      .replace(/[\w.+-]+@[\w.-]+\.\w{2,}/g, "[courriel]")
+      .replace(/\b\d[\d\s.-]{4,}\b/g, "[nombre]")
+      .replace(/\b(?=[A-Za-z]*\d)[A-Za-z0-9]{8,}\b/g, "[identifiant]");
+  }
+
+  /**
+   * Décrit la structure de la page sans en divulguer le contenu.
+   *
+   * Quand l'extraction échoue, il faut savoir de quoi la page est faite. Mais
+   * envoyer son HTML exposerait un nom, une adresse, un historique de
+   * commandes. Ce rapport ne contient donc que des métadonnées de structure et
+   * des libellés de produits — jamais de texte libre de la page.
+   */
+  function construireDiagnostic() {
+    const lignes = [];
+    const ajouter = (cle, valeur) => lignes.push(`${cle}: ${valeur}`);
+
+    // Les paramètres d'URL sont écartés d'office, et les segments de chemin
+    // qui ressemblent à un identifiant sont caviardés : une adresse comme
+    // /mes-commandes/ABC123456789 divulguerait un numéro de commande.
+    ajouter("chemin", caviarder(location.pathname));
+    ajouter("titre", caviarder((document.title || "").slice(0, 80)));
+
+    // --- Stratégie 1 : JSON-LD
+    const blocs = [...document.querySelectorAll('script[type="application/ld+json"]')];
+    ajouter("blocs JSON-LD", blocs.length);
+
+    const types = new Set();
+    let exemple = null;
+    for (const bloc of blocs) {
+      let donnees;
+      try {
+        donnees = JSON.parse(bloc.textContent || "");
+      } catch {
+        types.add("(bloc illisible)");
+        continue;
+      }
+      for (const noeud of aplatir(donnees)) {
+        const t = noeud["@type"];
+        if (t) types.add(Array.isArray(t) ? t.join("+") : String(t));
+        const estProduit = t === "Product" || (Array.isArray(t) && t.includes("Product"));
+        if (estProduit && !exemple) {
+          const offre = premiereOffre(noeud.offers) ?? {};
+          exemple = {
+            champs: Object.keys(noeud).slice(0, 20),
+            champsOffre: Object.keys(offre).slice(0, 12),
+            prix: offre.price ?? offre.lowPrice ?? null,
+            dispo: offre.availability ?? null,
+            aUnCodeBarres: Boolean(noeud.gtin13 || noeud.gtin || noeud.sku),
+          };
+        }
+      }
+    }
+    ajouter("types JSON-LD", [...types].slice(0, 12).join(", ") || "aucun");
+    if (exemple) ajouter("exemple de Product", JSON.stringify(exemple));
+
+    // --- Stratégie 2 : état applicatif
+    const etats = [...document.querySelectorAll('script[id], script[type="application/json"]')]
+      .filter((b) => (b.textContent || "").length > 200)
+      .slice(0, 6)
+      .map((b) => `${b.id || b.type}(${Math.round((b.textContent || "").length / 1024)}Ko)`);
+    ajouter("scripts d'état", etats.join(", ") || "aucun");
+
+    // --- Stratégie 3 : structure visible
+    // On repère les conteneurs répétés qui contiennent un prix : ce sont
+    // presque toujours les cartes produit.
+    const compte = new Map();
+    for (const noeud of document.querySelectorAll("article, li, div")) {
+      const texte = noeud.textContent || "";
+      if (texte.length > 400 || !/\d{1,3}[.,]\d{2}\s*€/.test(texte)) continue;
+      if (noeud.querySelector("article, li")) continue; // on veut la feuille
+      const signature = `${noeud.tagName.toLowerCase()}.${[...noeud.classList].slice(0, 3).join(".")}`
+        + (noeud.dataset.testid ? `[data-testid=${noeud.dataset.testid}]` : "");
+      compte.set(signature, (compte.get(signature) ?? 0) + 1);
+    }
+    const cartes = [...compte.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+    ajouter("cartes probables", cartes.map(([sig, n]) => `${n}x ${sig}`).join(" | ") || "aucune");
+
+    // --- Résultat effectif des trois stratégies
+    const { produits, methode } = extraireProduits();
+    ajouter("méthode retenue", methode);
+    ajouter("produits extraits", produits.length);
+    if (produits[0]) {
+      ajouter("premier extrait", JSON.stringify({
+        nom: String(produits[0].nom ?? "").slice(0, 60),
+        prix: produits[0].prix,
+        dispo: produits[0].dispo,
+        codeBarres: produits[0].ean ? "oui" : "non",
+      }));
+    }
+    ajouter("magasin détecté", detecterMagasin() ?? "aucun");
+
+    return `--- Diagnostic Auchan-Opti ---\n${lignes.join("\n")}\n--- fin ---`;
   }
 
   /**

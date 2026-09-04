@@ -269,6 +269,14 @@ function Installation() {
           </div>
         </div>
 
+        <Notice title="Si le relevé ne donne rien">
+          L&apos;encart affiche toujours <strong>comment</strong> il a lu la page :
+          « JSON-LD », « état de page » ou « lecture d&apos;écran ». Si tu vois
+          « aucune », ou zéro produit, clique sur <strong>« Diagnostic »</strong> :
+          il copie un rapport de structure — sans aucune donnée personnelle,
+          identifiants et adresses caviardés — à transmettre pour ajustement.
+        </Notice>
+
         <details className="text-sm">
           <summary className="cursor-pointer text-muted">
             Ou par extension, si tu préfères

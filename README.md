@@ -203,7 +203,12 @@ La source lisible est dans le script ; le JSON est un artefact.
   consultes la page, le mode rayon ce que tu constates devant le linéaire.
 - **Le collecteur dépend de la structure des pages Auchan.** Il essaie trois
   stratégies et annonce laquelle a fonctionné ; si le site change en
-  profondeur, les sélecteurs devront être ajustés.
+  profondeur, les sélecteurs devront être ajustés. Le bouton **Diagnostic**
+  produit alors un rapport de structure — types JSON-LD présents, scripts
+  d'état, signatures des cartes produit, résultat de chaque stratégie — d'où
+  les identifiants, adresses électroniques et suites de chiffres sont
+  caviardés. C'est ce rapport qu'il faut transmettre, jamais le HTML de la
+  page, qui contiendrait nom, adresse et historique de commandes.
 - **La couverture d'Open Prices est inégale.** Pour beaucoup de magasins, la
   base est vide ou ancienne. C'est le propre d'une base participative, et
   l'interface le dit plutôt que de faire semblant.
