@@ -34,12 +34,19 @@ export interface PlanOptions {
   /** Facture les épices au prorata plutôt qu'au pot entier. */
   assumeStaples?: boolean;
   signal?: AbortSignal;
+  /**
+   * Graine du planificateur hors-ligne. À graine égale le plan est identique ;
+   * l'interface en change à chaque génération pour que redemander un plan ne
+   * rende pas la liste précédente. Par défaut fixe, pour que les tests et le
+   * plancher budgétaire annoncé restent reproductibles.
+   */
+  seed?: number;
   /** Retour de progression, pour l'interface. */
   onProgress?: (step: string) => void;
 }
 
 export async function generatePlan(options: PlanOptions): Promise<MealPlan> {
-  const { request, catalog, gemini, signal, onProgress } = options;
+  const { request, catalog, gemini, signal, onProgress, seed = 0 } = options;
 
   const pool = filterCatalog(catalog.products, {
     diet: request.diet,
@@ -60,7 +67,7 @@ export async function generatePlan(options: PlanOptions): Promise<MealPlan> {
   if (!gemini?.apiKey) {
     onProgress?.("Composition des repas (mode hors-ligne)…");
     return finalize({
-      recipes: planOffline(request, pool),
+      recipes: planOffline(request, pool, seed),
       request, pool, productsById, costOptions,
       warnings: [
         "Plan généré sans IA : ajoute une clé Gemini dans les réglages pour des recettes plus variées.",
@@ -79,7 +86,7 @@ export async function generatePlan(options: PlanOptions): Promise<MealPlan> {
   if (validation.recipes.length === 0) {
     warnings.push("Aucune recette exploitable : repli sur le planificateur hors-ligne.");
     return finalize({
-      recipes: planOffline(request, pool),
+      recipes: planOffline(request, pool, seed),
       request, pool, productsById, costOptions, warnings, engine: "offline",
     });
   }

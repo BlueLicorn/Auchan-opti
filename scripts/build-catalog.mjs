@@ -52,20 +52,20 @@ const RAYONS = {
     ["fl-aubergine", "Aubergines", "legume", "national", "g", 1000, 2.99, 25, 1, 6, 0.2, 3, 0, 8, ""],
     ["fl-poivron", "Poivrons rouges", "legume", "national", "piece", 2, 2.49, 31, 1, 6, 0.3, 2.1, 0, 10, ""],
     ["fl-tomate", "Tomates grappe", "legume", "national", "g", 1000, 2.99, 18, 0.9, 3.9, 0.2, 1.2, 0, 7, ""],
-    ["fl-tomate-cerise", "Tomates cerises", "legume", "national", "g", 500, 2.79, 18, 0.9, 3.9, 0.2, 1.2, 0, 7, "cru"],
-    ["fl-concombre", "Concombre", "legume", "national", "piece", 1, 1.19, 15, 0.7, 3.6, 0.1, 0.5, 0, 7, "cru"],
-    ["fl-salade", "Salade batavia", "legume", "national", "piece", 1, 1.29, 15, 1.4, 2.9, 0.2, 1.3, 0, 5, "cru"],
-    ["fl-epinard", "Pousses d'épinard", "legume", "national", "g", 300, 2.49, 23, 2.9, 3.6, 0.4, 2.2, 0.08, 5, "cru"],
+    ["fl-tomate-cerise", "Tomates cerises", "legume", "national", "g", 500, 2.79, 18, 0.9, 3.9, 0.2, 1.2, 0, 7, "cru froid"],
+    ["fl-concombre", "Concombre", "legume", "national", "piece", 1, 1.19, 15, 0.7, 3.6, 0.1, 0.5, 0, 7, "cru froid"],
+    ["fl-salade", "Salade batavia", "legume", "national", "piece", 1, 1.29, 15, 1.4, 2.9, 0.2, 1.3, 0, 5, "cru froid"],
+    ["fl-epinard", "Pousses d'épinard", "legume", "national", "g", 300, 2.49, 23, 2.9, 3.6, 0.4, 2.2, 0.08, 5, "cru froid"],
     ["fl-brocoli", "Brocoli", "legume", "national", "g", 500, 2.29, 34, 2.8, 7, 0.4, 2.6, 0.03, 8, ""],
     ["fl-chou-fleur", "Chou-fleur", "legume", "national", "piece", 1, 2.49, 25, 1.9, 5, 0.3, 2, 0.03, 8, ""],
     ["fl-haricot-vert", "Haricots verts frais", "legume", "national", "g", 500, 3.49, 31, 1.8, 7, 0.1, 2.7, 0, 6, ""],
     ["fl-champignon", "Champignons de Paris", "legume", "national", "g", 500, 2.79, 22, 3.1, 3.3, 0.3, 1, 0, 6, ""],
     ["fl-poireau", "Poireaux", "legume", "national", "g", 1000, 2.49, 61, 1.5, 14, 0.3, 1.8, 0, 10, ""],
-    ["fl-celeri", "Céleri branche", "legume", "national", "piece", 1, 1.79, 16, 0.7, 3, 0.2, 1.6, 0.08, 10, "cru"],
+    ["fl-celeri", "Céleri branche", "legume", "national", "piece", 1, 1.79, 16, 0.7, 3, 0.2, 1.6, 0.08, 10, "cru froid"],
     ["fl-butternut", "Courge butternut", "legume", "national", "piece", 1, 2.99, 45, 1, 12, 0.1, 2, 0, 30, ""],
     ["fl-betterave", "Betteraves cuites", "legume", "mdd", "g", 500, 2.19, 43, 1.6, 10, 0.2, 2.8, 0.1, 12, "cru"],
-    ["fl-radis", "Radis", "legume", "national", "piece", 1, 1.29, 16, 0.7, 3.4, 0.1, 1.6, 0.04, 6, "cru"],
-    ["fl-endive", "Endives", "legume", "national", "g", 1000, 2.99, 17, 1, 4, 0.1, 3.1, 0, 8, "cru"],
+    ["fl-radis", "Radis", "legume", "national", "piece", 1, 1.29, 16, 0.7, 3.4, 0.1, 1.6, 0.04, 6, "cru froid"],
+    ["fl-endive", "Endives", "legume", "national", "g", 1000, 2.99, 17, 1, 4, 0.1, 3.1, 0, 8, "cru froid"],
     ["fl-persil", "Persil plat", "herbe", "national", "g", 30, 0.99, 36, 3, 6, 0.8, 3.3, 0.06, 5, ""],
     ["fl-basilic", "Basilic en pot", "herbe", "national", "g", 40, 2.49, 23, 3.2, 2.7, 0.6, 1.6, 0, 10, ""],
     ["fl-coriandre", "Coriandre fraîche", "herbe", "national", "g", 30, 1.19, 23, 2.1, 3.7, 0.5, 2.8, 0, 5, ""],
@@ -101,19 +101,19 @@ const RAYONS = {
     ["po-truite", "Filets de truite", "poisson-gras", "national", "g", 250, 5.49, 145, 20, 0, 7, 0, 0.1, 2, VIANDE],
     ["po-crevette", "Crevettes roses cuites", "fruits-de-mer", "mdd", "g", 200, 5.99, 99, 24, 0.2, 0.3, 0, 1.5, 2, VIANDE],
     ["po-moule", "Moules de bouchot", "fruits-de-mer", "national", "g", 1000, 4.99, 86, 12, 3.7, 2.2, 0, 0.6, 2, VIANDE],
-    ["po-saumon-fume", "Saumon fumé", "poisson-gras", "mdd", "g", 140, 5.99, 180, 23, 0.5, 10, 0, 3, 7, VIANDE + " cru"],
+    ["po-saumon-fume", "Saumon fumé", "poisson-gras", "mdd", "g", 140, 5.99, 180, 23, 0.5, 10, 0, 3, 7, VIANDE + " cru froid"],
     ["po-sardine-fraiche", "Sardines fraîches", "poisson-gras", "national", "g", 500, 4.99, 165, 21, 0, 9, 0, 0.15, 2, VIANDE],
   ],
   "Charcuterie & Traiteur": [
     ["ch-jambon", "Jambon blanc découenné", "charcuterie", "mdd", "g", 160, 2.49, 110, 20, 1, 3, 0, 2, 6, PORC + " cru"],
     ["ch-jambon-dinde", "Jambon de dinde", "charcuterie", "mdd", "g", 160, 1.99, 100, 19, 1.5, 2, 0, 2, 6, VIANDE + " cru"],
     ["ch-chorizo", "Chorizo doux", "charcuterie", "national", "g", 100, 2.79, 380, 24, 2, 30, 0, 3.5, 21, PORC + " cru"],
-    ["ch-saucisson", "Saucisson sec", "charcuterie", "national", "g", 200, 3.49, 420, 25, 2, 35, 0, 4.5, 30, PORC + " cru"],
-    ["ch-coppa", "Coppa", "charcuterie", "national", "g", 80, 3.49, 340, 27, 1, 26, 0, 3.8, 14, PORC + " cru"],
+    ["ch-saucisson", "Saucisson sec", "charcuterie", "national", "g", 200, 3.49, 420, 25, 2, 35, 0, 4.5, 30, PORC + " cru froid"],
+    ["ch-coppa", "Coppa", "charcuterie", "national", "g", 80, 3.49, 340, 27, 1, 26, 0, 3.8, 14, PORC + " cru froid"],
     ["ch-bacon", "Bacon en tranches", "charcuterie", "mdd", "g", 150, 2.29, 210, 22, 1, 13, 0, 2.8, 8, PORC],
-    ["ch-rillettes", "Rillettes du Mans", "charcuterie", "national", "g", 220, 2.49, 420, 17, 0.5, 39, 0, 1.6, 14, PORC + " cru"],
-    ["ch-pate", "Pâté de campagne", "charcuterie", "mdd", "g", 180, 2.19, 330, 14, 2, 29, 0, 1.8, 14, PORC + " cru"],
-    ["ch-poulet-roti", "Poulet rôti prêt à manger", "traiteur", "national", "g", 1100, 8.99, 190, 22, 1, 11, 0, 0.9, 2, VIANDE + " cru"],
+    ["ch-rillettes", "Rillettes du Mans", "charcuterie", "national", "g", 220, 2.49, 420, 17, 0.5, 39, 0, 1.6, 14, PORC + " cru froid"],
+    ["ch-pate", "Pâté de campagne", "charcuterie", "mdd", "g", 180, 2.19, 330, 14, 2, 29, 0, 1.8, 14, PORC + " cru froid"],
+    ["ch-poulet-roti", "Poulet rôti prêt à manger", "traiteur", "national", "g", 1100, 8.99, 190, 22, 1, 11, 0, 0.9, 2, VIANDE + " cru froid"],
   ],
   "Crémerie": [
     ["cr-lait-demi", "Lait demi-écrémé UHT", "lait", "mdd", "ml", 6000, 6.29, 46, 3.2, 4.8, 1.5, 0, 0.1, 90, LAIT],
@@ -167,8 +167,8 @@ const RAYONS = {
     ["es-quinoa", "Quinoa", "graine", "national", "g", 500, 3.99, 368, 14, 58, 6, 7, 0, 500, ""],
     ["es-boulgour", "Boulgour", "graine", "mdd", "g", 500, 1.99, 350, 12, 69, 1.5, 8, 0, 400, GLUTEN],
     ["es-semoule", "Semoule de blé moyenne", "graine", "mdd", "g", 1000, 2.29, 350, 12, 71, 1.3, 3.5, 0, 400, GLUTEN],
-    ["es-lentille", "Lentilles vertes", "legumineuse", "mdd", "g", 500, 2.29, 336, 24, 50, 1.5, 11, 0, 500, ""],
-    ["es-pois-chiche-sec", "Pois chiches secs", "legumineuse", "mdd", "g", 500, 1.99, 350, 19, 55, 5, 12, 0, 500, ""],
+    ["es-lentille", "Lentilles vertes", "legumineuse", "mdd", "g", 500, 2.29, 336, 24, 50, 1.5, 11, 0, 500, "sec"],
+    ["es-pois-chiche-sec", "Pois chiches secs", "legumineuse", "mdd", "g", 500, 1.99, 350, 19, 55, 5, 12, 0, 500, "trempage"],
     ["es-pois-chiche", "Pois chiches cuisinés", "legumineuse", "mdd", "g", 400, 0.99, 120, 7, 16, 2, 6, 0.4, 500, "cru"],
     ["es-haricot-rouge", "Haricots rouges", "legumineuse", "mdd", "g", 400, 0.99, 115, 8, 15, 0.6, 7, 0.4, 500, "cru"],
     ["es-haricot-blanc", "Haricots blancs", "legumineuse", "mdd", "g", 400, 0.95, 110, 7, 15, 0.5, 6.5, 0.4, 500, "cru"],
@@ -289,7 +289,14 @@ for (const [rayon, rows] of Object.entries(RAYONS)) {
 
     const tokens = String(flags).split(/\s+/).filter(Boolean);
     const readyToEat = tokens.includes("cru");
-    const denied = new Set(tokens.filter((t) => t !== "cru"));
+    // « trempage » implique « sec » : un pois chiche qui trempe est un légume sec.
+    const needsSoaking = tokens.includes("trempage");
+    const dryPulse = needsSoaking || tokens.includes("sec");
+    // « froid » n'est pas « cru » : la mozzarella et les haricots en boîte se
+    // mangent tels quels et se cuisinent très bien. Un saucisson, non.
+    const servedCold = tokens.includes("froid");
+    const structurels = new Set(["cru", "sec", "trempage", "froid"]);
+    const denied = new Set(tokens.filter((t) => !structurels.has(t)));
 
     for (const d of denied) {
       if (!ALL_DIETS.includes(d)) throw new Error(`Régime inconnu « ${d} » sur ${id}`);
@@ -308,6 +315,9 @@ for (const [rayon, rows] of Object.entries(RAYONS)) {
       priceFrom: { source: "estimation", at: TODAY },
       stock: "inconnu",
       ...(readyToEat ? { readyToEat: true } : {}),
+      ...(servedCold ? { servedCold: true } : {}),
+      ...(dryPulse ? { dryPulse: true } : {}),
+      ...(needsSoaking ? { needsSoaking: true } : {}),
     });
   }
 }

@@ -142,6 +142,23 @@ export interface Product {
   stockFrom?: Provenance;
   /** Rend le produit consommable tel quel (sert au mode dépannage). */
   readyToEat?: boolean;
+  /**
+   * Se mange froid : la cuisson le dénature. Un saucisson, une coppa, du saumon
+   * fumé, une salade batavia.
+   *
+   * À ne pas confondre avec `readyToEat`, qui dit seulement qu'un produit est
+   * consommable tel quel — la mozzarella et les haricots en boîte le sont, et
+   * se cuisinent parfaitement.
+   */
+  servedCold?: boolean;
+  /**
+   * Légume sec : il ne se mange pas sans une cuisson longue, et parfois sans
+   * un trempage la veille. Sans ce marqueur, le planificateur mettait des pois
+   * chiches secs dans une salade froide.
+   */
+  dryPulse?: boolean;
+  /** Trempage la veille indispensable — pois chiches et haricots secs. */
+  needsSoaking?: boolean;
   /** Code-barres, quand il est connu, pour l'enrichissement Open Food Facts. */
   ean?: string;
   /**

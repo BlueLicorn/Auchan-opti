@@ -14,6 +14,17 @@ dans ton navigateur.
   recalcule le total. Jusqu'à 60 repas par plan — au-delà de six, la
   génération part en lots successifs, avec la liste des plats déjà retenus
   passée à chaque lot pour éviter de servir deux fois le même.
+- **Des recettes qui tiennent debout.** Un légume sec ne part jamais dans une
+  salade froide ni dans une poêlée de vingt minutes : il lui faut un plat qui
+  cuit longtemps, et le trempage de la veille est annoncé en première étape.
+  Les étapes ne parlent de viande que s'il y en a, et citent chaque ingrédient
+  avec sa quantité.
+- **Deux générations ne donnent pas la même liste.** À budget égal, le
+  planificateur départage au hasard les produits que rien ne sépare vraiment,
+  et fait tourner l'ordre des plats. Dix générations puisent dans une
+  quarantaine de produits là où la version précédente resservait les mêmes
+  quinze. La marge d'équivalence se resserre à mesure que le budget serre :
+  quand chaque centime compte, il n'y a plus rien à arbitrer.
 - **Un plan qui tient dans le budget.** Le coût n'est jamais estimé par l'IA :
   il est calculé à partir des conditionnements réels. 350 g de pâtes coûtent
   le prix d'un paquet de 500 g, et les 150 g restants sont affichés comme
@@ -254,6 +265,15 @@ déploiement existant depuis le tableau de bord.
   s'étend à 71 produits distincts au lieu de 18. C'est un choix : quand le
   budget ne contraint pas, la variété passe devant la dernière pièce.
 - **Les poids à la pièce sont des moyennes** (un œuf 55 g, un oignon 60 g).
-  Le bilan nutritionnel en hérite l'approximation.
+  Le bilan nutritionnel en hérite l'approximation, et une recette peut demander
+  « 1 pièce de chou-fleur » là où une demi-tête suffirait.
+- **Le plat de fête disparaît quand le budget ne peut pas le porter.** « Façon
+  plaisir, sauce crémeuse » réclame viande, crème, beurre et fromage — près de
+  sept euros pour deux. En dessous d'environ 1,50 € la portion, le
+  planificateur cuisine simplement plutôt que de dénaturer le plat.
+- **Le planificateur hors-ligne travaille par gabarits**, sept en tout. Il
+  varie les produits, pas les structures de plat : au-delà d'une dizaine de
+  repas, les formes se répètent même si le contenu change. C'est ce que la clé
+  Gemini apporte.
 
 Cette application n'est pas affiliée à Auchan.

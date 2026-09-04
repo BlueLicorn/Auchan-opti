@@ -791,7 +791,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "fl-concombre",
@@ -825,7 +826,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "fl-salade",
@@ -859,7 +861,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "fl-epinard",
@@ -893,7 +896,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "fl-brocoli",
@@ -1092,7 +1096,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "fl-butternut",
@@ -1193,7 +1198,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "fl-endive",
@@ -1227,7 +1233,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "fl-persil",
@@ -2152,7 +2159,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "po-sardine-fraiche",
@@ -2305,7 +2313,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "ch-coppa",
@@ -2335,7 +2344,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "ch-bacon",
@@ -2394,7 +2404,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "ch-pate",
@@ -2424,7 +2435,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "ch-poulet-roti",
@@ -2456,7 +2468,8 @@
         "at": "2026-09-04"
       },
       "stock": "inconnu",
-      "readyToEat": true
+      "readyToEat": true,
+      "servedCold": true
     },
     {
       "id": "cr-lait-demi",
@@ -3980,7 +3993,8 @@
         "source": "estimation",
         "at": "2026-09-04"
       },
-      "stock": "inconnu"
+      "stock": "inconnu",
+      "dryPulse": true
     },
     {
       "id": "es-pois-chiche-sec",
@@ -4013,7 +4027,9 @@
         "source": "estimation",
         "at": "2026-09-04"
       },
-      "stock": "inconnu"
+      "stock": "inconnu",
+      "dryPulse": true,
+      "needsSoaking": true
     },
     {
       "id": "es-pois-chiche",

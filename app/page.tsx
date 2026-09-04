@@ -83,6 +83,9 @@ export default function Home() {
         catalog,
         gemini: apiKey.trim() ? { apiKey: apiKey.trim(), model } : undefined,
         assumeStaples,
+        // Une graine neuve à chaque génération : redemander un plan doit
+        // rebattre les produits, pas resservir la même liste.
+        seed: Date.now(),
         onProgress: setProgress,
       });
 

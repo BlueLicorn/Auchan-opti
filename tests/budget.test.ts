@@ -63,9 +63,14 @@ describe("le budget pilote réellement le plan", () => {
   it("produit un panier moins cher quand on demande moins", () => {
     const large = cost(request(120, 5, 2));
     const serre = cost(request(10, 5, 2));
+    // Le seuil n'est pas plus bas parce que dix portions se heurtent au
+    // conditionnement : on achète un sac de pommes de terre, pas 500 g. Il a
+    // d'ailleurs dû remonter de 0,75 le jour où les légumes secs ont cessé
+    // d'être servis crus — un pois chiche sec était un raccourci bon marché,
+    // mais immangeable.
     assert.ok(
-      serre < large * 0.75,
-      `un budget six fois plus petit doit peser bien moins : ${serre} vs ${large}`,
+      serre < large * 0.8,
+      `un budget douze fois plus petit doit peser bien moins : ${serre} vs ${large}`,
     );
   });
 

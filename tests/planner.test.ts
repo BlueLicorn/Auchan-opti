@@ -391,3 +391,226 @@ describe("import CSV", () => {
     }
   });
 });
+
+/**
+ * Signalé : « les recettes n'ont aucun sens ».
+ *
+ * Trois causes distinctes, toutes reproductibles : des pois chiches secs
+ * servis crus en salade, des étapes qui parlaient de viande alors que le
+ * budget avait imposé une légumineuse, et un français cassé par l'absence
+ * d'article — « Émincer ail », « arroser de huile de tournesol ».
+ */
+describe("des recettes qui tiennent debout", () => {
+  const pool = filterCatalog(seedCatalog.products, {});
+  const byId = indexById(seedCatalog);
+
+  /** Le budget nul pousse le planificateur dans ses retranchements. */
+  const auPlusSerre = (equipment: PlanRequest["equipment"]) =>
+    planOffline({ ...baseRequest, budget: 0, meals: 8, equipment }, pool);
+
+  const toutLEquipement: PlanRequest["equipment"] = [
+    "four", "plaques", "poele", "micro_ondes", "cocotte", "mixeur",
+  ];
+
+  it("ne sert jamais un légume sec sans cuisson longue", () => {
+    for (const equipment of [toutLEquipement, ["four", "plaques", "poele"] as const]) {
+      for (const recipe of auPlusSerre(equipment as PlanRequest["equipment"])) {
+        const secs = recipe.ingredients
+          .map((i) => byId.get(i.productId))
+          .filter((p) => p?.dryPulse);
+        if (secs.length === 0) continue;
+        assert.ok(
+          recipe.cookMinutes >= 30,
+          `${recipe.title} : ${secs[0]!.name} dans un plat qui cuit ${recipe.cookMinutes} min`,
+        );
+      }
+    }
+  });
+
+  it("annonce le trempage quand il en faut un", () => {
+    for (const recipe of auPlusSerre(toutLEquipement)) {
+      const aTremper = recipe.ingredients
+        .map((i) => byId.get(i.productId))
+        .filter((p) => p?.needsSoaking);
+      if (aTremper.length === 0) continue;
+      assert.ok(
+        recipe.steps.some((step) => step.toLowerCase().includes("tremper")),
+        `${recipe.title} contient ${aTremper[0]!.name} sans étape de trempage`,
+      );
+    }
+  });
+
+  it("ne parle de viande que lorsqu'il y en a", () => {
+    const animales = new Set([
+      "boeuf", "porc", "agneau", "veau", "canard", "poulet", "dinde", "lapin",
+      "poisson-blanc", "poisson-gras", "fruits-de-mer", "charcuterie",
+      "poisson-surgele", "conserve-poisson", "viande-surgelee",
+    ]);
+
+    for (const equipment of [toutLEquipement, ["four", "plaques", "poele"] as const]) {
+      for (const recipe of auPlusSerre(equipment as PlanRequest["equipment"])) {
+        const carne = recipe.ingredients
+          .map((i) => byId.get(i.productId))
+          .some((p) => p && animales.has(p.category));
+        if (carne) continue;
+        for (const step of recipe.steps) {
+          assert.ok(
+            !/\bla viande\b/i.test(step),
+            `${recipe.title} n'a pas de viande, et pourtant : « ${step} »`,
+          );
+        }
+      }
+    }
+  });
+
+  it("nomme un ingrédient avec sa quantité, jamais tout nu", () => {
+    // « Émincer ail », « arroser de huile de tournesol » : le nom nu ne se
+    // place pas en français sans connaître son genre. Reprendre la quantité
+    // — « Émincer 40 g d'ail » — est l'usage en cuisine et reste correct quel
+    // que soit le produit. C'est donc cela qu'on vérifie : dès qu'une étape
+    // cite un ingrédient, elle le cite entier.
+    for (const equipment of [toutLEquipement, ["four", "plaques", "poele"] as const]) {
+      for (const recipe of auPlusSerre(equipment as PlanRequest["equipment"])) {
+        for (const ingredient of recipe.ingredients) {
+          const nom = byId.get(ingredient.productId)!.name.toLowerCase();
+          // Sur les bords du mot, sinon « ail » se trouve dans « taille ».
+          const cite = new RegExp(
+            `(?<![a-zà-ÿ])${nom.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![a-zà-ÿ])`,
+            "i",
+          );
+          for (const step of recipe.steps) {
+            if (!cite.test(step)) continue;
+            assert.ok(
+              step.includes(ingredient.label),
+              `${recipe.title} : « ${step} » cite ${nom} sans sa quantité`
+                + ` (attendu « ${ingredient.label} »)`,
+            );
+          }
+        }
+      }
+    }
+  });
+
+  it("n'accorde pas un participe au hasard", () => {
+    // « haricots blancs rincée », « mozzarella râpé » : ces accords étaient
+    // écrits en dur dans les gabarits, donc faux dès que le produit changeait.
+    const accords = /\brincée\b|\brâpé\b|\bhachée\b|\bgrillé\b|\bémincé\b/;
+
+    for (const equipment of [toutLEquipement, ["four", "plaques", "poele"] as const]) {
+      for (const recipe of auPlusSerre(equipment as PlanRequest["equipment"])) {
+        for (const step of recipe.steps) {
+          assert.ok(!accords.test(step), `accord deviné — « ${step} »`);
+        }
+      }
+    }
+  });
+});
+
+/**
+ * Signalé : « quand je change ma demande, mauvaise actualisation ».
+ *
+ * Un gabarit impossible à remplir — sans gluten, il n'y a pas de pâtes —
+ * faisait perdre le repas en silence : six repas demandés, cinq rendus.
+ */
+describe("le nombre de repas demandé est rendu", () => {
+  for (const diet of [[], ["vegetarien"], ["vegan"], ["sans_gluten"], ["sans_lactose"]] as const) {
+    const nom = diet.length === 0 ? "sans régime" : diet[0];
+    it(`en rend six pour six — ${nom}`, () => {
+      const request = { ...baseRequest, meals: 6, diet: [...diet] } as PlanRequest;
+      const pool = filterCatalog(seedCatalog.products, { diet: request.diet });
+      assert.equal(planOffline(request, pool).length, 6);
+    });
+  }
+
+  it("en rend six pour six même sans budget", () => {
+    const request = { ...baseRequest, meals: 6, budget: 0 } as PlanRequest;
+    assert.equal(planOffline(request, filterCatalog(seedCatalog.products, {})).length, 6);
+  });
+});
+
+/**
+ * Signalé : « le site me propose toujours les mêmes trucs à acheter, j'ai
+ * l'impression que la liste de produit est minuscule ».
+ *
+ * Elle ne l'était pas : le planificateur était déterministe et le produit le
+ * moins cher de chaque catégorie gagnait toujours. Pire, la pénalité de
+ * répétition était un facteur multiplicatif appliqué à un coût marginal nul
+ * dès qu'un paquet était ouvert — donc sans effet.
+ */
+describe("la liste ne se répète pas d'une génération à l'autre", () => {
+  const pool = filterCatalog(seedCatalog.products, {});
+  const request: PlanRequest = { ...baseRequest, budget: 48, meals: 6 };
+
+  const produits = (seed: number) =>
+    new Set(planOffline(request, pool, seed).flatMap((r) => r.ingredients.map((i) => i.productId)));
+
+  it("rend le même plan à graine égale", () => {
+    assert.deepEqual(planOffline(request, pool, 7), planOffline(request, pool, 7));
+  });
+
+  it("rend un plan différent à graine différente", () => {
+    const differences = [1, 2, 3, 4, 5].filter((seed) => {
+      const a = [...produits(seed)].sort().join();
+      return a !== [...produits(0)].sort().join();
+    });
+    assert.ok(
+      differences.length >= 3,
+      `seules ${differences.length} graines sur cinq changent quelque chose`,
+    );
+  });
+
+  it("puise largement dans le catalogue sur une dizaine de générations", () => {
+    const cumul = new Set<string>();
+    for (let seed = 0; seed < 10; seed++) for (const id of produits(seed)) cumul.add(id);
+    // Une seule génération en propose une quinzaine ; dix générations qui
+    // resservent la même liste en donneraient tout autant.
+    assert.ok(cumul.size >= 35, `${cumul.size} produits distincts sur dix générations`);
+  });
+
+  it("garde le budget malgré la variation", () => {
+    const byId = indexById(seedCatalog);
+    for (let seed = 0; seed < 10; seed++) {
+      const total = buildShoppingList(
+        planOffline(request, pool, seed), byId, { assumeStaples: true },
+      ).total;
+      assert.ok(
+        total < request.budget * 1.15,
+        `graine ${seed} : ${total.toFixed(2)} € pour un budget de ${request.budget} €`,
+      );
+    }
+  });
+});
+
+describe("le plat de fête n'est pas servi à n'importe quel prix", () => {
+  const pool = filterCatalog(seedCatalog.products, {});
+
+  it("disparaît quand le budget ne peut pas le porter", () => {
+    // « Façon plaisir, sauce crémeuse » réclame viande, crème, beurre et
+    // fromage : près de sept euros pour deux. Le servir à un euro la portion
+    // mangeait un cinquième du panier.
+    const serre = planOffline({ ...baseRequest, budget: 10, meals: 5 }, pool);
+    assert.ok(
+      serre.every((r) => r.indulgence <= 60),
+      `plat trop riche au menu : ${serre.find((r) => r.indulgence > 60)?.title}`,
+    );
+  });
+
+  it("reste disponible quand le budget le permet", () => {
+    const large = planOffline({ ...baseRequest, budget: 200, meals: 5, indulgence: 85 }, pool);
+    assert.ok(large.some((r) => r.indulgence > 60), "aucun plat généreux à budget large");
+  });
+});
+
+describe("élision devant une voyelle", () => {
+  it("écrit « d'œufs », pas « de œufs »", () => {
+    const pool = filterCatalog(seedCatalog.products, {});
+    for (let seed = 0; seed < 20; seed++) {
+      for (const recipe of planOffline({ ...baseRequest, meals: 6 }, pool, seed)) {
+        assert.ok(
+          !/\bde [aeiouyœæéèêà]/i.test(recipe.title),
+          `élision manquée : « ${recipe.title} »`,
+        );
+      }
+    }
+  });
+});

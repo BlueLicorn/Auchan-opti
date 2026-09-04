@@ -30,9 +30,10 @@ interface Slot {
   phrase: (product: Product, quantity: number) => string;
   optional?: boolean;
   /**
-   * L'emplacement part en cuisson : les produits qui ne se mangent que crus
-   * (salade, concombre, radis) en sont écartés. Sans ce garde-fou, le
-   * planificateur met un concombre dans un gratin parce qu'il est bon marché.
+   * L'emplacement part en cuisson : les produits qui se mangent froids en sont
+   * écartés — concombre, radis, saucisson, saumon fumé. Sans ce garde-fou, le
+   * planificateur met un concombre dans un gratin parce qu'il est bon marché,
+   * et saisit un pâté de campagne trois minutes par face.
    */
   cooked?: boolean;
   /**
@@ -42,6 +43,23 @@ interface Slot {
    * quasiment plus de fromage ni de crème.
    */
   kind?: "proteine" | "feculent" | "legume" | "extra";
+  /**
+   * L'emplacement supporte un légume sec. Il faut pour cela que le plat cuise
+   * longtemps et à l'eau : un mijoté, une soupe. Partout ailleurs, des pois
+   * chiches secs sont immangeables — ils finissaient pourtant en salade froide.
+   */
+  longCook?: boolean;
+  /**
+   * Interdit le repli sur les légumineuses quand le budget serre. Les étapes
+   * de ce gabarit parlent de viande et n'ont aucun sens sans elle.
+   */
+  noFallback?: boolean;
+}
+
+/** Ce que le remplissage a réellement mis dans le plat, pour rédiger les étapes. */
+interface StepContext {
+  /** L'emplacement principal est-il tenu par une protéine animale ? */
+  proteineAnimale: boolean;
 }
 
 interface Template {
@@ -61,8 +79,55 @@ interface Template {
   /** Position sur l'axe équilibre / plaisir, sert à choisir les gabarits. */
   indulgence: IndulgenceLevel;
   slots: Slot[];
-  steps: (names: Record<string, string>) => string[];
+  steps: (names: Record<string, string>, ctx: StepContext) => string[];
   tips: string[];
+}
+
+/** Catégories dont un produit se coupe, se saisit et se dore comme une viande. */
+const CATEGORIES_ANIMALES = new Set([
+  "boeuf", "porc", "agneau", "veau", "canard", "poulet", "dinde", "lapin",
+  "poisson-blanc", "poisson-gras", "fruits-de-mer", "charcuterie",
+  "poisson-surgele", "conserve-poisson", "viande-surgelee",
+]);
+
+/**
+ * Ce qu'on accepte de payer, en euros, pour ne pas resservir un produit déjà
+ * utilisé une fois de plus. Comparé à des coûts marginaux réels, donc exprimé
+ * dans la même unité qu'eux.
+ */
+const PRIX_DE_LA_VARIETE = 0.5;
+
+/**
+ * Écart de prix à l'intérieur duquel deux produits sont tenus pour équivalents
+ * et départagés au hasard, exprimé en part du budget d'un repas.
+ *
+ * Sans ce jeu, le planificateur est strictement déterministe : le produit le
+ * moins cher de sa catégorie gagne toujours, et deux générations de suite
+ * rendent la même liste au produit près. C'est ce qui donne l'impression que le
+ * catalogue tient en vingt articles.
+ *
+ * En part du budget et non en euros fixes, parce qu'une marge de cinquante
+ * centimes par emplacement ne veut pas dire la même chose à six euros le repas
+ * qu'à deux : au forfait, elle faisait déraper les paniers serrés de moitié.
+ * Elle s'annule en outre quand le budget serre, où il n'y a rien à arbitrer.
+ */
+const EQUIVALENCE_PART_DU_REPAS = 0.08;
+
+/**
+ * Générateur pseudo-aléatoire déterministe (mulberry32).
+ *
+ * Déterministe et non pas `Math.random` : à graine égale, le plan est
+ * reproductible — c'est indispensable pour les tests, et pour que le plancher
+ * budgétaire annoncé à l'utilisateur ne change pas d'un affichage à l'autre.
+ */
+function melangeur(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 }
 
 /** Protéines de repli quand le budget ne permet ni viande ni poisson. */
@@ -79,7 +144,7 @@ const H_ASPIRE = /^(haricot|hareng|homard|houmous|hachis|hamburger)/;
 /** « de carottes », « d'ail », « de haricots » : l'élision et ses exceptions. */
 function de(name: string): string {
   const lower = name.toLowerCase();
-  const elide = /^[aeiouyàâéèêëîïôöùûü]/.test(lower)
+  const elide = /^[aeiouyœæàâéèêëîïôöùûü]/.test(lower)
     || (lower.startsWith("h") && !H_ASPIRE.test(lower));
   return elide ? `d'${lower}` : `de ${lower}`;
 }
@@ -91,7 +156,7 @@ const portion = (product: Product, quantity: number) =>
 const TEMPLATES: Template[] = [
   {
     id: "poelee",
-    title: (main) => `Poêlée ${de(main.name)}, légumes et féculent`,
+    title: (main) => `Poêlée ${de(main.name)} aux légumes`,
     description: "Un plat complet à la poêle, prêt en une demi-heure, sans vaisselle inutile.",
     skill: 1,
     equipment: ["poele", "plaques"],
@@ -99,7 +164,7 @@ const TEMPLATES: Template[] = [
     cookMinutes: 20,
     indulgence: 25,
     slots: [
-      { categories: ["poulet", "dinde", "boeuf", "poisson-blanc", "vegetal", "oeuf", "legumineuse"], perServing: 150, kind: "proteine", phrase: portion },
+      { categories: ["poulet", "dinde", "boeuf", "veau", "poisson-blanc", "poisson-gras", "vegetal", "oeuf", "legumineuse"], perServing: 150, kind: "proteine", cooked: true, phrase: portion },
       { categories: ["pates", "riz", "graine", "feculent-frais"], perServing: 90, kind: "feculent", phrase: portion },
       { categories: ["legume", "legume-surgele"], perServing: 200, kind: "legume", cooked: true, phrase: portion },
       { categories: ["aromate"], perServing: 40, phrase: portion },
@@ -110,7 +175,7 @@ const TEMPLATES: Template[] = [
       `Faire chauffer ${n.s4 ?? "un filet d'huile"} dans une grande poêle à feu vif.`,
       `Émincer ${n.s3 ?? "l'aromate"}, puis faire suer 2 minutes jusqu'à ce que les morceaux deviennent translucides.`,
       `Ajouter ${n.s0 ?? "la protéine"} et saisir 5 à 7 minutes en remuant, jusqu'à coloration.`,
-      `Pendant ce temps, cuire ${n.s1 ?? "le féculent"} selon les indications du paquet, puis égoutter.`,
+      `Pendant ce temps, cuire ${n.s1 ?? "le féculent"} à l'eau bouillante salée, puis égoutter.`,
       `Ajouter ${n.s2 ?? "les légumes"} dans la poêle, baisser le feu et cuire 8 minutes à couvert.`,
       `Réunir le féculent et la poêlée, assaisonner, et servir immédiatement.`,
     ],
@@ -126,19 +191,25 @@ const TEMPLATES: Template[] = [
     cookMinutes: 60,
     indulgence: 45,
     slots: [
-      { categories: ["boeuf", "porc", "agneau", "poulet", "legumineuse"], perServing: 160, kind: "proteine", phrase: portion },
+      { categories: ["boeuf", "porc", "agneau", "veau", "canard", "poulet", "legumineuse"], perServing: 160, kind: "proteine", longCook: true, cooked: true, phrase: portion },
       { categories: ["legume"], perServing: 180, kind: "legume", cooked: true, phrase: portion },
       { categories: ["conserve-legume"], perServing: 120, phrase: portion },
       { categories: ["aromate"], perServing: 40, phrase: portion },
       { categories: ["epice"], perServing: 2, phrase: portion },
       { categories: ["feculent-frais", "riz", "pates"], perServing: 80, kind: "feculent", phrase: portion },
     ],
-    steps: (n) => [
-      `Couper ${n.s0 ?? "la viande"} en gros cubes, puis faire dorer dans la cocotte sur toutes les faces, sans rien bouger trop tôt.`,
-      `Réserver, puis faire suer ${n.s3 ?? "les aromates"} finement émincé dans le même gras pendant 5 minutes.`,
-      `Remettre la viande, ajouter ${n.s2 ?? "les tomates"} et ${n.s1 ?? "les légumes"} coupés en morceaux réguliers.`,
+    steps: (n, ctx) => [
+      ctx.proteineAnimale
+        ? `Couper ${n.s0 ?? "la viande"} en gros cubes, puis faire dorer dans la cocotte sur toutes les faces, sans rien bouger trop tôt.`
+        : `Égoutter et rincer ${n.s0 ?? "la légumineuse"}, puis réserver à part : l'ajout se fait en fin de cuisson, sinon tout s'écrase.`,
+      `Émincer finement ${n.s3 ?? "les aromates"}, puis faire suer 5 minutes dans un filet d'huile chaude.`,
+      ctx.proteineAnimale
+        ? `Remettre la viande, puis ajouter ${n.s2 ?? "les tomates"} et ${n.s1 ?? "les légumes"}, en morceaux réguliers.`
+        : `Ajouter ${n.s2 ?? "les tomates"} et ${n.s1 ?? "les légumes"}, en morceaux réguliers.`,
       `Assaisonner avec ${n.s4 ?? "les épices"}, couvrir d'eau à hauteur, porter à frémissement.`,
-      `Couvrir et laisser mijoter 1 heure à feu doux, en remuant toutes les 20 minutes.`,
+      ctx.proteineAnimale
+        ? `Couvrir et laisser mijoter 1 heure à feu doux, en remuant toutes les 20 minutes.`
+        : `Couvrir et laisser mijoter 45 minutes, puis ajouter ${n.s0 ?? "la légumineuse"} et poursuivre 15 minutes.`,
       `Cuire ${n.s5 ?? "l'accompagnement"} en fin de cuisson et servir bien chaud.`,
     ],
     tips: [
@@ -168,7 +239,7 @@ const TEMPLATES: Template[] = [
       `Émincer finement ${n.s0 ?? "la base"} en tranches de 3 mm, et ${n.s4 ?? "l'aromate"} en lamelles.`,
       `Faire revenir ${n.s3 ?? "la garniture"} 5 minutes à la poêle pour bien colorer.`,
       `Frotter un plat à gratin, y ranger les couches en alternant base et garniture, saler et poivrer entre chaque étage.`,
-      `Verser ${n.s2 ?? "la crème"} sur l'ensemble, couvrir de ${n.s1 ?? "fromage"} râpé.`,
+      `Verser ${n.s2 ?? "la crème"} sur l'ensemble, puis parsemer de ${n.s1 ?? "fromage"}.`,
       `Enfourner 40 minutes : le dessus doit être doré et la pointe d'un couteau doit traverser sans résistance.`,
       `Laisser reposer 10 minutes hors du four avant de servir, le gratin se tient mieux.`,
     ],
@@ -186,7 +257,7 @@ const TEMPLATES: Template[] = [
     indulgence: 55,
     slots: [
       { categories: ["pates"], perServing: 110, kind: "feculent", phrase: portion },
-      { categories: ["charcuterie", "boeuf", "poulet", "legumineuse", "vegetal", "conserve-poisson"], perServing: 100, kind: "proteine", phrase: portion },
+      { categories: ["charcuterie", "boeuf", "poulet", "legumineuse", "vegetal", "conserve-poisson", "fruits-de-mer", "poisson-gras"], perServing: 100, kind: "proteine", phrase: portion },
       { categories: ["conserve-legume"], perServing: 150, phrase: portion },
       { categories: ["fromage"], perServing: 35, kind: "extra", phrase: portion },
       { categories: ["aromate"], perServing: 25, phrase: portion },
@@ -194,7 +265,7 @@ const TEMPLATES: Template[] = [
     ],
     steps: (n) => [
       `Porter une grande casserole d'eau généreusement salée à ébullition.`,
-      `Faire revenir ${n.s4 ?? "l'aromate"}, haché finement, 3 minutes dans un filet d'huile, sans laisser brûler.`,
+      `Hacher finement ${n.s4 ?? "l'aromate"}, puis faire revenir 3 minutes dans un filet d'huile, sans laisser brûler.`,
       `Ajouter ${n.s1 ?? "la garniture"} et faire colorer 5 minutes.`,
       `Verser ${n.s2 ?? "la tomate"}, assaisonner et laisser réduire 10 minutes à feu moyen.`,
       `Cuire ${n.s0 ?? "les pâtes"} une minute de moins que le temps indiqué, puis les égoutter en gardant un verre d'eau de cuisson.`,
@@ -212,8 +283,8 @@ const TEMPLATES: Template[] = [
     cookMinutes: 45,
     indulgence: 40,
     slots: [
-      { categories: ["poulet", "porc", "poisson-blanc", "vegetal"], perServing: 180, kind: "proteine", phrase: portion },
-      { categories: ["feculent-frais"], perServing: 200, kind: "feculent", phrase: portion },
+      { categories: ["poulet", "porc", "veau", "canard", "poisson-blanc", "poisson-gras", "vegetal"], perServing: 180, kind: "proteine", cooked: true, phrase: portion },
+      { categories: ["feculent-frais", "feculent-surgele"], perServing: 200, kind: "feculent", phrase: portion },
       { categories: ["legume"], perServing: 150, kind: "legume", cooked: true, phrase: portion },
       { categories: ["matiere-grasse"], perServing: 12, phrase: portion },
       { categories: ["epice"], perServing: 3, phrase: portion },
@@ -239,7 +310,7 @@ const TEMPLATES: Template[] = [
     cookMinutes: 0,
     indulgence: 15,
     slots: [
-      { categories: ["conserve-poisson", "charcuterie", "fromage", "legumineuse", "oeuf"], perServing: 90, kind: "proteine", phrase: portion },
+      { categories: ["conserve-poisson", "charcuterie", "fromage", "legumineuse", "oeuf", "poisson-gras", "fruits-de-mer", "traiteur"], perServing: 90, kind: "proteine", phrase: portion },
       { categories: ["legume"], perServing: 200, kind: "legume", phrase: portion },
       { categories: ["graine", "legumineuse", "pates"], perServing: 70, kind: "feculent", phrase: portion },
       { categories: ["matiere-grasse"], perServing: 12, phrase: portion },
@@ -265,7 +336,7 @@ const TEMPLATES: Template[] = [
     cookMinutes: 25,
     indulgence: 88,
     slots: [
-      { categories: ["boeuf", "porc", "poulet", "charcuterie"], perServing: 200, kind: "proteine", phrase: portion },
+      { categories: ["boeuf", "porc", "poulet", "canard", "veau", "charcuterie"], perServing: 200, kind: "proteine", noFallback: true, cooked: true, phrase: portion },
       { categories: ["creme"], perServing: 90, kind: "extra", phrase: portion },
       { categories: ["fromage"], perServing: 60, phrase: portion },
       { categories: ["feculent-surgele", "feculent-frais", "pates"], perServing: 200, kind: "feculent", phrase: portion },
@@ -276,7 +347,7 @@ const TEMPLATES: Template[] = [
       `Sortir ${n.s0 ?? "la viande"} 20 minutes avant : la cuisson sera plus régulière.`,
       `Faire fondre ${n.s5 ?? "le beurre"} dans une poêle large et saisir la viande à feu vif, 3 minutes par face, sans y toucher.`,
       `Réserver au chaud sous une feuille d'aluminium.`,
-      `Dans la même poêle, faire suer ${n.s4 ?? "l'échalote"} hachée, puis déglacer avec un fond d'eau en grattant les sucs.`,
+      `Hacher ${n.s4 ?? "l'échalote"} et faire suer dans la même poêle, puis déglacer avec un fond d'eau en grattant les sucs.`,
       `Verser ${n.s1 ?? "la crème"}, laisser réduire 5 minutes, ajouter ${n.s2 ?? "le fromage"} et remuer jusqu'à ce qu'il soit fondu.`,
       `Cuire ${n.s3 ?? "l'accompagnement"} pendant ce temps, napper la viande de sauce et servir sans attendre.`,
     ],
@@ -296,7 +367,7 @@ const TEMPLATES: Template[] = [
     indulgence: 20,
     slots: [
       { categories: ["legume"], perServing: 300, kind: "legume", cooked: true, phrase: portion },
-      { categories: ["legumineuse", "graine", "riz"], perServing: 60, kind: "proteine", phrase: portion },
+      { categories: ["legumineuse", "graine", "riz"], perServing: 60, kind: "proteine", longCook: true, phrase: portion },
       { categories: ["aromate"], perServing: 40, phrase: portion },
       { categories: ["epice"], perServing: 4, phrase: portion },
       { categories: ["creme", "lait"], perServing: 40, phrase: portion, optional: true },
@@ -305,10 +376,10 @@ const TEMPLATES: Template[] = [
     steps: (n) => [
       `Éplucher et couper ${n.s0 ?? "les légumes"} en morceaux grossiers, l'aspect final importe peu.`,
       `Faire revenir ${n.s2 ?? "l'oignon"} 5 minutes dans un filet d'huile au fond de la cocotte.`,
-      `Ajouter les légumes, ${n.s1 ?? "la légumineuse"} rincée et ${n.s3 ?? "les épices"}, couvrir d'eau à deux centimètres au-dessus.`,
+      `Rincer ${n.s1 ?? "la légumineuse"} à l'eau claire, puis ajouter aux légumes avec ${n.s3 ?? "les épices"} et couvrir d'eau à deux centimètres au-dessus.`,
       `Porter à ébullition puis laisser cuire 30 minutes à couvert, jusqu'à ce que tout s'écrase à la fourchette.`,
       `Mixer par à-coups pour garder un peu de texture, rectifier le sel.`,
-      `Servir avec ${n.s5 ?? "du pain"} grillé.`,
+      `Faire griller ${n.s5 ?? "le pain"} et servir avec la soupe.`,
     ],
     tips: ["La soupe se congèle en portions : de quoi couvrir un repas de la semaine suivante."],
   },
@@ -351,7 +422,9 @@ function budgetScale(kind: Slot["kind"], pressure: number): number {
   }
 }
 
-export function planOffline(request: PlanRequest, pool: Product[]): Recipe[] {
+export function planOffline(request: PlanRequest, pool: Product[], seed = 0): Recipe[] {
+  const hasard = melangeur(seed);
+  const budgetParRepas = request.budget / Math.max(1, request.meals);
   const pressure = budgetPressure(request);
   const usable = TEMPLATES.filter((template) =>
     template.equipment.every((e) => request.equipment.includes(e))
@@ -359,11 +432,32 @@ export function planOffline(request: PlanRequest, pool: Product[]): Recipe[] {
     && template.prepMinutes + template.cookMinutes <= request.maxPrepMinutes,
   );
 
-  const candidates = (usable.length > 0 ? usable : TEMPLATES.filter((t) => t.equipment.length === 0))
+  const retenus = usable.length > 0 ? usable : TEMPLATES.filter((t) => t.equipment.length === 0);
+
+  // Un plat « façon plaisir, sauce crémeuse » à un euro la portion n'existe
+  // pas : il lui faut une viande, de la crème, du beurre et un fromage, soit
+  // près de sept euros pour deux. Le servir quand même revenait à le dénaturer
+  // — des pois chiches à la crème — ou à faire exploser le budget d'un
+  // cinquième du panier. Sous contrainte, on cuisine simplement.
+  const plafond = 100 - 45 * pressure;
+  const abordables = retenus.filter((t) => t.indulgence <= plafond);
+
+  const candidates = (abordables.length >= 3 ? abordables : retenus)
     .slice()
     .sort((a, b) => Math.abs(a.indulgence - request.indulgence) - Math.abs(b.indulgence - request.indulgence));
 
   if (candidates.length === 0) return [];
+
+  // Le tri par proximité avec le curseur plaisir décide quels gabarits sont
+  // pertinents ; il ne devrait pas décider qu'ils sortent toujours dans cet
+  // ordre-là. On fait tourner le départ, sinon six repas donnent six fois le
+  // même menu dans le même ordre, génération après génération.
+  //
+  // La rotation reste cantonnée aux gabarits les plus proches du curseur
+  // plaisir : la varier sur toute la liste reviendrait à servir un plat de
+  // fête à qui a demandé de l'équilibre.
+  const pertinents = Math.min(candidates.length, Math.max(request.meals, 4));
+  const depart = Math.floor(hasard() * pertinents);
 
   const byCategory = new Map<string, Product[]>();
   for (const product of pool) {
@@ -388,10 +482,17 @@ export function planOffline(request: PlanRequest, pool: Product[]): Recipe[] {
   const committed = new Map<string, number>();
 
   for (let i = 0; i < request.meals; i++) {
-    const template = candidates[i % candidates.length];
-    const recipe = fillTemplate(
-      template, i, request, byCategory, usedMains, usageCount, committed, pressure,
-    );
+    // Un gabarit peut se révéler impossible à remplir — sans gluten, il n'y a
+    // pas de pâtes. Le repas était alors silencieusement perdu et l'on rendait
+    // cinq recettes pour six demandées. On essaie les gabarits suivants.
+    let recipe: Recipe | undefined;
+    for (let essai = 0; essai < candidates.length && !recipe; essai++) {
+      recipe = fillTemplate(
+        candidates[(depart + i + essai) % candidates.length],
+        i, request, byCategory, usedMains, usageCount, committed, pressure, hasard,
+        budgetParRepas * EQUIVALENCE_PART_DU_REPAS * (1 - pressure),
+      );
+    }
     if (recipe) {
       recipes.push(recipe);
       const main = recipe.ingredients[0];
@@ -420,6 +521,8 @@ function fillTemplate(
   usageCount: Map<string, number>,
   committed: Map<string, number>,
   pressure: number,
+  hasard: () => number,
+  equivalence: number,
 ): Recipe | undefined {
   const ingredients: RecipeIngredient[] = [];
   const names: Record<string, string> = {};
@@ -427,6 +530,10 @@ function fillTemplate(
   let mainProduct: Product | undefined;
   /** Produits déjà retenus ici : une liste d'ingrédients ne se répète pas. */
   const chosen = new Set<string>();
+  /** Ce que le remplissage a réellement retenu, pour rédiger les étapes. */
+  let proteineAnimale = false;
+  /** Légumes secs à faire tremper la veille, s'il y en a. */
+  const aTremper: Product[] = [];
 
   for (const [slotIndex, slot] of template.slots.entries()) {
     // Le grammage suit le budget : c'est le levier le plus puissant, bien
@@ -444,6 +551,8 @@ function fillTemplate(
       committed,
       chosen,
       pressure,
+      hasard,
+      equivalence,
     );
     if (!product) {
       if (slot.optional) continue;
@@ -455,18 +564,44 @@ function fillTemplate(
 
     chosen.add(product.id);
     if (slotIndex === (template.titleSlot ?? 0)) mainProduct = product;
+    if (slot.kind === "proteine" && CATEGORIES_ANIMALES.has(product.category)) {
+      proteineAnimale = true;
+    }
+    if (product.needsSoaking) aTremper.push(product);
 
     const quantity = roundQuantity(gramsToProductQuantity(needed, product), product);
-    names[`s${slotIndex}`] = product.name.toLowerCase();
+    const label = slot.phrase(product, quantity);
+    // Les étapes reprennent l'ingrédient AVEC sa quantité — « 40 g d'ail »,
+    // pas « ail ». C'est l'usage en cuisine, et surtout c'est la seule forme
+    // qui reste correcte sans connaître le genre du produit : « arroser de
+    // huile de tournesol » et « Émincer ail » ne veulent rien dire.
+    names[`s${slotIndex}`] = label;
     ingredients.push({
       productId: product.id,
       quantity,
-      label: slot.phrase(product, quantity),
+      label,
       ...(slot.optional ? { optional: true } : {}),
     });
   }
 
   if (!mainProduct || ingredients.length < 2) return undefined;
+
+  // Le trempage est du temps d'attente, pas du travail : il n'entre pas dans
+  // le temps de préparation, mais il doit être dit — et dit en premier, sinon
+  // il est lu trop tard.
+  const trempage = aTremper.map((product) => product.name.toLowerCase());
+  const steps = template.steps(names, { proteineAnimale });
+  const tips = [...template.tips];
+  if (trempage.length > 0) {
+    steps.unshift(
+      `La veille : couvrir ${trempage.join(" et ")} de trois fois leur volume`
+      + ` d'eau froide et laisser tremper une nuit, puis égoutter et rincer.`,
+    );
+    tips.push(
+      "Sans trempage, un légume sec reste dur quelle que soit la durée de cuisson."
+      + " À défaut, prendre la version en conserve, déjà cuite.",
+    );
+  }
 
   const title = template.title(mainProduct);
   return {
@@ -479,8 +614,8 @@ function fillTemplate(
     skill: template.skill,
     equipment: template.equipment,
     ingredients,
-    steps: template.steps(names),
-    tips: template.tips,
+    steps,
+    tips,
     diet: intersectDiet(ingredients, byCategory),
     indulgence: template.indulgence,
   };
@@ -504,13 +639,15 @@ function pickProduct(
   committed: Map<string, number>,
   chosen: Set<string>,
   pressure: number,
+  hasard: () => number,
+  equivalence: number,
 ): Product | undefined {
-  let best: { product: Product; score: number } | undefined;
+  const notes: { product: Product; score: number }[] = [];
 
   // Sous forte contrainte, un emplacement protéiné peut se replier sur des
   // légumineuses même si le gabarit ne les listait pas : c'est ce qu'on fait
   // réellement quand la viande ne rentre pas dans le budget.
-  const categories = slot.kind === "proteine" && pressure > 0.55
+  const categories = slot.kind === "proteine" && pressure > 0.55 && !slot.noFallback
     ? [...slot.categories, ...REPLIS_PROTEINES.filter((c) => !slot.categories.includes(c))]
     : slot.categories;
 
@@ -522,7 +659,10 @@ function pickProduct(
     if (!bucket?.length) continue;
 
     for (const product of bucket) {
-      if (slot.cooked && product.readyToEat) continue;
+      if (slot.cooked && product.servedCold) continue;
+      // Un légume sec demande une cuisson longue à l'eau. Ailleurs, il est
+      // simplement immangeable : mieux vaut ne pas remplir l'emplacement.
+      if (product.dryPulse && !slot.longCook) continue;
       if (chosen.has(product.id)) continue;
 
       const quantity = gramsToProductQuantity(neededGrams, product);
@@ -541,24 +681,41 @@ function pickProduct(
       // plein. Sur un produit de garde, il rejoint le placard et ne coûte rien.
       const perishable = product.shelfLifeDays <= PANTRY_SHELF_LIFE_DAYS;
 
-      // Le coût marginal récompense déjà la réutilisation. Cette pénalité ne
-      // sert plus qu'à la variété du menu, et s'efface quand le budget serre.
-      const repetition = 1 + (usageCount.get(product.id) ?? 0) * 0.4 * (1 - pressure);
+      // La variété se paie, et se paie en euros — pas en pourcentage.
+      //
+      // En facteur multiplicatif, cette pénalité était inerte : dès qu'un
+      // paquet est ouvert, le coût marginal du produit tombe à zéro, et zéro
+      // multiplié par n'importe quelle pénalité fait toujours zéro. Le produit
+      // déjà entamé gagnait donc tous les emplacements suivants, quel que soit
+      // le nombre de fois qu'il avait déjà servi : le menu se refermait sur une
+      // poignée d'articles et la liste de courses paraissait minuscule.
+      //
+      // Ajoutée, elle pèse aussi sur un coût nul : reprendre un produit pour la
+      // troisième fois doit valoir mieux qu'un article neuf à un euro. Elle
+      // s'efface quand le budget serre, car c'est précisément la répétition qui
+      // rend un panier contraint tenable.
+      const dejaVu = usageCount.get(product.id) ?? 0;
+      const variete = dejaVu * PRIX_DE_LA_VARIETE * (1 - pressure);
 
       const score = cost * (1 + (perishable ? wasteRatio : 0))
         * (1 + rank * 0.03)
-        * repetition
+        + variete
         + (avoid.has(product.id) ? 1000 : 0);
 
-      if (!best || score < best.score) best = { product, score };
+      notes.push({ product, score });
     }
   }
 
-  if (best && best.score < 1000) return best.product;
+  if (notes.length === 0) return undefined;
 
-  // Tout est déjà utilisé ailleurs : on accepte la répétition plutôt que de
-  // rendre une recette incomplète.
-  return best?.product;
+  const meilleur = notes.reduce((a, b) => (b.score < a.score ? b : a));
+
+  // Départager au hasard les produits que rien ne sépare vraiment. Le seuil est
+  // un montant, pas une proportion : à budget large, deux protéines à moins de
+  // quarante centimes d'écart se valent, et alterner entre elles ne coûte rien
+  // qui se voie sur le ticket.
+  const exaequo = notes.filter((note) => note.score <= meilleur.score + equivalence);
+  return exaequo[Math.floor(hasard() * exaequo.length)]?.product ?? meilleur.product;
 }
 
 function roundQuantity(quantity: number, product: Product): number {

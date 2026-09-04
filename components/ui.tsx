@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 
 /** Briques d'interface partagées, pour que les écrans restent lisibles. */
 
@@ -62,23 +62,35 @@ export function NumberInput({
   suffix?: string;
   ariaLabel?: string;
 }) {
+  // Ce que l'utilisateur est en train de taper, tant que le champ a le focus.
+  // Sans cela, vider le champ pour retaper une valeur envoyait 0 au parent —
+  // `Number("")` vaut 0 — et un budget passé à 0 ne remontait jamais.
+  const [draft, setDraft] = useState<string | null>(null);
+  const affiche = draft ?? (Number.isFinite(value) ? String(value) : "");
+
   return (
     <div className="relative">
       <input
         type="number"
         className={inputClass}
-        value={Number.isFinite(value) ? value : ""}
+        value={affiche}
         min={min}
         max={max}
         step={step}
         aria-label={ariaLabel}
         onChange={(event) => {
-          const next = Number(event.target.value);
-          onChange(Number.isFinite(next) ? next : min);
+          const saisie = event.target.value;
+          setDraft(saisie);
+          // Un champ vide, ou une saisie en cours (« - », « 1, »), ne vaut pas
+          // zéro : on n'en propage rien et la dernière valeur valide tient.
+          const next = Number(saisie);
+          if (saisie.trim() !== "" && Number.isFinite(next)) onChange(next);
         }}
         onBlur={(event) => {
+          setDraft(null);
           const next = Number(event.target.value);
-          onChange(Math.min(max, Math.max(min, Number.isFinite(next) ? next : min)));
+          const valide = event.target.value.trim() !== "" && Number.isFinite(next);
+          onChange(Math.min(max, Math.max(min, valide ? next : value)));
         }}
       />
       {suffix && (

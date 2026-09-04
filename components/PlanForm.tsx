@@ -62,11 +62,19 @@ export function PlanForm({
   const round2 = (n: number) => Math.round(n * 100) / 100;
 
   /** Coût par repas déduit du total. Le total reste la source de vérité. */
-  const parRepas = request.meals > 0 ? round2(request.budget / request.meals) : 0;
+  const parRepas = request.meals > 0 && request.budget > 0
+    ? round2(request.budget / request.meals)
+    : 0;
 
-  /** Changer le nombre de repas conserve le coût unitaire, pas le total. */
+  /**
+   * Changer le nombre de repas conserve le coût unitaire, pas le total.
+   *
+   * Le garde-fou sur `parRepas > 0` compte : sans lui, un état transitoire à
+   * budget nul se propageait en multipliant, et le budget restait bloqué à
+   * zéro pour toutes les saisies suivantes.
+   */
   const setMeals = (meals: number) => {
-    if (budgetMode === "parRepas" && meals > 0) {
+    if (budgetMode === "parRepas" && meals > 0 && parRepas > 0) {
       onChange({ ...request, meals, budget: round2(parRepas * meals) });
     } else {
       set("meals", meals);
