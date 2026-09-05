@@ -1,7 +1,7 @@
 import type {
   Equipment, PlanRequest, Product, Recipe, SkillLevel,
 } from "@/lib/types";
-import { packLabel, unitPrice } from "@/lib/catalog";
+import { comparablePrice, packLabel, rayonRank, unitPrice } from "@/lib/catalog";
 
 /**
  * Construction de la requête envoyée à Gemini.
@@ -131,6 +131,50 @@ export function serializeCatalog(products: Product[]): string {
   ].join("\n");
 }
 
+/**
+ * Nombre de produits envoyés au modèle.
+ *
+ * Le catalogue d'un vrai magasin en compte plusieurs milliers : les envoyer
+ * tous, c'est un prompt de plus de cent mille jetons à chaque lot, pour un
+ * choix que le modèle ne peut de toute façon pas exploiter. On lui donne un
+ * échantillon représentatif — le moins cher de chaque famille d'abord, puis de
+ * la variété — et le chiffrage se fait ensuite sur le catalogue entier.
+ */
+const PRODUITS_AU_PROMPT = 500;
+
+/**
+ * Échantillonne le catalogue par catégorie, au prorata de ce qu'elle pèse.
+ *
+ * Prendre les N moins chers toutes catégories confondues donnerait cinq cents
+ * paquets de pâtes et pas un légume : c'est la répartition qui compte, pas le
+ * prix seul. À l'intérieur d'une catégorie, en revanche, le moins cher passe en
+ * premier — c'est ce qui permet de tenir un budget serré.
+ */
+export function echantillonnerCatalogue(
+  products: Product[],
+  limite = PRODUITS_AU_PROMPT,
+): Product[] {
+  if (products.length <= limite) return products;
+
+  const parCategorie = new Map<string, Product[]>();
+  for (const product of products) {
+    const bucket = parCategorie.get(product.category) ?? [];
+    bucket.push(product);
+    parCategorie.set(product.category, bucket);
+  }
+
+  const retenus: Product[] = [];
+  for (const [, bucket] of parCategorie) {
+    bucket.sort((a, b) => comparablePrice(a) - comparablePrice(b));
+    // Au moins trois produits par famille, sinon une catégorie rare — les œufs,
+    // les légumes secs — disparaîtrait du menu faute de représentants.
+    const part = Math.max(3, Math.round((bucket.length / products.length) * limite));
+    retenus.push(...bucket.slice(0, part));
+  }
+
+  return retenus.sort((a, b) => rayonRank(a.rayon) - rayonRank(b.rayon));
+}
+
 export function buildPlanPrompt(request: PlanRequest, products: Product[]): string {
   const totalServings = request.meals * request.servingsPerMeal;
   const perServingBudget = request.budget / Math.max(1, totalServings);
@@ -178,10 +222,11 @@ Privilégie des recettes qui consomment ces produits : ils sont déjà payés.`)
     }
   }
 
-  sections.push(`## Catalogue autorisé (${products.length} produits)
+  const catalogue = echantillonnerCatalogue(products);
+  sections.push(`## Catalogue autorisé (${catalogue.length} produits)
 Tu ne peux utiliser aucun autre produit. Les colonnes sont séparées par « | ».
 
-${serializeCatalog(products)}`);
+${serializeCatalog(catalogue)}`);
 
   sections.push(`## Ce que tu dois produire
 Exactement ${request.meals} recettes, chacune pour ${request.servingsPerMeal} portion(s).

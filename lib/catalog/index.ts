@@ -362,3 +362,28 @@ export function coverage(products: Product[]): CatalogCoverage {
 
   return { realPrices, knownStock, stale, total: products.length };
 }
+
+/**
+ * Catalogue du magasin de l'utilisateur, servi comme fichier statique.
+ *
+ * Il pèse trois mégaoctets pour cinq mille six cents produits : l'inclure dans
+ * le paquet JavaScript alourdirait chaque chargement de page, alors qu'il ne
+ * sert qu'au moment de composer un plan. Il est donc téléchargé à part, et le
+ * catalogue de démonstration prend le relais s'il manque.
+ */
+export const CHEMIN_CATALOGUE_MAGASIN = "/catalogue-magasin.json";
+
+export async function chargerCatalogueMagasin(
+  signal?: AbortSignal,
+): Promise<Catalog | null> {
+  try {
+    const reponse = await fetch(CHEMIN_CATALOGUE_MAGASIN, { signal });
+    if (!reponse.ok) return null;
+    const donnees = (await reponse.json()) as Catalog;
+    return Array.isArray(donnees?.products) && donnees.products.length > 0 ? donnees : null;
+  } catch {
+    // Hors ligne, ou fichier absent d'un déploiement plus ancien : le catalogue
+    // de démonstration suffit à faire tourner l'application.
+    return null;
+  }
+}

@@ -2,7 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Catalog, MealPlan, PlanRequest } from "@/lib/types";
-import { applyOverrides, isEstimate, seedCatalog, type StoreOverride } from "@/lib/catalog";
+import {
+  applyOverrides, chargerCatalogueMagasin, isEstimate, seedCatalog, type StoreOverride,
+} from "@/lib/catalog";
 import { generatePlan } from "@/lib/planner";
 import { GeminiError, listModels, preferredModel } from "@/lib/ai/gemini";
 import {
@@ -25,6 +27,8 @@ export default function Home() {
   const [model, setModel] = useState("gemini-2.5-flash");
   const [overrides, setOverrides] = useState<StoreOverride[]>([]);
   const [importedCatalog, setImportedCatalog] = useState<Catalog | null>(null);
+  /** Catalogue du magasin, téléchargé à part parce qu'il pèse trois mégaoctets. */
+  const [catalogueMagasin, setCatalogueMagasin] = useState<Catalog | null>(null);
   const [assumeStaples, setAssumeStaples] = useState(true);
   const [budgetMode, setBudgetMode] = useState<BudgetMode>("total");
 
@@ -48,6 +52,12 @@ export default function Home() {
     setImportedCatalog(loadCatalog());
     setBudgetMode(read<BudgetMode>(KEYS.budgetMode, "total"));
 
+    // Le catalogue du magasin n'est pas dans le paquet JavaScript : on le
+    // télécharge en arrière-plan, et le catalogue de démonstration sert en
+    // attendant plutôt que de bloquer l'écran.
+    const abandon = new AbortController();
+    void chargerCatalogueMagasin(abandon.signal).then(setCatalogueMagasin);
+
     const saved = loadPlan();
     if (saved) {
       setPlan(saved.plan);
@@ -55,6 +65,7 @@ export default function Home() {
       setView("result");
     }
     setReady(true);
+    return () => abandon.abort();
   }, []);
 
   useEffect(() => { if (ready) write(KEYS.request, request); }, [ready, request]);
@@ -72,8 +83,8 @@ export default function Home() {
 
   /** Le catalogue effectif : la source choisie, corrigée des relevés magasin. */
   const catalog = useMemo(
-    () => applyOverrides(importedCatalog ?? seedCatalog, overrides),
-    [importedCatalog, overrides],
+    () => applyOverrides(importedCatalog ?? catalogueMagasin ?? seedCatalog, overrides),
+    [importedCatalog, catalogueMagasin, overrides],
   );
 
   /** Combien de produits portent un prix relevé, pour l'option « prix relevés ». */

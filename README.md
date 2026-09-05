@@ -42,6 +42,10 @@ dans ton navigateur.
 - **Les régimes et allergies ne se négocient pas.** Une recette qui contient
   un ingrédient exclu est rejetée entièrement, jamais rafistolée en retirant
   discrètement la ligne.
+- **Le catalogue est celui de ton magasin.** 5 600 produits du drive, avec
+  leur prix, leur conditionnement réel et leur disponibilité — pas des
+  estimations. Il est régénéré depuis un export du site par
+  `scripts/import-auchan.py`.
 - **Option « prix relevés uniquement ».** Le catalogue embarqué est estimé ;
   cette option restreint le plan aux seuls produits dont le prix vient d'un
   relevé sur le site, d'un import CSV ou d'une saisie. Le choix est plus
@@ -233,6 +237,21 @@ respect du budget de bout en bout.
 
 ## Régénérer le catalogue
 
+Le catalogue servi est celui du magasin, converti depuis un export du site :
+
+```bash
+python3 scripts/import-auchan.py catalogue.xlsx public/catalogue-magasin.json
+```
+
+L'export contient tout le site — 67 000 lignes, marketplace comprise. Le script
+ne retient que les produits vendus par le drive lui-même (reconnu à la mention
+« Dans mon drive »), écarte les rayons non alimentaires, et traduit les rayons
+Auchan en catégories exploitables par le planificateur. Sans dépendance : un
+`.xlsx` est une archive de XML, et la bibliothèque standard sait lire les deux.
+
+Le catalogue de démonstration, lui, sert de repli quand le fichier du magasin
+n'est pas disponible :
+
 ```bash
 node scripts/build-catalog.mjs
 ```
@@ -283,6 +302,19 @@ déploiement existant depuis le tableau de bord.
   cher par portion que cinq, non par gaspillage mais parce que le menu
   s'étend à 71 produits distincts au lieu de 18. C'est un choix : quand le
   budget ne contraint pas, la variété passe devant la dernière pièce.
+- **La nutrition du catalogue magasin est estimée par famille.** L'export du
+  site ne porte ni valeurs nutritionnelles ni allergènes : elles sont déduites
+  de la catégorie. Elles suffisent à comparer deux plans, pas à un suivi
+  diététique.
+- **Les régimes du catalogue magasin sont déduits, pas lus sur l'étiquette.**
+  Faute de liste d'ingrédients dans l'export, ils viennent du rayon et du nom.
+  L'erreur n'étant pas symétrique — accorder « sans gluten » à tort met en
+  danger — l'étiquette n'est accordée qu'aux familles dont la composition ne
+  fait aucun doute. **Une allergie sévère demande de vérifier l'emballage.**
+- **Le drive vend peu de frais.** Sur 5 600 produits, on compte une
+  soixantaine de légumes et trois poissons blancs : les recettes s'appuient
+  donc beaucoup sur l'épicerie et le surgelé. C'est le catalogue du magasin,
+  pas un choix du planificateur.
 - **Les poids à la pièce sont des moyennes** (un œuf 55 g, un oignon 60 g).
   Le bilan nutritionnel en hérite l'approximation, et une recette peut demander
   « 1 pièce de chou-fleur » là où une demi-tête suffirait.
