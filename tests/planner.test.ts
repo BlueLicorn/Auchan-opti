@@ -773,3 +773,41 @@ describe("un plan enregistré par une version antérieure", () => {
     }
   });
 });
+
+describe("la viande ne recule que si elle ne rentre pas", () => {
+  const pool = filterCatalog(seedCatalog.products, {});
+  const animales = new Set([
+    "boeuf", "porc", "agneau", "veau", "canard", "poulet", "dinde",
+    "poisson-blanc", "poisson-gras", "fruits-de-mer", "charcuterie",
+    "poisson-surgele", "conserve-poisson",
+  ]);
+
+  const partAnimale = (budget: number, meals: number) => {
+    const byId = indexById(seedCatalog);
+    const recipes = planOffline({ ...baseRequest, budget, meals }, pool, 5);
+    const list = buildShoppingList(recipes, byId, { assumeStaples: true });
+    const carne = list.lines
+      .filter((l) => animales.has(l.product.category))
+      .reduce((s, l) => s + l.cost, 0);
+    return carne / Math.max(0.01, list.total);
+  };
+
+  it("disparaît quand elle mangerait le budget", () => {
+    assert.ok(partAnimale(4, 8) < 0.2, "à 0,25 € la portion, aucune viande ne rentre");
+  });
+
+  it("revient dès que le budget la porte", () => {
+    // Le seuil était une tension abstraite, calibrée sur des prix estimés :
+    // face à un vrai catalogue, il écartait la viande à des budgets qui la
+    // permettaient. Il compare désormais son prix au budget du repas.
+    //
+    // La part reste modeste — autour de 12 % du panier — parce qu'un plan
+    // pèse surtout des légumes et des féculents : c'est la présence qui est
+    // vérifiée ici, pas une proportion.
+    assert.ok(partAnimale(80, 8) > 0.08, "à 5 € la portion, la viande doit revenir");
+  });
+
+  it("en met d'autant plus que le budget monte", () => {
+    assert.ok(partAnimale(80, 8) > partAnimale(20, 8));
+  });
+});

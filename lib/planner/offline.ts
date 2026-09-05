@@ -133,6 +133,15 @@ function melangeur(seed: number): () => number {
 /** Protéines de repli quand le budget ne permet ni viande ni poisson. */
 const REPLIS_PROTEINES = ["legumineuse", "oeuf"];
 
+/**
+ * Part du budget d'un repas qu'une protéine animale peut légitimement prendre.
+ *
+ * Au-delà, elle prive l'assiette de tout le reste, et le repli sur les légumes
+ * secs est justifié. En deçà, s'en passer n'économise rien qui vaille la
+ * monotonie d'un menu sans viande ni poisson.
+ */
+const PART_PROTEINE = 0.45;
+
 const grams = (product: Product, quantity: number) => quantityLabel(quantity, product.unit);
 
 /**
@@ -491,6 +500,7 @@ export function planOffline(request: PlanRequest, pool: Product[], seed = 0): Re
         candidates[(depart + i + essai) % candidates.length],
         i, request, byCategory, usedMains, usageCount, committed, pressure, hasard,
         budgetParRepas * EQUIVALENCE_PART_DU_REPAS * (1 - pressure),
+        budgetParRepas,
       );
     }
     if (recipe) {
@@ -523,6 +533,7 @@ function fillTemplate(
   pressure: number,
   hasard: () => number,
   equivalence: number,
+  budgetRepas: number,
 ): Recipe | undefined {
   const ingredients: RecipeIngredient[] = [];
   const names: Record<string, string> = {};
@@ -553,6 +564,7 @@ function fillTemplate(
       pressure,
       hasard,
       equivalence,
+      budgetRepas,
     );
     if (!product) {
       if (slot.optional) continue;
@@ -641,13 +653,24 @@ function pickProduct(
   pressure: number,
   hasard: () => number,
   equivalence: number,
+  budgetRepas: number,
 ): Product | undefined {
   const notes: { product: Product; score: number }[] = [];
 
   // Sous forte contrainte, un emplacement protéiné peut se replier sur des
   // légumineuses même si le gabarit ne les listait pas : c'est ce qu'on fait
   // réellement quand la viande ne rentre pas dans le budget.
-  const categories = slot.kind === "proteine" && pressure > 0.55 && !slot.noFallback
+  //
+  // Le repli se décide sur le prix réel de la viande dans ce magasin, et non
+  // sur un seuil de tension abstrait : celui-ci était calibré sur un catalogue
+  // estimé et, face aux vrais prix du drive, écartait encore toute protéine
+  // animale à un budget qui la permettait pourtant.
+  const replier = slot.kind === "proteine"
+    && !slot.noFallback
+    && coutMinimal(slot.categories, neededGrams, byCategory, committed)
+      > budgetRepas * PART_PROTEINE;
+
+  const categories = replier
     ? [...slot.categories, ...REPLIS_PROTEINES.filter((c) => !slot.categories.includes(c))]
     : slot.categories;
 
@@ -716,6 +739,30 @@ function pickProduct(
   // qui se voie sur le ticket.
   const exaequo = notes.filter((note) => note.score <= meilleur.score + equivalence);
   return exaequo[Math.floor(hasard() * exaequo.length)]?.product ?? meilleur.product;
+}
+
+/**
+ * Ce que coûterait, au mieux, de remplir cet emplacement avec ce que le gabarit
+ * prévoit — compte tenu des paquets déjà ouverts. Sert à décider si la protéine
+ * animale rentre dans le budget, ou s'il faut se replier sur les légumes secs.
+ */
+function coutMinimal(
+  categories: string[],
+  neededGrams: number,
+  byCategory: Map<string, Product[]>,
+  committed: Map<string, number>,
+): number {
+  let minimum = Number.POSITIVE_INFINITY;
+  for (const category of categories) {
+    for (const product of byCategory.get(category) ?? []) {
+      const quantity = gramsToProductQuantity(neededGrams, product);
+      const dejaEngage = committed.get(product.id) ?? 0;
+      const packs = Math.ceil((dejaEngage + quantity) / product.packSize)
+        - Math.ceil(dejaEngage / product.packSize);
+      minimum = Math.min(minimum, packs * product.price);
+    }
+  }
+  return minimum;
 }
 
 function roundQuantity(quantity: number, product: Product): number {
