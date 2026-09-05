@@ -69,6 +69,15 @@ describe("catalogue du magasin", () => {
     assert.deepEqual(fautifs.map((p) => `${p.name} → ${p.category}`), []);
   });
 
+  it("ne range pas un fruit parmi les légumes", () => {
+    // « Fruit de la passion » et « Avocats » étaient rangés en légume : le
+    // motif ne tolérait pas le pluriel, et le planificateur mettait un fruit
+    // exotique à 1,59 € dans une poêlée à un euro le repas.
+    const fruits = /^(fruit de la passion|avocat|grenade|litchi|mangue|papaye|kiwi|banane)/i;
+    const fautifs = produits.filter((p) => p.category === "legume" && fruits.test(p.name));
+    assert.deepEqual(fautifs.map((p) => p.name), []);
+  });
+
   it("ne range pas une boisson parmi les ingrédients", () => {
     // « Tomates pelées au jus » n'est pas une boisson : c'est le liquide de la
     // conserve. Seul un nom qui COMMENCE par la boisson en désigne une.

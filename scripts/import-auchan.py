@@ -228,13 +228,32 @@ PLATS_PREPARES = {
     "POTAGES & PLATS A CONSOMMER", "ROTISSERIE",
 }
 
+def motif_de_mots(mots):
+    """
+    Assemble une expression qui tolère le pluriel de chaque mot.
+
+    Écrire les motifs à la main a laissé passer trois fois le même défaut :
+    « Filets » ne retrouvait pas « filet », « haricot blanc » ratait « haricots
+    blancs », et « avocat » laissait « Avocats » au rayon des légumes. Le « s »
+    final est donc retiré puis rendu optionnel, systématiquement.
+    """
+    formes = []
+    for mot in mots:
+        formes.append(r"\s+".join(re.escape(m.rstrip("s")) + "s?" for m in mot.split()))
+    return re.compile(r"\b(" + "|".join(formes) + r")\b", re.I)
+
+
 # Le rayon fruits & légumes ne distingue pas le fruit du légume : le nom le fait.
-FRUITS = re.compile(
-    r"\b(pomme|banane|orange|clementine|clémentine|poire|kiwi|fraise|raisin|ananas|"
-    r"avocat|mangue|melon|pasteque|pastèque|peche|pêche|abricot|prune|cerise|figue|"
-    r"citron|pamplemousse|myrtille|framboise|nectarine)\b",
-    re.I,
-)
+FRUITS = motif_de_mots([
+    "pomme", "banane", "orange", "clementine", "clémentine", "poire", "kiwi",
+    "fraise", "raisin", "ananas", "avocat", "mangue", "melon", "pasteque",
+    "pastèque", "peche", "pêche", "abricot", "prune", "cerise", "figue",
+    "citron", "citron vert", "pamplemousse", "myrtille", "framboise", "mure",
+    "mûre", "nectarine", "grenade", "fruit de la passion", "litchi", "papaye",
+    "goyave", "kaki", "physalis", "datte", "grenadille", "carambole",
+    "clementine", "mandarine", "pomelo", "cranberry", "groseille", "cassis",
+    "rhubarbe", "coing", "brugnon", "nefle", "nèfle",
+])
 
 
 def normalise(valeur):
